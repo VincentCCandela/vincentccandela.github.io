@@ -311,6 +311,7 @@
                 $('body').fadeOut(800, function() { /* ... */ });
             });
             $(document).on('click', '#start-menu', function(e) { e.stopPropagation(); });
+            $(document).on('click', function() { if ($('#start-menu').hasClass('open')) closeStartMenu(); });
 
             if (isTouchScreen){
             } 
@@ -628,7 +629,7 @@
                     <p class="popup-small-button" id="creditsClose">x</p>
                 </div>
                 <div style="overflow-y: auto; padding-left: 5%; padding-right: 3%;">
-                    <p> TODO </p>
+                    <p> ... </p>
                 </div>
             </div>
         </div>
