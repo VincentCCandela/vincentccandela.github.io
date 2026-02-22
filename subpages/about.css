@@ -370,9 +370,9 @@ sub,sup {
 	vertical-align: baseline;
 }
 
-.fullscreen-menu-bar{
-	background-color: blue;
-}
+/* .fullscreen-menu-bar{
+	background-color: rgb(60, 102, 73);
+} */
 
 #wrapper{
 	background-color: #f6f6f6;
