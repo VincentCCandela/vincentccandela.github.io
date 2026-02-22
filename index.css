@@ -117,7 +117,6 @@ position: fixed !important
 /* Portrait mode */
 @media (max-aspect-ratio: 1/1){
     .shortcut-icons-wrapper{
-        font-family: "Windows 95";
         position: absolute;
         bottom: 8vh;
         left:0px;
@@ -164,7 +163,6 @@ position: fixed !important
     }
 
     .bottomnav {
-        font-family: "Windows 95";
         overflow: hidden;
         /* background-color: #cfd4e8; */
         background-color: #001a0a;

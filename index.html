@@ -267,6 +267,13 @@
             $("#contactMenu, #contactMin").click(function () { minimizeWindow("contact"); });
             $("#contactClose").click(function () { closeWindow("contact"); });
 
+            $("#aboutMax").click(function () { toggleMaximize("about-popup"); });
+            $("#educationMax").click(function () { toggleMaximize("education-popup"); });
+            $("#experienceMax").click(function () { toggleMaximize("experience-popup"); });
+            $("#projectsMax").click(function () { toggleMaximize("projects-popup"); });
+            $("#musicMax").click(function () { toggleMaximize("music-popup"); });
+            $("#contactMax").click(function () { toggleMaximize("contact-popup"); });
+
             function toggleMaximize(popupId) {
                 const $win = $("#" + popupId);
                 $win.toggleClass("maximized");
