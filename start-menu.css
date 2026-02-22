@@ -1,0 +1,128 @@
+/* ── Start Button ─────────────────────────────────────────── */
+#start-btn {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    height: 100%;
+    border-right: 3px solid rgb(60, 102, 73);
+    user-select: none;
+    transition: background-color 0.1s;
+    flex-shrink: 0;
+}
+#start-btn:hover { background-color: rgb(3, 49, 18); }
+#start-btn.active {
+    background-color: rgb(60, 102, 73);
+    border-top: 3px inset rgb(30, 60, 40);
+}
+#start-btn-label {
+    font-family: "Windows 95", monospace;
+    font-size: 1.1vmax;
+    font-weight: bold;
+    color: #00ff41;
+    text-shadow: 0 0 4px #00ff41;
+    letter-spacing: 0.05em;
+}
+#top-left-logo {
+    height: 4vh;
+    image-rendering: pixelated;
+}
+
+/* ── Start Menu Panel ─────────────────────────────────────── */
+#start-menu {
+    position: fixed;
+    bottom: var(--nav-height);
+    left: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    background-color: #001a0a;
+    border: 3px solid rgb(60, 102, 73);
+    border-bottom: none;
+    min-width: 220px;
+    box-shadow: 4px -4px 0 rgba(0, 255, 65, 0.08);
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+#start-menu.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* ── Start Menu Sidebar ───────────────────────────────────── */
+#start-menu-sidebar {
+    width: 28px;
+    background-color: rgb(20, 60, 35);
+    border-right: 3px solid rgb(60, 102, 73);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 8px;
+    flex-shrink: 0;
+}
+#start-menu-name {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: "Windows 95", "Press Start 2P", monospace;
+    font-size: 0.7vmax;
+    color: #00ff41;
+    text-shadow: 0 0 6px #00ff41;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    user-select: none;
+}
+
+/* ── Start Menu Items ─────────────────────────────────────── */
+#start-menu-items {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 4px 0;
+}
+.start-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 16px 6px 10px;
+    cursor: pointer;
+    color: #00ff41;
+    font-family: "Windows 95", monospace;
+    font-size: clamp(0.55rem, 0.9vmax, 0.9rem);
+    white-space: nowrap;
+    transition: background-color 0.08s;
+    text-shadow: 0 0 3px rgba(0, 255, 65, 0.4);
+}
+.start-menu-item:hover {
+    background-color: rgb(60, 102, 73);
+    text-shadow: 0 0 6px #00ff41;
+}
+.start-menu-icon {
+    width: 20px;
+    height: 20px;
+    image-rendering: pixelated;
+    flex-shrink: 0;
+}
+.start-menu-icon-text {
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+.start-menu-divider {
+    height: 1px;
+    background-color: rgb(60, 102, 73);
+    margin: 4px 8px;
+}
+
+/* ── Mobile ───────────────────────────────────────────────── */
+@media (max-aspect-ratio: 1/1) {
+    #start-menu      { min-width: 60vw; }
+    .start-menu-item { padding: 10px 16px; font-size: 3vw; }
+    #start-btn-label { font-size: 3vw; }
+    #top-left-logo   { height: 5vw; }
+}

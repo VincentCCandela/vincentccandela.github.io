@@ -17,6 +17,7 @@
     <link type="text/css" rel="stylesheet" href="./style.css">
     <link type="text/css" rel="stylesheet" href="./crt.css">
     <link type="text/css" rel="stylesheet" href="./index.css">
+    <link type="text/css" rel="stylesheet" href="./start-menu.css">
     <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -227,11 +228,11 @@
                 $(".list-row").dequeue();
             });
 
-            $("#top-left-logo").hover(function () {
-                $(this).attr('src', './img/logo-hover.png');
-            }, function () {
-                $(this).attr('src', './img/logo.png');
-            });
+            // $("#top-left-logo").hover(function () {
+            //     $(this).attr('src', './img/logo-hover.png');
+            // }, function () {
+            //     $(this).attr('src', './img/logo.png');
+            // });
 
             $("#aboutMenu, #aboutMin").click(function () { minimizeWindow("about"); });
             $("#aboutClose").click(function () { closeWindow("about"); });
@@ -248,7 +249,8 @@
             $("#musicMenu, #musicMin").click(function () { minimizeWindow("music"); });
             $("#musicClose").click(function () { closeWindow("music"); });
 
-            $("#top-left-logo, #creditsMin").click(function () { minimizeWindow("credits"); });
+            // $("#top-left-logo, #creditsMin").click(function () { minimizeWindow("credits"); });
+            $("#creditsMin").click(function () { minimizeWindow("credits"); });
             $("#creditsClose").click(function () { closeWindow("credits"); });
 
             $("#contactMenu, #contactMin").click(function () { minimizeWindow("contact"); });
@@ -277,6 +279,38 @@
             $('#projects-icon').click(function () { openWindow("projects"); });
             $('#music-icon').click(function () { openWindow("music"); });
             $('#contact-icon').click(function () { openWindow("contact"); });
+
+            function openStartMenu() {
+                $('#start-menu').addClass('open');
+                $('#start-btn').addClass('active');
+            }
+            function closeStartMenu() {
+                $('#start-menu').removeClass('open');
+                $('#start-btn').removeClass('active');
+            }
+            function toggleStartMenu() {
+                if ($('#start-menu').hasClass('open')) closeStartMenu();
+                else openStartMenu();
+            }
+
+            $('#start-btn').click(function(e) {
+                e.stopPropagation();
+                toggleStartMenu();
+            });
+
+            $(document).on('click', '.start-menu-item[data-window]', function() {
+                closeStartMenu();
+                openWindow($(this).data('window'));
+            });
+            $(document).on('click', '#start-credits-btn', function() {
+                closeStartMenu();
+                minimizeWindow('credits');
+            });
+            $(document).on('click', '#start-shutdown-btn', function() {
+                closeStartMenu();
+                $('body').fadeOut(800, function() { /* ... */ });
+            });
+            $(document).on('click', '#start-menu', function(e) { e.stopPropagation(); });
 
             if (isTouchScreen){
             } 
@@ -391,9 +425,43 @@
 
     <div class="crt-overlay"></div>
     <div id="theTrickSafariDiv">
+        <div id="start-menu">
+            <div id="start-menu-sidebar">
+                <span id="start-menu-name">Vincent Candela</span>
+            </div>
+            <div id="start-menu-items">
+                <div class="start-menu-item" data-window="about">
+                    <img src="./img/about-icon.png" class="start-menu-icon"> About
+                </div>
+                <div class="start-menu-item" data-window="education">
+                    <img src="./img/education-icon.png" class="start-menu-icon"> Education
+                </div>
+                <div class="start-menu-item" data-window="experience">
+                    <img src="./img/experience-icon.png" class="start-menu-icon"> Experience
+                </div>
+                <div class="start-menu-item" data-window="projects">
+                    <img src="./img/projects-icon.png" class="start-menu-icon"> Projects
+                </div>
+                <div class="start-menu-item" data-window="music">
+                    <img src="./img/music-icon.png" class="start-menu-icon"> Music Tierlist
+                </div>
+                <div class="start-menu-item" data-window="contact">
+                    <img src="./img/contact-icon-17.png" class="start-menu-icon"> Linktree
+                </div>
+                <div class="start-menu-divider"></div>
+                <div class="start-menu-item" id="start-credits-btn">
+                    <span class="start-menu-icon-text">⭐</span> Credits
+                </div>
+                <div class="start-menu-item" id="start-shutdown-btn">
+                    <span class="start-menu-icon-text">⏻</span> Shut Down...
+                </div>
+            </div>
+        </div>
+
         <div class="bottomnav" id="main-bottomnav">
-            <div>
+            <div id="start-btn">
                 <img id="top-left-logo" src="./img/logo.png" alt="">
+                <span id="start-btn-label">Start</span>
             </div>
             <p id="aboutMenu">About</p>
             <p id="educationMenu">Education</p>
