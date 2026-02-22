@@ -114,28 +114,6 @@ position: fixed !important
     border-right: 0.4vw solid rgb(60, 102, 73);
 }
 
-
-
-#contactMenu{
-    border-left: 0.4vw solid rgb(60, 102, 73);
-    border-top: 0.4vw solid rgb(60, 102, 73);
-    animation: cycleBgColorTop 10s infinite;
-}
-
-#contactMenu:hover{
-    animation: none;
-    background-color: rgb(3, 49, 18);
-}
-
-#contactMenu.active{
-    animation: cycleBgColorTop 10s infinite;
-    border-left: 0.4vw rgb(60, 102, 73);
-    border-top: 0.4vw rgb(60, 102, 73);
-    border-bottom: 0.4vw rgb(60, 102, 73);
-    border-right: 0.4vw rgb(60, 102, 73);
-}
-
-
 /* Portrait mode */
 @media (max-aspect-ratio: 1/1){
     .shortcut-icons-wrapper{
@@ -201,10 +179,6 @@ position: fixed !important
         border-top: 5px rgb(60, 102, 73);
         justify-content: space-between;
         align-items: center;
-    }
-
-    #contactMenu{
-        margin-right: auto;
     }
 
     #top-left-logo {
@@ -799,24 +773,13 @@ position: fixed !important
     }
 }
 
-/* bottom instruction text */
 :root {
-    --nav-height: 5vh;
+    --nav-height: 6vh;
 }
 
 .bottomnav {
     height: var(--nav-height);
 }
-
-/* #bottom-hint {
-    position: fixed;
-    bottom: var(--nav-height);
-    width: 100%;
-    text-align: center;
-    font-size: clamp(1rem, 1vw, 1rem);
-    color: #d93609;
-    text-shadow: 1px 0 1px rgba(0, 30, 255, 0.5), -2px 0 1px rgba(255, 0, 80, 0.1), 0 0 3px;
-} */
 
 #matrix-canvas {
     position: fixed;
