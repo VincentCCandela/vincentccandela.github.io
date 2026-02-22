@@ -8,22 +8,6 @@
 -->
 <!-- 
     *5 pages ONLY; subpages made in single-page website format w/ anchor links
-
-    |Landing Page
-        |-> About Page
-            |-> Life Details not found elsewhere
-            |-> Synopsis/"Cover Letter" (funny?)
-        |-> Education Page 
-            |-> McGill
-                |-> Relevant Coursework
-            |-> GFS
-        |-> Experience Page 
-            |-> Jobs
-            |-> Extracurricular/Volunteer
-        |-> Projects Page  
-            |-> Coding
-            |-> Videos
-            |-> Photoshop
 -->
 
 <html>
@@ -85,7 +69,9 @@
             "Do you think that's air you're breathing?",
             "You Take The Red Pill You Stay In Wonderland",
             "Mr. Anderson",
-            "Smith. Agent Smith."
+            "A Smith. Agent Smith.",
+            "Welcome to the real world",
+            
         ];
 
         if (isMobileBrowser()){
@@ -97,7 +83,7 @@
         }
 
         // splash_messages.push(`the (non-bayesian) odds of seeing this text are 1/${splash_messages.length}`)
-        return splash_messages_matrix[getRandomInt(1,splash_messages_matrix.length-1)];
+        return splash_messages_matrix[getRandomInt(0,splash_messages_matrix.length-1)];
     }
 
     //splits and re-attaches string so as to work with individual characters
@@ -146,17 +132,30 @@
         size: 50
     }
 
-    function toggleWindow(windowString) {
-        if ($("#" + windowString + "-popup").is(":hidden")) {
+    function openWindow(windowString) {
+        const $popup = $("#" + windowString + "-popup");
+        const $menu  = $("#" + windowString + "Menu");
+        $menu.css("display", "block");
+        if ($popup.is(":hidden")) {
+            $menu.addClass("active");
             $("#" + windowString + "-popup .popup-window-wrapper iframe").attr('src', function (i, val) { return val; });
+            $popup.show("fold", foldSettings);
         }
-        $("#" + windowString + "Menu").toggleClass("active");
-        $("#" + windowString + "-popup").toggle("fold", foldSettings);
     }
 
-    function hideWindow(windowString) {
-        $("#" + windowString + "Menu").removeClass("active");
-        $("#" + windowString + "-popup").hide("fold", foldSettings);
+    function minimizeWindow(windowString) {
+        const $popup = $("#" + windowString + "-popup");
+        const $menu  = $("#" + windowString + "Menu");
+        $menu.toggleClass("active");
+        $popup.toggle("fold", foldSettings);
+    }
+
+    function closeWindow(windowString) {
+        const $menu = $("#" + windowString + "Menu");
+        $menu.removeClass("active");
+        $("#" + windowString + "-popup").hide("fold", foldSettings, function () {
+            $menu.css("display", "none");
+        });
     }
 
     function initMatrix() {
@@ -247,45 +246,26 @@
                 setTimeout(function () {  $("#kiran-photo").attr("src", "./img/skiing.jpg"); }, timeRemaining);  
             });
 
-            $("#aboutMenu, #aboutClose, #aboutMin").click(function () {
-                toggleWindow("about");
-            });
-            $("#educationMenu, #educationClose, #educationMin").click(function () {
-                toggleWindow("education");
-            });
-            $("#experienceMenu, #experienceClose, #experienceMin").click(function () {
-                toggleWindow("experience");
-            });
-            $("#projectsMenu, #projectsClose, #projectsMin").click(function () {
-                toggleWindow("projects");
-            });
-            $("#musicMenu, #musicClose, #musicMin").click(function () {
-                toggleWindow("music");
-            });
-            $("#top-left-logo, #creditsClose, #creditsMin").click(function () {
-                toggleWindow("credits");
-                hideWindow("contact");
-            });
-            $("#contactMenu, #contactClose, #contactMin").click(function () {
-                toggleWindow("contact");
-                hideWindow("credits");
-            });
+            $("#aboutMenu, #aboutMin").click(function () { minimizeWindow("about"); });
+            $("#aboutClose").click(function () { closeWindow("about"); });
 
-            // $("#aboutMax").click(function () {
-            //     window.location.href = "./subpages/about.html";
-            // });
-            // $("#educationMax").click(function () {
-            //     window.location.href = "./subpages/education.html";
-            // });
-            // $("#experienceMax").click(function () {
-            //     window.location.href = "./subpages/experience.html";
-            // });
-            // $("#projectsMax").click(function () {
-            //     window.location.href = "./subpages/projects.html";
-            // });
-            // $("#musicMax").click(function () {
-            //     window.location.href = "./subpages/albums.html";
-            // });
+            $("#educationMenu, #educationMin").click(function () { minimizeWindow("education"); });
+            $("#educationClose").click(function () { closeWindow("education"); });
+
+            $("#experienceMenu, #experienceMin").click(function () { minimizeWindow("experience"); });
+            $("#experienceClose").click(function () { closeWindow("experience"); });
+
+            $("#projectsMenu, #projectsMin").click(function () { minimizeWindow("projects"); });
+            $("#projectsClose").click(function () { closeWindow("projects"); });
+
+            $("#musicMenu, #musicMin").click(function () { minimizeWindow("music"); });
+            $("#musicClose").click(function () { closeWindow("music"); });
+
+            $("#top-left-logo, #creditsMin").click(function () { minimizeWindow("credits"); });
+            $("#creditsClose").click(function () { closeWindow("credits"); });
+
+            $("#contactMenu, #contactMin").click(function () { minimizeWindow("contact"); });
+            $("#contactClose").click(function () { closeWindow("contact"); });
 
             function toggleMaximize(popupId) {
                 const $win = $("#" + popupId);
@@ -297,36 +277,18 @@
                 }
             }
 
-            $("#aboutMax").click(function () { toggleMaximize("about-popup"); });
-            $("#educationMax").click(function () { toggleMaximize("education-popup"); });
-            $("#experienceMax").click(function () { toggleMaximize("experience-popup"); });
-            $("#projectsMax").click(function () { toggleMaximize("projects-popup"); });
-            $("#musicMax").click(function () { toggleMaximize("music-popup"); });
-            $("#contactMax").click(function () { toggleMaximize("contact-popup"); });
+            $('#about-icon').click(function () { openWindow("about"); });
+            $('#education-icon').click(function () { openWindow("education"); });
+            $('#experience-icon').click(function () { openWindow("experience"); });
+            $('#music-icon').click(function () { openWindow("music"); });
+            $('#contact-icon').click(function () { openWindow("contact"); });
 
             if (isTouchScreen){
-                $('#about-icon').click(function () {
-                    // window.location.href = "./subpages/about.html";
-                    toggleWindow("about");
-                });
-                $('#education-icon').click(function () {
-                    // window.location.href = "./subpages/education.html";
-                    toggleWindow("education");
-                });
-                $('#experience-icon').click(function () {
-                    // window.location.href = "./subpages/experience.html";
-                    toggleWindow("experience");
-                });
-                $('#projects-icon').click(function () {
-                    window.open('https://github.com/VincentCCandela', '_blank');
-                });
-                $('#music-icon').click(function () {
-                    // window.location.href = "./subpages/albums.html";
-                    toggleWindow("music");
-                });
-                $('#contact-icon').click(function () {
-                    toggleWindow("contact");
-                });
+                $('#about-icon').dblclick(function () { openWindow("about"); });
+                $('#education-icon').dblclick(function () { openWindow("education"); });
+                $('#experience-icon').dblclick(function () { openWindow("experience"); });
+                $('#music-icon').dblclick(function () { openWindow("music"); });
+                $('#contact-icon').dblclick(function () { openWindow("contact"); });
             } else {
                 $('.icon-wrapper').click(function () {
                     $('.icon-wrapper').not(this).removeClass('icon-border');
@@ -339,24 +301,11 @@
                     $('.icon-wrapper').removeClass('icon-border');
                 });
 
-                $('#about-icon').dblclick(function () {
-                    toggleWindow("about");
-                });
-                $('#education-icon').dblclick(function () {
-                    toggleWindow("education");
-                });
-                $('#experience-icon').dblclick(function () {
-                    toggleWindow("experience");
-                });
-                $('#projects-icon').dblclick(function () {
-                    window.open('https://github.com/VincentCCandela', '_blank');
-                });
-                $('#music-icon').dblclick(function () {
-                    toggleWindow("music");
-                });
-                $('#contact-icon').dblclick(function () {
-                    toggleWindow("contact");
-                });
+                $('#about-icon').dblclick(function () { openWindow("about"); });
+                $('#education-icon').dblclick(function () { openWindow("education"); });
+                $('#experience-icon').dblclick(function () { openWindow("experience"); });
+                $('#music-icon').dblclick(function () { openWindow("music"); });
+                $('#contact-icon').dblclick(function () { openWindow("contact"); });
 
                 $("#about-icon").hover(
                     function () {
@@ -505,10 +454,7 @@
                 <img class="shortcut-icon" id="music-icon-img" src="./img/music-icon.png">
                 <p style="margin-top: 0;">Music Tierlist</p>
             </div>
-        </div>
-    
-        <!-- <img id="kiran-photo" class="bounce" src="./img/skiing.jpg"> -->
-    
+        </div>    
     
         <div id="center-text">
             <p class="sub-heading">welcome to</p>
@@ -553,17 +499,8 @@
                 </div>
                 <div class="flex-break"></div>
     
-                <!-- <div class="list-row">
-                    <div class="center-list-item" id="list-item-7">Click a tab at the bottom to learn more<br>or
-                        double-click a shortcut on the right for fullscreen</div>
-                </div> -->
             </div>
         </div>
-
-        <!-- <div id="bottom-hint">
-            Click a tab at the bottom to learn more <br>
-            or double-click a shortcut on the right for fullscreen
-        </div> -->
     
         <div id="about-popup" class="popup-window draggable resizable row-container">
             <div class="popup-window-wrapper">

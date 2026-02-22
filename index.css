@@ -833,3 +833,8 @@ position: fixed !important
     height: calc(100dvh - var(--nav-height)) !important;
     border-radius: 0;
 }
+
+#aboutMenu, #educationMenu, #experienceMenu,
+#projectsMenu, #musicMenu, #contactMenu {
+    display: none;
+}
