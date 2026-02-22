@@ -227,23 +227,10 @@
                 $(".list-row").dequeue();
             });
 
-
             $("#top-left-logo").hover(function () {
                 $(this).attr('src', './img/logo-hover.png');
             }, function () {
                 $(this).attr('src', './img/logo.png');
-            });
-
-            var startTime;
-            const winkTime = 500;
-            $("#kiran-photo").mousedown(function(){
-                $(this).attr('src', './img/skiing.jpg');
-                startTime = new Date().getTime();
-            });
-            $(document).mouseup(function(){
-                endTime = new Date().getTime();
-                timeRemaining = Math.max(0,(winkTime-(endTime - startTime))) || 0; 
-                setTimeout(function () {  $("#kiran-photo").attr("src", "./img/skiing.jpg"); }, timeRemaining);  
             });
 
             $("#aboutMenu, #aboutMin").click(function () { minimizeWindow("about"); });
@@ -287,16 +274,13 @@
             $('#about-icon').click(function () { openWindow("about"); });
             $('#education-icon').click(function () { openWindow("education"); });
             $('#experience-icon').click(function () { openWindow("experience"); });
+            $('#projects-icon').click(function () { openWindow("projects"); });
             $('#music-icon').click(function () { openWindow("music"); });
             $('#contact-icon').click(function () { openWindow("contact"); });
 
             if (isTouchScreen){
-                $('#about-icon').dblclick(function () { openWindow("about"); });
-                $('#education-icon').dblclick(function () { openWindow("education"); });
-                $('#experience-icon').dblclick(function () { openWindow("experience"); });
-                $('#music-icon').dblclick(function () { openWindow("music"); });
-                $('#contact-icon').dblclick(function () { openWindow("contact"); });
-            } else {
+            } 
+            else {
                 $('.icon-wrapper').click(function () {
                     $('.icon-wrapper').not(this).removeClass('icon-border');
                     $(this).toggleClass('icon-border');
@@ -307,12 +291,6 @@
                 $(document).on('click', function (e) {
                     $('.icon-wrapper').removeClass('icon-border');
                 });
-
-                $('#about-icon').dblclick(function () { openWindow("about"); });
-                $('#education-icon').dblclick(function () { openWindow("education"); });
-                $('#experience-icon').dblclick(function () { openWindow("experience"); });
-                $('#music-icon').dblclick(function () { openWindow("music"); });
-                $('#contact-icon').dblclick(function () { openWindow("contact"); });
 
                 $("#about-icon").hover(
                     function () {
