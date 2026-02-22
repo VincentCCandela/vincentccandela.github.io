@@ -1,0 +1,212 @@
+* {
+    font-family: 'Press Start 2P', monospace !important;
+}
+
+@font-face {
+  font-family: "Windows 95";
+  src: url(./fonts/w-95-sans-serif.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cheltenham";
+  src: url(./fonts/cheltenham.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'BP Squares';
+  src: url('./fonts/bpdots.squares-bold-webfont.woff2') format('woff2'),
+    url('./fonts/bpdots.squares-bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(1.5vh);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0%;
+  }
+
+  to {
+    opacity: 100%;
+  }
+}
+
+
+
+*,
+*:before,
+*:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+/* ------- DEFAULT ------- */
+body {
+  /* font-family: 'Windows 95'; # use the minecraft font*/ 
+  margin: 0 auto;
+  padding: 0 auto;
+}
+
+.underline {
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: 0.1em;
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #cfd4e8;
+  border-right: 3px solid #565861;
+  border-bottom: 3px solid #565861;
+  border-left: 3px solid #f5f7ff;
+  border-top: 3px solid #f5f7ff;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.invisible {
+  opacity: 0;
+}
+
+.fullscreen-menu-bar {
+  position: fixed;
+  display: flex;
+  height: fit-content;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  font-size: clamp(1rem, 1.3vmax, 2rem);
+  margin: 0 auto;
+  width: 100%;
+  border-bottom: #cfd4e8;
+}
+
+.fullscreen-menu-bar * {
+  margin: 1vh auto;
+}
+
+#fullscreen-menu-bar-spacer {
+  position: relative;
+  z-index: 0;
+  opacity: 0;
+}
+
+.popup-small-button {
+  align-self: stretch;
+  font-size: 2.2%;
+  flex-basis: 2vw;
+  font-size: 1.1vmax;
+  text-align: center;
+  margin-right: auto;
+  padding: 0.1vmax;
+  background-color: #cfd4e8;
+  border-right: 0.2vw solid #565861;
+  border-bottom: 0.2vw solid #565861;
+  border-left: 0.2vw solid #f5f7ff;
+  border-top: 0.2vw solid #f5f7ff;
+  text-decoration: none;
+  color: black !important;
+  display: flexbox;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-small-button:hover {
+  background-color: #e3e9ff;
+}
+
+.popup-title {
+  pointer-events: none;
+  font-size: 1.3vmax;
+  margin-left: auto;
+  /* font-size: 3vmin; */
+  color: white;
+  padding-left: 1vw;
+}
+
+.popup-spacer {
+  pointer-events: none;
+  flex-grow: 0.95;
+}
+
+.home-button {
+  position: fixed;
+  background-color: #cfd4e8;
+  width: 12vw;
+  height: 12vw;
+  bottom: 2dvh;
+  right: 2dvh;
+  border-right: 1vw solid #565861;
+  border-bottom: 1vw solid #565861;
+  border-left: 1vw solid #f5f7ff;
+  border-top: 1vw solid #f5f7ff;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  z-index: 1;
+}
+
+.home-button:active:hover {
+  background-color: #acb0c1;
+  border-left: 1vw solid #565861;
+  border-top: 1vw solid #565861;
+  border-right: 1vw solid #f5f7ff;
+  border-bottom: 1vw solid #f5f7ff;
+}
+
+.home-button>img {
+  width: 80%;
+  padding-top: 10%;
+  pointer-events: none;
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-pixelated;
+  image-rendering: pixelated;
+}
+
+/* Landscape mode */
+@media (min-aspect-ratio: 1/1) or (aspect-ratio: 1/1) {
+  .home-button {
+    display: none;
+  }
+}

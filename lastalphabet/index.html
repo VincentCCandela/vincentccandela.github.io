@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Last.Alphabet</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(180deg, rgba(74,86,125,1) 0%, rgba(14,32,115,1) 100%);
+            color: white;
+        }
+
+        .table{
+            width: 85vw;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: auto;
+            padding-top: 5vh;
+            color: white;
+            -webkit-text-stroke: 0.08em black;
+            font-weight: bold;
+            padding-bottom: 5%;
+        }
+
+        .row {
+            display: flex;  /* aligns all child elements (flex items) in a row */
+        }
+
+        .col {
+            background-color: black;
+            text-align: left;
+            background-size: cover;
+            font-size: 3.5em;
+            height: 25vh;
+            flex: 1;
+            border: 1px solid white;
+        }
+
+        .letter{
+            padding-left: 5%; 
+        }
+
+        .info{
+            text-align: center;
+            font-size: 0.4em;
+            -webkit-text-stroke: 0.05em black;
+        }
+
+        .artistinfo{
+            font-size: 0.8em;
+            padding: 0px;
+            margin: 5% 0px 0px 0px;
+        }
+
+        .stats{
+            font-size: 0.8em;
+            padding: 0px;
+            margin: 0px 0px 0px 0px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <form id="theform" style="width:20vw; margin:auto">
+        <label for="username">Username:</label>
+        <input type="text" name="username" required><br>
+        
+        <label for="timeframe">Timeframe:</label> 
+        <select name="timeframe" required>
+            overall | 7day | 1month | 3month | 6month | 12month
+            <option value="overall">Overall</option>
+            <option value="7day">7 days</option>
+            <option value="1month">1 month</option>
+            <option value="3month">3 months</option>
+            <option value="6month">6 months</option>
+            <option value="12month">12 months</option>
+        </select>
+        <input type="submit" id="submit" value="Generate">
+    </form>
+
+    <section class="table" id="maintable">
+        <div class="row">
+            <div class="col" id="A" style="border-radius: 20% 0% 0% 0%;">
+                <div class="letter">A</div>
+            </div>
+            <div class="col" id="B">
+                <div class="letter">B</div>
+            </div>
+            <div class="col" id="C">
+                <div class="letter">C</div>
+            </div>
+            <div class="col" id="D">
+                <div class="letter">D</div>
+            </div>
+            <div class="col" id="E" style="border-radius: 0% 20% 0% 0%;">
+                <div class="letter">E</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" id="F">
+                <div class="letter">F</div>
+            </div>
+            <div class="col" id="G">
+                <div class="letter">G</div>
+            </div>
+            <div class="col" id="H">
+                <div class="letter">H</div>
+            </div>
+            <div class="col" id="I">
+                <div class="letter">I</div>
+            </div>
+            <div class="col" id="J">
+                <div class="letter">J</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" id="K">
+                <div class="letter">K</div>
+            </div>
+            <div class="col" id="L">
+                <div class="letter">L</div>
+            </div>
+            <div class="col" id="M">
+                <div class="letter">M</div>
+            </div>
+            <div class="col" id="N">
+                <div class="letter">N</div>
+            </div>
+            <div class="col" id="O">
+                <div class="letter">O</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" id="P">
+                <div class="letter">P</div>
+            </div>
+            <div class="col" id="Q">
+                <div class="letter">Q</div>
+            </div>
+            <div class="col" id="R">
+                <div class="letter">R</div>
+            </div>
+            <div class="col" id="S">
+                <div class="letter">S</div>
+            </div>
+            <div class="col" id="T">
+                <div class="letter">T</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" id="U" style="border-radius: 0% 0% 0% 20%;">
+                <div class="letter">U</div>
+            </div>
+            <div class="col" id="V">
+                <div class="letter">V</div>
+            </div>
+            <div class="col" id="W">
+                <div class="letter">W</div>
+            </div>
+            <div class="col" id="X">
+                <div class="letter">X</div>
+            </div>
+            <div class="col" id="Y">
+                <div class="letter">Y</div>
+            </div>
+            <div class="col" id="Z" style="border-radius: 0% 0% 20% 0%;">
+                <div class="letter">Z</div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const API_KEY = "6e222d4a9e5accdbd296663fb7696096";
+
+        $(document).ready(function(){
+            const submit = document.querySelector("#submit");
+            submit.addEventListener("click", async (event) => {
+                event.preventDefault();
+                const userInfo = document.querySelector("#theform");
+                const formData = new FormData(userInfo);
+                $('#maintable').load('./blanktable.html');
+                await main(formData.get("username"), formData.get("timeframe"));
+            });
+
+        });
+
+        
+
+        async function get_album_artwork(song){
+            const new_response = await fetch("https://ws.audioscrobbler.com/2.0/?" + new URLSearchParams(
+                        {"method": "track.getInfo",
+                            "api_key": API_KEY,
+                            "track": song["name"],
+                            "artist": song["artist"]["name"],
+                            "format": "json"
+                        }),{method: "POST"});
+            const json_new_response = await new_response.json();
+
+            try{
+                print("error: "+str(json_new_response["error"]))
+                return
+            } catch {
+                try{
+                    var album_mbid = json_new_response["track"]["album"]["mbid"]
+                    if (album_mbid){
+                        const ca_response = await fetch("https://ws.audioscrobbler.com/2.0/?" + new URLSearchParams(
+                        {"method": "album.getInfo",
+                            "api_key": API_KEY,
+                            "mbid": album_mbid,
+                            "format": "json"
+                        }),{method: "POST"});
+                        const json_ca_response = await ca_response.json();
+                        image = json_ca_response["album"]["image"][2]["#text"]
+                    } else {
+                        image = "Unknown Image"
+                    }
+                } catch {
+                    image = "Unknown Image"
+                }                        
+            }
+            return image;
+        }
+
+        async function main(username, timeframe){
+            console.log("test");
+            var song_limit = 200;
+            var all_letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var top_letters = [];
+            var count = 0;
+            var index = 1;
+            var totalPages = 1;
+            while(count < 26 && index <= totalPages){
+                console.log("searching page "+index.toString())
+                const response = await fetch("https://ws.audioscrobbler.com/2.0/?" + new URLSearchParams({
+                    "method": "user.getTopTracks",
+                    "user": username,
+                    "api_key": API_KEY,
+                    "period": timeframe,
+                    "limit": song_limit.toString(),
+                    "page": index.toString(),
+                    "format": "json"
+                }),{method: "POST"});
+                const json_response = await response.json();
+                if(index == 1){
+                    totalPages = parseInt(json_response.toptracks["@attr"]["totalPages"]);
+                    console.log("total pages: "+json_response.toptracks["@attr"]["totalPages"])
+                }
+                try{
+                    console.log("error: "+strval(json_response.error));
+                    return;
+                }
+                catch(error){
+                    var array = json_response.toptracks.track;
+                }
+                var k = 0;
+                while (k < array.length){
+                    var first_letter = array[k]["name"][0].toUpperCase();
+                    if (all_letters.includes(first_letter)){
+                        count += 1;
+                        all_letters = all_letters.replace(first_letter,'');
+                        var end_string=
+                        '<i class="songname">'+array[k]["name"]+'</i>'+
+                        '<p class="artistinfo">'+array[k]["artist"]["name"]+'</p>'+
+                        '<p class="stats">'+array[k]["playcount"]+' plays | ranked #'+array[k]["@attr"]["rank"]+'</p>';
+                        //var end_string = array[k]["name"] + " - " + array[k]["artist"]["name"]  + " (" + array[k]["playcount"] + " plays, ranked #" + array[k]["@attr"]["rank"] + ")";
+                        top_letters[first_letter] = end_string;
+                        album_image = await get_album_artwork(array[k])
+                        if (album_image != "Unknown Image"){
+                            $("#"+first_letter).css("background-image","url(\""+album_image+"\")");
+                            //$("#"+first_letter+" > .thumbnail").html("<img src=\""+album_image+"\"><img>");
+                        }
+                        $("#"+first_letter+" > .info").html(end_string);
+                    }
+                    if(count >= 26){
+                        break;
+                    }
+                    k++;
+                }
+                index += 1;       
+            }
+            //go through remaining unset letters, if any:
+            var n=0;
+            while (n < all_letters.length){
+                $("#"+all_letters[n]+" > .info").html("No Song Found!");
+                n++;
+            }
+            console.log(top_letters);
+        }
+    </script>
+</body>
+</html>

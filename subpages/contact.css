@@ -1,0 +1,85 @@
+body {
+    width: 100vw;
+    /* background-color: #bfc3d3; */
+    background-color: #808080;
+    margin: 0;
+}
+
+#content {
+    top: 0px;
+    height: auto;
+    width: 100dvw;
+    background-color: #808080;
+}
+
+#ps-overlays {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+#contact-main-section {
+    padding: 1vw;
+}
+
+.contact-links {
+    padding: 1em 1.5em;
+    font-size: clamp(0.75rem, 1.5vw, 1.1rem);
+}
+
+.contact-links p {
+    margin: 0.6em 0;
+}
+
+.contact-links a {
+    color: #1a0dab;
+}
+
+.contact-links a:visited {
+    color: #6a0dad;
+}
+
+/* .popup-title {
+    color: green !important;
+    text-shadow: none !important;
+} */
+
+/* .popup-title {
+    color: green !important;
+} */
+
+/* Portrait mode */
+@media (max-aspect-ratio: 1/1) {
+    #content {
+        overflow-x: hidden;
+        padding-top: 10vh;
+        padding-bottom: 15vh;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .contact-links {
+        margin: 0 5vw;
+        font-size: clamp(0.75rem, 3vw, 1.1rem);
+    }
+}
+
+/* Landscape mode */
+@media (min-aspect-ratio: 1/1) or (aspect-ratio: 1/1) {
+    #content {
+        display: flex;
+        z-index: 0;
+        padding-bottom: 5vh;
+        min-height: 100vh;
+    }
+
+    .contact-links {
+        margin-top: 14vh;
+        margin-left: 4vw;
+        margin-right: 2vw;
+        width: 80vw;
+        height: auto;
+    }
+}

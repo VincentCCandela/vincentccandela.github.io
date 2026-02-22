@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link type="text/css" rel="stylesheet" href="../style.css">
+    <link type="text/css" rel="stylesheet" href="../crt.css">
+    <link type="text/css" rel="stylesheet" href="./experience.css">
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script src="../crt.js"></script>
+    <title>Experience - Kiran McCulloch</title>
+</head>
+
+<script>
+    function toggleOdd() {
+        $(".exp-subtitle").css('text-align', 'left');
+        $(".exp-title").css('text-align', 'left');
+        $(".exp-section").css('left', '0%');
+        $(".exp-section:visible").odd().css({ 'left': '15%' });
+        $(".exp-title:visible").odd().css('text-align', 'right');
+        $(".exp-subtitle:visible").odd().css('text-align', 'right');
+    }
+
+    $(document).ready(
+        function () {
+            $('img').attr('draggable', false);
+            toggleOdd();
+            if (inIframe()) {
+                $("#crt-overlay, .fullscreen-menu-bar, .home-button").hide()
+            }
+            // if (inIframe()) {
+            //     $("#crt-overlay, .fullscreen-menu-bar, .home-button").hide();
+            //     $(".popup-small-button", ".ps-menu-bar").hide();
+            // }
+            // if (inIframe()) {
+            //     $("#crt-overlay, .fullscreen-menu-bar, .home-button").hide();
+            //     $(".ps-menu-bar .popup-small-button").hide();
+            // }
+            $("#no-filter-button").click(function () {
+                $(this).addClass("active");
+                $("#tech-filter-button, #geo-filter-button, #video-filter-button, #design-filter-button").removeClass("active");
+                $(".exp-section").show();
+                toggleOdd();
+            });
+            $("#tech-filter-button").click(function () {
+                $(this).addClass("active");
+                $("#no-filter-button, #geo-filter-button, #video-filter-button, #design-filter-button").removeClass("active");
+                $(".exp-section").show();
+                $(".exp-section").not(".tech-job").toggle();
+                toggleOdd();
+            });
+            $("#geo-filter-button").click(function () {
+                $(this).addClass("active");
+                $("#tech-filter-button, #no-filter-button, #video-filter-button, #design-filter-button").removeClass("active");
+                $(".exp-section").show();
+                $(".exp-section").not(".geo-job").hide();
+                toggleOdd();
+            });
+            $("#video-filter-button").click(function () {
+                $(this).addClass("active");
+                $("#tech-filter-button, #geo-filter-button, #no-filter-button, #design-filter-button").removeClass("active");
+                $(".exp-section").show();
+                $(".exp-section").not(".video-job").hide();
+                toggleOdd();
+            });
+            $("#design-filter-button").click(function () {
+                $(this).addClass("active");
+                $("#tech-filter-button, #geo-filter-button, #video-filter-button, #no-filter-button").removeClass("active");
+                $(".exp-section").show();
+                $(".exp-section").not(".design-job").hide();
+                toggleOdd();
+            });
+        }
+
+    );
+
+    $(function () {
+        function hexFromRGB(r, g, b) {
+            var hex = [
+                r.toString(16),
+                g.toString(16),
+                b.toString(16)
+            ];
+            $.each(hex, function (nr, val) {
+                if (val.length === 1) {
+                    hex[nr] = "0" + val;
+                }
+            });
+            return hex.join("").toUpperCase();
+        }
+
+        function refreshSwatch() {
+            var red = $("#red-slider").slider("value"),
+                green = $("#green-slider").slider("value"),
+                blue = $("#blue-slider").slider("value"),
+                hex = hexFromRGB(red, green, blue);
+            $("#swatch").css("background-color", "#" + hex);
+            $("#red-text").text(red);
+            $("#green-text").text(green);
+            $("#blue-text").text(blue);
+            $(".exp-title").css("color", "#" + hex);
+        }
+
+        $("#red-slider, #green-slider, #blue-slider").slider({
+            orientation: "horizontal",
+            range: "min",
+            max: 255,
+            value: 127,
+            slide: refreshSwatch,
+            change: refreshSwatch
+        });
+        $("#red-slider").slider("value", 0);
+        $("#green-slider").slider("value", 0);
+        $("#blue-slider").slider("value", 0);
+    });
+</script>
+
+<body class="crt-text">
+    <div class="crt-overlay" id="crt-overlay"></div>
+    <div id="ps-overlays">
+        <!-- <div class="fullscreen-menu-bar"> -->
+        <div class="fullscreen-menu-bar" style="background-color: darkblue;">
+
+            <p class="popup-title">Experience</p>
+            <!-- <div class="popup-spacer"></div> -->
+            <!-- <a class="popup-small-button" href="../index.html" id="aboutFullMin">&#95;</a> -->
+            <!-- <a class="popup-small-button" id="aboutFullMax"><b>&#9634;</b></a> -->
+            <!-- <a class="popup-small-button" href="../index.html" id="aboutFullClose">x</a> -->
+        </div>
+        <!-- <div class="ps-menu-bar">
+            <a id="no-filter-button" class="active"><span class="underline">A</span>ll</a>
+            <a id="tech-filter-button"><span class="underline">T</span>echnology</a>
+            <a id="geo-filter-button"><span class="underline">G</span>eography</a>
+            <a id="video-filter-button"><span class="underline">V</span>ideo</a>
+            <a id="design-filter-button"><span class="underline">D</span>esign</a>
+                <img src="../img/home.png" onclick='window.location.href = "../index.html"' alt="a pixellated icon of a home">
+
+            <div class="popup-spacer"></div>
+            <a class="popup-small-button" href="../index.html" id="aboutFullMin">&#95;</a>
+            <a class="popup-small-button" id="aboutFullMax"><b>&#9634;</b></a>
+            <a class="popup-small-button" href="../index.html" id="aboutFullClose">x</a>
+            
+        </div> -->
+        <div class="ps-menu-bar">
+            <a id="no-filter-button" class="active"><span class="underline">A</span>ll</a>
+            <a id="tech-filter-button"><span class="underline">T</span>echnology</a>
+            <a id="geo-filter-button"><span class="underline">G</span>eography</a>
+            <a id="video-filter-button"><span class="underline">V</span>ideo</a>
+            <a id="design-filter-button"><span class="underline">D</span>esign</a>
+            <img src="../img/home.png" onclick='window.location.href = "../index.html"' alt="a pixellated icon of a home">
+        </div>
+        <img id="ps-ruler" src="../img/ps-ruler.png">
+        <img class="ps-sidebar" id="ps-sidebar-real" src="../img/ps-sidebar.png">
+        <img class="ps-panel" id="ps-panel-real" src="../img/ps-panel.png">
+        <img class="ps-panel" id="ps-bar-mobile" src="../img/ps-bar-mobile.jpg">
+        <div class="ps-panel" id="slider-wrapper">
+            <div id="red-slider" class="slider-bar"></div>
+            <div id="green-slider" class="slider-bar"></div>
+            <div id="blue-slider" class="slider-bar"></div>
+            <div id="swatch"></div>
+            <span id="red-text">255</span>
+            <span id="green-text">255</span>
+            <span id="blue-text">255</span>
+        </div>
+
+    </div>
+    <!-- <div class="fullscreen-menu-bar" id="fullscreen-menu-bar-spacer">
+        <p class="popup-title">Experience</p>
+    </div> -->
+    <div id="content">
+        <img class="ps-sidebar" src="../img/ps-sidebar-trans.png">
+        <div id="canvas">
+            <div id="exp-main-section">
+                <!-- THIS SOLSYS SECTION IS TEMPORARY AND SHOULD BE TREATED AS SUCH -->
+                <div class="exp-section tech-job" id="solsys">
+                    <p class="exp-title">
+                        SOLSYS, Toronto, ON
+                    </p>
+                    <p class="exp-subtitle">
+                        Software Developer, June 2023 - August 2024
+                    </p>
+                    <ul class="exp-body">
+                        <li>Built and ran API Ecosystems in Python, focusing on a wide range of functionality, including
+                            an IDP up to OAuth 2 standards</li>
+                        <li>Developed an API testing synthesizer with an HTML/CSS frontend and a Python backend hosted
+                            in Azure Cloud</li>
+                        <li>Created and maintained Azure Function Apps written in Python to generate and manage large
+                            amounts of API Traffic</li>
+                        <li>Maintained deployment pipelines in Jenkins and Digital Ocean for several active web services
+                        </li>
+                        <li>Wrote and deployed a Serenity testing suite in Java for all of the above projects using
+                            JUnit and Cucumber; this was also deployed by Jenkins and was run at regular intervals</li>
+                        <li>Created Wordpress plugins in PHP and Javascript to manage contact forms, register webinar
+                            participants with Zoom, and integrate with Salesforce for email management and record
+                            keeping</li>
+                        <li>Collaborated extensively with other members of my team across and between projects, using my
+                            unique expertise on their projects and receiving theirs on mine, and integrating other tools
+                            like Splunk and Docker</li>
+                    </ul>
+                </div>
+
+                <div class="exp-section tech-job design-job video-job" id="colorkarma">
+                    <p class="exp-title">
+                        COLORKARMA, LLC, Boston, MA
+                    </p>
+                    <p class="exp-subtitle">
+                        Video Editor, January 2021 - December 2022
+                    </p>
+                    <ul class="exp-body">
+                        <li>Edited short videos and webinars to insert music, dialogue, and sound effects; arranged
+                            shots into sequences; and corrected errors, using editing software such as Adobe Premiere
+                            Pro and Adobe Photoshop CC</li>
+                        <li>Worked closely with clients and management to realize a coherent creative vision</li>
+                        <li>Managed workflow and schedules when working remotely</li>
+                        <li>Independently created videos from raw footage, intersplicing music, effects, and photos to
+                            effectively form a narrative and illustrate the core concepts present</li>
+                    </ul>
+                </div>
+
+                <div class="exp-section design-job video-job">
+                    <p class="exp-title">
+                        GREEK WEEK COMMITTEE, Montreal, QC
+                    </p>
+                    <p class="exp-subtitle">
+                        Graphics Chairman, July - September 2022
+                    </p>
+                    <ul class="exp-body">
+                        <li>Worked with a tight-knit team to plan and execute a week-long festival</li>
+                        <li>Shot and edited promotional video using a wide range of technologies, including Adobe
+                            AfterEffects and Premiere Pro</li>
+                        <li>Created promotional graphics and banners for a range of platforms using Adobe Illustator and
+                            Adobe Photoshop</li>
+                        <li>Created graphics for slideshows, maps, and guides for both co-workers and participants</li>
+                        <li>Designed official event logo; subsequently used and reworked the design for printing, video,
+                            social media, and more</li>
+                        <li>Operated with full creative control over most aspects of design and often collaborated with
+                            teammates to refine ideas</li>
+                        <li>Worked as a live event photographer using a DSLR Camera on multiple occasions</li>
+                        <li>Edited and cleaned up photographs in Adobe Photoshop; uploaded, organized, and backed up
+                            thousands of images</li>
+                    </ul>
+                </div>
+
+                <div class="exp-section tech-job">
+                    <p class="exp-title">
+                        VERIZON WIRELESS/TTEC, Montreal, QC
+                    </p>
+                    <p class="exp-subtitle">
+                        Tech Support/IT, April - July 2020
+                    </p>
+                    <ul class="exp-body">
+                        <li>Provided detailed technical support to customers, covering a wide range of smartphones and
+                            other technologies</li>
+                        <li>Troubleshot technical issues including network connectivity, file management, data transfer,
+                            and Bluetooth technology</li>
+                        <li>Researched and resolved customer problems, acting as the customer liaison, conducting
+                            call-backs on investigations</li>
+                        <li>Worked closely within a team to successfully workshop and solve all presented issues</li>
+                        <li>Processed payments as requested and checked verification requests by third parties</li>
+                        <li>Received, de-escalated and documented customer dissatisfaction and complaints within the
+                            established standards</li>
+                    </ul>
+                </div>
+
+                <div class="exp-section tech-job geo-job">
+                    <p class="exp-title">
+                        ACADEMY OF NATURAL SCIENCES, Philadelphia, PA
+                    </p>
+                    <p class="exp-subtitle">
+                        Researcher and Programmer, May - August 2019
+                    </p>
+                    <ul class="exp-body">
+                        <li>Coded complex watershed delineation and overland flow algorithms in the JavaScript-based
+                            Google Earth Engine</li>
+                        <li> Manually identified Karst features and lakes using satellite imagery along with QGIS and
+                            ARCGIS</li>
+                        <li>Interpreted, identified, and marked sinkholes, caves, and other depressions using LIDAR data
+                        </li>
+                        <li>Worked with other researchers in teams on large-scale GIS-based mapping projects</li>
+                        <li>Read, analyzed, and summarized scientific papers concerning hydrology, topography, and
+                            related geographical research</li>
+                    </ul>
+                </div>
+
+                <div class="exp-section design-job">
+                    <p class="exp-title">
+                        BLUESTONE EXTERIORS, Philadelphia, PA
+                    </p>
+                    <p class="exp-subtitle">
+                        Graphic Designer, June - August 2018; September - November 2019
+                    </p>
+                    <ul class="exp-body">
+                        <li>Created graphic designs, collages, and mockup landscape images using Adobe Photoshop CC
+                        </li>
+                        <li>Composited reference images to actualize a creative vision put forth by a client</li>
+                        <li>Based on input, helped corporate clients realize their vision for the final product</li>
+                        <li>Surveyed an area and took numerous base photos from which to work</li>
+                        <li>Found appropriate additional images on various databases to supplement the designs</li>
+                        <li>Edited together multiple photos to create one cohesive, realistic final product</li>
+                        <li>Managed and organized large numbers of files, both in and out of digital sharing services
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="exp-section design-job video-job">
+                    <p class="exp-title">
+                        WINDSOR MOUNTAIN INTERNATIONAL, Windsor, NH
+                    </p>
+                    <p class="exp-subtitle">
+                        Film Editor/Counselor, June 2017 - July 2017
+                    </p>
+                    <ul class="exp-body">
+                        <li>Edited films and videotapes to insert music, dialogue, and sound effects; arranged shots
+                            into sequences; and corrected errors, using Final Cut Pro X and other editing software</li>
+                        <li>Organized and coordinated scripts on the instructions of directors and producers</li>
+                        <li>Taught software skills and creative-based film techniques to campers ranging from ages 7-15
+                        </li>
+                        <li>Supervised and coordinated activities of coworkers engaged in film editing, assembling, and
+                            recording activities</li>
+                        <li>Wrote scripts and outlines for films and assisted others with the same</li>
+                        <li>Selected the specific audio/visual effects, music, and most effective shots for each scene
+                            to form a logical and smoothly running story</li>
+                    </ul>
+                </div>
+
+                <div class="exp-section video-job">
+                    <p class="exp-title">
+                        SPIRIT ANIMAL COLLECTIVE, Philadelphia, PA
+                    </p>
+                    <p class="exp-subtitle">
+                        Film Editor Intern, January 2017
+                    </p>
+                    <ul class="exp-body">
+                        <li> Edited films and videotapes to insert music, dialogue, and sound effects; arranged shots
+                            into sequences; and corrected errors, using editing software such as Adobe Premiere Pro and
+                            Final Cut Pro X</li>
+                        <li>Shot footage for creatvie projects and webinars using DSLR Cameras and external microphones
+                        </li>
+                        <li>Reviewed footage sequence by sequence to become familiar with it before assembling it into a
+                            final product</li>
+                        <li>Managed company-wide digital storage systems and hard drives as well as organizing file
+                            systems</li>
+                        <li>Performed data entry and santitization tasks using Excel and SQL</li>
+                        <li>Reviewed assembled films or edits of films to determine if corrections were necessary</li>
+                        <li>Set up and operated computer editing systems and digital video effects units to produce a
+                            final product</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <img class="ps-panel" src="../img/ps-panel-trans.png">
+    </div>
+
+
+</body>
+
+</html>

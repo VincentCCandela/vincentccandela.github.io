@@ -1,0 +1,541 @@
+:root{
+    --developer-black: #111023;
+    --tooltip-padding: 1em;
+}
+
+img{
+    max-width: 100%;
+}
+
+html{
+    height: 100dvh;
+    background-color: var(--developer-black);
+}
+
+img.linkUnavailable{
+    filter: grayscale(100%);
+}
+
+#reviewblock{
+    text-align: left;
+    display: flex;
+    gap: 0;
+    flex-direction: column;
+    padding: 1.5em;
+}
+
+#reviewblock > p{
+    text-indent: 50px;
+}
+
+#reviewblock pre{
+    width: min-content;
+}
+
+pre{
+    font-family: "Cheltenham";
+    padding: 2vw;
+}
+
+#links-row{
+    display: flex; 
+    flex-direction: row; 
+    justify-content: center; 
+}
+
+#links-row > a > img{
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-pixelated;
+    image-rendering: pixelated;
+}
+
+.album{
+    box-sizing: border-box;
+    justify-content: center;
+    height: fit-content;
+}
+
+.album>img:hover{
+    border-radius: 0.3em;
+    border: 0.3vmax solid aliceblue;
+}
+
+.lyricsBlock{
+    text-align: center; 
+    text-indent: 0;
+    align-self: center;
+}
+
+hr{
+    width: 95%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Portrait Mode */
+@media (max-aspect-ratio: 1/1){
+    [data-alttext] > span {
+        display: none;
+    }
+      
+    [data-alttext]::before {
+        content: attr(data-alttext);
+    }
+
+    :root{
+        --alphabetical_text: A->Z;
+    }
+
+    .landscape{
+        display: none;
+    }
+
+    .fullscreen-menu-bar{
+        display: none;
+    }
+
+    .tier{
+        font-family: "Cheltenham";
+        width: 100vw;
+        display: flex;
+        height: fit-content;
+        min-height: 30vh;
+    }
+
+    .tierLabel{
+        padding: 1vw;
+        display: flex;
+        text-align: center;
+        width: 25vw;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 2vw;
+        font-size: 3vw;
+    }
+
+    .tierLabel > .tierNumber{
+        font-size: 15vw;
+    }
+
+    .sortButtonHolder{
+        display: flex;
+        flex-basis:50%;
+        gap: 10px;
+        flex-direction: column;
+    }
+
+    .sortButtonHolder > button{
+        font-size: 1.5vh;
+        font-family: 'Windows 95';
+        border-radius: 0.5em;
+        box-sizing: border-box;
+        border-top: 0.2em solid #cccccc;
+        border-left: 0.2em solid #cccccc;
+        border-right: 0.2em solid #666666;
+        border-bottom: 0.2em solid #666666;
+    }
+
+    button.selected{
+        border: 0.2em solid var(--developer-black);
+    }
+
+    .album{
+        flex-basis: 31%;
+    }
+
+    .albumHolder{
+        display: flex;
+        flex-wrap: wrap;
+        width: 80vw;
+        align-content: flex-start;
+        background-color: var(--developer-black);
+        gap: 2vw;
+        padding: 2vw;
+    }
+    
+    #albumTooltip{
+        font-family: "Cheltenham";
+        position: absolute;
+        display: block;
+        opacity: 0%;
+        padding: var(--tooltip-padding);
+        background-color: aliceblue;
+        border-radius: 1em; 
+        border: 0.5em solid var(--developer-black);
+        transition: opacity 0.5s;
+    }
+
+    #albumTooltip.visible{
+        opacity: 100%;
+        transition: none;
+    }
+
+    .hiddenInfo{
+        display: none;
+    }
+
+    #moreInfo{
+        font-family: "Cheltenham";
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        opacity: 0%;
+        text-align: center;
+        top: 8vh;
+        left: 10vw;
+        width: 80vw;
+        height: 80vh;
+        background-color: aliceblue;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        overscroll-behavior: none;
+    }
+
+    #blurOverlay {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: #000;
+        opacity: 0.7;
+        filter: alpha(opacity = 70); /* required for opacity to work in IE */
+    }
+
+    .topSection{
+        padding-top: 3vh;
+        padding-bottom: 3vh
+    }
+
+    #dummyTopSection{
+        display: flex;
+        flex-direction: column;
+        background-size: cover;
+        background-position: center;
+        filter: blur(4px);
+
+    }
+
+    #realTopSection{
+        width: 100%;
+        z-index: 2;
+        position: absolute;
+
+        -webkit-text-stroke: 4px var(--developer-black);
+        paint-order: stroke fill;
+        color: white;    
+    }
+
+    .heading{
+        z-index: 2;
+        font-size: 8vw
+    }
+
+    .subheading{
+        z-index: 2;
+        font-size: 6vw
+    }
+    
+    .artistyear{
+        z-index: 2;
+        font-size: 4vw
+    }
+
+    #reviewblock >p {
+        z-index: 2;
+        font-size: clamp(1em,1vw,2em);
+    }
+
+
+    #dummyTopSection > div{
+        visibility: hidden;
+    }
+
+    #icon-row {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 4vw;
+    }
+
+    #icon-row > img{
+        -ms-interpolation-mode: nearest-neighbor;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: -o-pixelated;
+        image-rendering: pixelated;
+        height: auto;
+        width: 40%;
+        flex-basis: auto;
+    }
+
+    #links-row{
+        gap: 3vw;
+    }
+
+    #links-row > a > img{
+        height: 4vh;
+    }    
+
+
+    .lyricsBlock{
+        font-size: clamp(0.7em,0.7vw,1.4em);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+/* Landscape Mode */
+@media (min-aspect-ratio: 1/1) or (aspect-ratio: 1/1){
+    :root{
+        --alphabetical_text: Alphabetically;
+    }
+
+    .portrait{
+        display: none;
+    }
+
+    .fullscreen-menu-bar{
+        font-family: 'Windows 95';
+        background-color: #77B6EA;
+    }
+
+    .tier{
+        font-family: "Cheltenham";
+        width: 100vw;
+        display: flex;
+        height: fit-content;
+        min-height: 30vh;
+    }
+
+    .tierLabel{
+        padding: 1vw;
+        display: flex;
+        width: 20vw !important; 
+        text-align: center;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 2vh;
+    }
+
+    .tierLabel > .tierNumber{
+        font-size: 6vw;
+    }
+
+    .sortButtonHolder > button{
+        font-family: 'Windows 95';
+        border-radius: 0.5em;
+        box-sizing: border-box;
+        border-top: 0.2em solid #cccccc;
+        border-left: 0.2em solid #cccccc;
+        border-right: 0.2em solid #666666;
+        border-bottom: 0.2em solid #666666;
+    }
+
+    button.selected{
+        border: 0.2em solid var(--developer-black);
+    }
+
+    .albumHolder{
+        display: flex;
+        width: 79vw;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        column-gap: 10px;
+        background-color: var(--developer-black);
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .album{
+        flex-basis: 10%;
+    }
+
+    
+    #albumTooltip{
+        font-family: "Cheltenham";
+        position: absolute;
+        display: block;
+        opacity: 0%;
+        padding: var(--tooltip-padding);
+        background-color: aliceblue;
+        border-radius: 1em; 
+        border: 0.5em solid var(--developer-black);
+        transition: opacity 0.5s;
+    }
+
+    #albumTooltip.visible{
+        opacity: 100%;
+        transition: none;
+    }
+
+    .hiddenInfo{
+        display: none;
+    }
+
+    #moreInfo{
+        font-family: "Cheltenham";
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        opacity: 0%;
+        text-align: center;
+        top: 10vh;
+        left: 30vw;
+        width: clamp(200px,40vw,1000px);
+        height: 80vh;
+        background-color: aliceblue;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        overscroll-behavior: none;
+    }
+
+    #blurOverlay {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: #000;
+        opacity: 0.7;
+        filter: alpha(opacity = 70); /* required for opacity to work in IE */
+    }
+
+    #dummyTopSection{
+        padding: 1vw;
+        display: flex;
+        flex-direction: column;
+        background-size: cover;
+        background-position: center;
+        filter: blur(4px);
+    }
+
+    #dummyTopSection > .heading{
+        width: 95%;
+    }
+
+    #realTopSection{
+        padding: 1vw;
+        z-index: 2;
+        position: absolute;
+        top:0;
+        left:2.5%;
+        width:95%;
+        -webkit-text-stroke: 4px var(--developer-black);
+        paint-order: stroke fill;
+        color: white;    
+    }
+
+    .heading{
+        z-index: 2;
+        font-size: clamp(2em,3vw,4em);
+    }
+
+    .subheading{
+        z-index: 2;
+        font-size: clamp(1.5em,2.2vw,3em);
+    }
+    
+    .artistyear{
+        z-index: 2;
+        font-size: clamp(1em,1.8vw,2.8em);
+        display: inline;
+        text-align: center;
+    }
+
+    #reviewblock >p {
+        z-index: 2;
+        font-size: clamp(1em,1vw,2em);
+    }
+
+
+    #dummyTopSection > div{
+        visibility: hidden;
+    }
+
+    #icon-row {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 2vw;
+    }
+
+    #icon-row > img{
+        -ms-interpolation-mode: nearest-neighbor;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: -o-pixelated;
+        image-rendering: pixelated;
+        height: auto;
+        width: 40%;
+        flex-basis: auto;
+    }
+
+    #links-row{
+        gap: 2vw;
+    }
+
+    .home-button{
+        display: block;
+        width: 4vw;
+        height: 4vw;
+        border-right: 0.5vw solid #565861;
+        border-bottom: 0.5vw solid #565861;
+        border-left: 0.5vw solid #f5f7ff;
+        border-top: 0.5vw solid #f5f7ff;
+      }
+      
+      .home-button:active:hover {
+        background-color: #acb0c1;
+        border-left: 0.5vw solid #565861;
+        border-top: 0.5vw solid #565861;
+        border-right: 0.5vw solid #f5f7ff;
+        border-bottom: 0.5vw solid #f5f7ff;
+      }
+
+}

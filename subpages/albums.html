@@ -1,0 +1,2742 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link type="text/css" rel="stylesheet" href="../style.css">
+    <link type="text/css" rel="stylesheet" href="./albums.css">
+    <link type="text/css" rel="stylesheet" href="../crt.css">
+    <link type="text/css" rel="stylesheet" href="../wiki.css">
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="../crt.js"></script>
+    <title>Albums - Kiran McCulloch</title>
+</head>
+
+<script>
+
+    function isMobileBrowser() {
+        let check = false;
+        (function (a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true; })(navigator.userAgent || navigator.vendor || window.opera);
+        return check;
+    };
+
+    function isTouchDevice() {
+        return (('ontouchstart' in window) ||
+            (navigator.maxTouchPoints > 0) ||
+            (navigator.msMaxTouchPoints > 0));
+    }
+
+    let browsertype = navigator.userAgent;
+
+    // if(browsertype.includes("Safari")){
+    //     alert("Hi! Looks like you're opening this website in Safari. Look, I developed this entire thing on Safari, so I get it, but there are a couple known bugs you should be aware of:\n\n1) CSS animations don't render in iFrames;\n2) background-images don't listen to image-rendering properties (so they may be rendered blurrily.)\n\nThese bugs are not present on Chrome or Firefox, so I'd recommend using one of those - but if you're like me and prefer Safari anyways, continue on, just keeping in mind you may not be getting the full experience. Thanks!");
+    // }
+    // if(browsertype.includes("Chrome")){
+
+    // }
+
+    //click into detailed info
+    function seeMoreAlbum(element) {
+        $("#moreInfo").find("#dummyTopSection").css("background-image", `url("${$(element).find("img").attr("src")}")`);
+
+        var hiddenInfo = $(element).find(".hiddenInfo")
+        $("#moreInfo").find(".heading").text(hiddenInfo.find(".albumInfo").text());
+        if (hiddenInfo.find(".subtitleInfo").length) {
+            $("#moreInfo").find(".subheading").text(hiddenInfo.find(".subtitleInfo").text());
+            $("#moreInfo").find(".subheading").show();
+        } else {
+            $("#moreInfo").find(".subheading").hide();
+        }
+        $("#moreInfo").find(".artistyear").text(`${hiddenInfo.find(".artistInfo").text()} | ${hiddenInfo.find(".yearInfo").text()}`);
+        $("#moreInfo").find("#starsimg").attr("src", `../img/stars/${$(element).parent().parent().find(".tierNumber").text()}.png`);
+        $("#moreInfo").find("#reviewblock").html(hiddenInfo.find(".reviewInfo").html());
+
+        var wikilink = $("#moreInfo").find("#wikipedia-link");
+        var wikiinfo = hiddenInfo.find(".wikipediaInfo").text();
+        var spotlink = $("#moreInfo").find("#spotify-link");
+        var spotinfo = hiddenInfo.find(".spotifyInfo").text();
+        var amlink = $("#moreInfo").find("#apple-music-link");
+        var aminfo = hiddenInfo.find(".appleMusicInfo").text();
+
+        if (wikiinfo == "Placeholder") {
+            wikilink.find("img").addClass("linkUnavailable");
+            wikilink.css("pointer-events", "none");
+        } else {
+            wikilink.find("img").removeClass("linkUnavailable");
+            wikilink.attr("href", wikiinfo);
+            wikilink.css("pointer-events", "auto");
+        }
+
+        if (spotinfo == "Placeholder") {
+            spotlink.find("img").addClass("linkUnavailable");
+            spotlink.css("pointer-events", "none");
+        } else {
+            spotlink.find("img").removeClass("linkUnavailable")
+            spotlink.attr("href", spotinfo);
+            spotlink.css("pointer-events", "auto");
+        }
+
+        if (aminfo == "Placeholder") {
+            amlink.find("img").addClass("linkUnavailable")
+            amlink.css("pointer-events", "none");
+        } else {
+            amlink.find("img").removeClass("linkUnavailable")
+            amlink.attr("href", aminfo);
+            amlink.css("pointer-events", "auto");
+        }
+
+        $('body').css('overflow', 'hidden');
+        $("#blurOverlay").show();
+        $("#moreInfo").show();
+        $("#moreInfo").scrollTop(0);
+
+    }
+
+
+    //click off of detailed info
+    $(document).mouseup(function (e) {
+        var container = $("#moreInfo");
+        // if the target of the click isn't the container nor a descendant of the container
+        if (!container.is(e.target) && container.has(e.target).length === 0) {
+            $('body').css('overflow', 'scroll');
+            $("#tierListWrapper").css("filter", "blur(0px)")
+            $("#blurOverlay").hide();
+            container.hide();
+            $("#moreInfo").find("#reviewblock").html("");
+        }
+    });
+
+    //sorting
+    function sortTierAlphabetically(button) {
+        tier = button.parent().parent().parent()
+        var sortModifier = 1;
+        if (button.hasClass("sorted-ascending")) {
+            button.find(".arrowIndicator").html("&uarr;")
+            button.removeClass("sorted-ascending");
+            sortModifier = -1;
+        } else {
+            button.find(".arrowIndicator").html("&darr;")
+            button.addClass("sorted-ascending");
+        }
+
+        var tieralbums = $(tier.find(".album").toArray().sort(function (a, b) {
+            nameA = a.querySelector(".hiddenInfo").querySelector(".albumInfo").innerHTML;
+            nameB = b.querySelector(".hiddenInfo").querySelector(".albumInfo").innerHTML;
+            return nameA.localeCompare(nameB) * sortModifier;
+        }));
+        tieralbums.each(function (index) {
+            $(this).css("order", index);
+        });
+
+        tier.find(".artistSortButton").html("Sort by Artist &udarr;");
+        tier.find(".artistSortButton").removeClass("selected");
+        tier.find(".yearSortButton").html("Sort by Year &udarr;");
+        tier.find(".yearSortButton").removeClass("selected");
+        button.addClass("selected")
+    }
+
+    function sortTierYearwise(button) {
+        tier = button.parent().parent().parent()
+        var sortModifier = 1;
+        if (button.hasClass("sorted-ascending")) {
+            button.html("Sort by Year &uarr;");
+            button.removeClass("sorted-ascending");
+            sortModifier = -1;
+        } else {
+            button.html("Sort by Year &darr;");
+            button.addClass("sorted-ascending");
+        }
+
+        var tieralbums = $(tier.find(".album").toArray().sort(function (a, b) {
+            var returning = 0
+            yearA = Number(a.querySelector(".hiddenInfo").querySelector(".yearInfo").innerHTML);
+            yearB = Number(b.querySelector(".hiddenInfo").querySelector(".yearInfo").innerHTML);
+            if (yearA > yearB) { returning = 1 }
+            if (yearA < yearB) { returning = -1 }
+            return returning * sortModifier;
+        }));
+        tieralbums.each(function (index) {
+            $(this).css("order", index);
+        });
+
+        tier.find(".artistSortButton").html("Sort by Artist &udarr;")
+        tier.find(".artistSortButton").removeClass("selected")
+        tier.find(".arrowIndicator").html("&udarr;")
+        tier.find(".alphabeticalSortButton").removeClass("selected")
+        button.addClass("selected")
+    }
+
+    function sortTierArtistwise(button) {
+        tier = button.parent().parent().parent()
+        var sortModifier = 1;
+        if (button.hasClass("sorted-ascending")) {
+            button.html("Sort by Artist &uarr;");
+            button.removeClass("sorted-ascending");
+            sortModifier = -1;
+        } else {
+            button.html("Sort by Artist &darr;");
+            button.addClass("sorted-ascending");
+        }
+
+        var tieralbums = $(tier.find(".album").toArray().sort(function (a, b) {
+            nameA = a.querySelector(".hiddenInfo").querySelector(".artistInfo").innerHTML;
+            nameB = b.querySelector(".hiddenInfo").querySelector(".artistInfo").innerHTML;
+            return nameA.localeCompare(nameB) * sortModifier;
+        }));
+        tieralbums.each(function (index) {
+            $(this).css("order", index);
+        });
+
+        tier.find(".yearSortButton").html("Sort by Year &udarr;")
+        tier.find(".yearSortButton").removeClass("selected")
+        tier.find(".arrowIndicator").html("&udarr;")
+        tier.find(".alphabeticalSortButton").removeClass("selected")
+        button.addClass("selected")
+    }
+
+
+    //control placement of tooltip
+    $(document).on('mousemove', function (e) {
+        var windowHeightLine = ($(window).height() * (2 / 3));
+        var windowWidthLine = ($(window).width() * (2 / 3));
+        var tipWidth = $('#albumTooltip').outerWidth() + 1;
+        var tipHeight = $('#albumTooltip').outerHeight() + 1;
+
+        //top left
+        if (e.clientY <= windowHeightLine && e.clientX <= windowWidthLine) {
+            $('#albumTooltip').css('top', e.pageY);
+            $('#albumTooltip').css('left', e.pageX + 1);
+            //top right
+        } else if (e.clientY <= windowHeightLine && e.clientX > windowWidthLine) {
+            $('#albumTooltip').css('top', e.pageY);
+            $('#albumTooltip').css('left', e.pageX - tipWidth);
+            //bottom left
+        } else if (e.clientY > windowHeightLine && e.clientX <= windowWidthLine) {
+            $('#albumTooltip').css('top', e.pageY - tipHeight);
+            $('#albumTooltip').css('left', e.pageX + 1);
+            //bottom right
+        } else {
+            $('#albumTooltip').css('top', e.pageY - tipHeight);
+            $('#albumTooltip').css('left', e.pageX - tipWidth);
+        }
+    });
+
+    $(document).ready(
+
+        function () {
+            $('img').attr('draggable', false);
+
+            if (inIframe()) {
+                $("#crt-overlay, .fullscreen-menu-bar, .home-button").hide()
+            }
+            $("#moreInfo").hide();
+            $("#moreInfo").css("opacity", "100%");
+            //disable hover until animation is finished
+            $(".list-row").delay(2500).queue(function () {
+                $(".list-row").css("pointer-events", "auto");
+                $(".list-row").dequeue();
+            });
+
+            var isTouchscreen = isTouchDevice();
+
+            //hover over credits button
+            $("#top-left-logo").hover(function () {
+                $(this).attr('src', './img/logo-hover.png');
+            }, function () {
+                $(this).attr('src', './img/logo.png');
+            });
+
+
+            if (isTouchscreen) {
+
+            } else {
+                //deal with additional album info tooltips
+                $(".album").hover(
+                    function () {
+                        var hiddenInfo = $(this).find(".hiddenInfo")
+                        if (hiddenInfo.find(".subtitleInfo").length) {
+                            $('#albumTooltip').html(`<b>${hiddenInfo.find(".albumInfo").text()}<br>${hiddenInfo.find(".subtitleInfo").text()}</b><br>by ${hiddenInfo.find(".artistInfo").text()}<br>${hiddenInfo.find(".yearInfo").text()}`);
+                        } else {
+                            $('#albumTooltip').html(`<b>${hiddenInfo.find(".albumInfo").text()}</b><br>by ${hiddenInfo.find(".artistInfo").text()}<br>${hiddenInfo.find(".yearInfo").text()}`);
+                        }
+
+                        $('#albumTooltip').css("border-color", $(this).parent().parent().find(".tierLabel").css("background-color"));
+                        $('#albumTooltip').addClass("visible");
+                    },
+                    function () {
+                        $('#albumTooltip').removeClass("visible");
+                    }
+                );
+            }
+
+        }
+    );
+</script>
+
+
+<body class="crt-text">
+    <!-- <div class="fullscreen-menu-bar">
+        <p class="popup-title">music.tierlist</p>
+        <div class="popup-spacer"></div>
+        <a class="popup-small-button" href="../index.html" id="aboutFullMin">&#95;</a>
+        <a class="popup-small-button" id="aboutFullMax"><b>&#9634;</b></a>
+        <a class="popup-small-button" href="../index.html" id="aboutFullClose">x</a>
+    </div>
+    <div class="fullscreen-menu-bar" id="fullscreen-menu-bar-spacer">
+        <p class="popup-title">About</p>
+    </div> -->
+    <div class="crt-overlay" id="crt-overlay" style="opacity: 80%;"></div>
+
+    <div class="home-button" onclick='window.location.href = "../index.html"'>
+        <img src="../img/home.png" alt="a pixellated icon of a home">
+    </div>
+    <div id="tierListWrapper"
+        style="display: flex; flex-direction: column; width: 100; gap: 1vh; background-color: var(--developer-black);">
+        <div id="albumTooltip"></div>
+        <!--████████╗██╗███████╗██████╗     ████████╗ ███████╗ ███╗   ██╗
+            ╚══██╔══╝██║██╔════╝██╔══██╗    ╚══██╔══╝ ██╔════╝ ████╗  ██║
+                ██║   ██║█████╗  ██████╔╝       ██║    █████╗   ██╔██╗ ██║
+                ██║   ██║██╔══╝  ██╔══██╗       ██║    ██╔══╝   ██║╚██╗██║
+                ██║   ██║███████╗██║  ██║       ██║    ███████╗ ██║ ╚████║
+                ╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝       ╚═╝    ╚══════╝ ╚═╝  ╚═══╝ -->
+
+        <div id="tier10" class="tier">
+            <div id="tierLabel10" style="background-color: dodgerblue;" class="tierLabel">
+                <div class="tierNumber">10</div>
+                <div class="tierDescription">Perfection. Next to no
+                    skips. An absolute must-listen.</div>
+                <div class="sortButtonHolder">
+                    <button class="alphabeticalSortButton" onclick="sortTierAlphabetically($(this))">
+                        <span>Sort<br></span>
+                        <span data-alttext="A->Z"><span>Alphabetically</span></span>
+                        <span class="arrowIndicator">&#8645;</span>
+                    </button>
+                    <button class="yearSortButton" onclick="sortTierYearwise($(this))">Sort by Year &#8645;</button>
+                    <button class="artistSortButton" onclick="sortTierArtistwise($(this))">Sort by Artist
+                        &#8645;</button>
+                </div>
+            </div>
+            <div class="albumHolder">
+
+                <!-- 
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/placeholder">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Placeholder</p>
+                        <p class="subtitleInfo">Placeholder</p>
+                        <p class="artistInfo">Placeholder</p>
+                        <p class="yearInfo">Placeholder</p>
+                        <p class="spotifyInfo">Placeholder</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">Placeholder</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i></i>
+                            </div>
+                            <b>FAVORITE SONGS: </b>
+                        </div>
+                    </div>
+                </div> 
+                -->
+
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/whitelighter.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">White Lighter</p>
+                        <p class="artistInfo">Typhoon</p>
+                        <p class="yearInfo">2013</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/4O1WEqjRcJqSjF0HhQPm31?si=54bbfe99b1ed4a27
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/White_Lighter</p>
+                        <div class="reviewInfo">
+                            <p>It is no small secret that this is my favorite album of all time.</p>
+                            <p>White Lighter is a project defined by scope. The lo-fi Prelude and the lamentful Caesar
+                                are under a minute long, while the closer, Post-Script, meditatively glides past 6
+                                minutes.
+                                But the real scale is found internally - each track could easily be four or five smaller
+                                ones; the effect is that you're always on the edge of your seat, never knowing what's
+                                coming next, settling into a slow moment never long enough for it to be boring before
+                                the band knocks you out of said seat with an explosion of sound, horns and strings, Kyle
+                                Morton's expressive voice and a chorus of harmonies permeating throughout.</p>
+                            <p>This is undeniably a sad album, lyrically, but it never feels like it; if the words are
+                                lamenting the brevity of life, the melody makes it feel like a triumph, like spitting in
+                                the face of fate; if the words are telling the story of a heartbreak or a death or a
+                                defeat, you don't feel the grief but instead the budding revanchism.</p>
+                            <p>I mean, White Lighter has some of the best single moments in Music: The fable-like
+                                outro of Young Fathers, everything leading up to the drop on Hunger and
+                                Thirst, the punchy Wolves closer of Morton's Fork, the almost Alt-J-y end of the first
+                                verse on Dreams of Cannibalism all come to mind. God, when the overdriven guitar kicks
+                                in on that heartbreaking, furious second verse of the Lake - that's cinema. That gets
+                                me every time.</p>
+                            <p>Thing is, it's impossible to talk about these songs in terms of Verses and Choruses and
+                                Bridges, they're more like rivers; the flow can be calm and gentle or breakneck, and
+                                you're just as likely to hit some rapids or go over a waterfall as you are to float
+                                gently by. These songs are expressions of faith, of belief, of love, of loss. Morton's
+                                lyrics wash you in it, they stick to you, they come back to you months later like
+                                proverbs. He sings, he talks, he yells. When he's angry, you feel it, when he's
+                                desperate, you're just as much so. The other vocalists and the brass section and the
+                                rest of the veritable orchestra he has backing him up reinforce these emotions, and the
+                                result is, despite my best efforts, indescribable.</p>
+                            <p>Put on some headphones, and set aside ninety-three minutes of your life - you're gonna
+                                end up wanting to listen to it twice.</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    Now I'm as old as you were when you had me<br>
+                                    Should I be afraid? Should I start a family?<br>
+                                    Raise them in the wild 'cause up against the city<br>
+                                    My love is such a small thing<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Young Fathers, Dreams of Cannibalism, Post Script</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/abbeyroad.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Abbey Road</p>
+                        <p class="artistInfo">The Beatles</p>
+                        <p class="yearInfo">1969</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/0ETFjACtuP2ADo6LFhL6HN?si=b0be09566f9246fb
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Abbey_Road</p>
+                        <div class="reviewInfo">
+                            <p> Shocker, I know. The Beatles are pretty undeniably the greatest band of all time (not
+                                even my personal favorite, and still the greatest.) The more you look into it, the more it
+                                becomes self-evident. But that's just a fact - and reviews are for opinions.</p>
+                            <p> Abbey Road was the final album recorded by the Beatles, and as such is the culmination
+                                of all their work, all their growth as a band and as individuals - and it shows. Whereas
+                                the White Album was great because it has an eclectic collection of tracks showing off
+                                all the depth and personality each Beatle brings to the table, and Sgt. Pepper's was
+                                great because it did something unique (for the time) and put together a tight, curated
+                                tracklist, Abbey Road is great because it does both, and better than either. Like the
+                                White Album, some of the dumbest songs ever written are on this album, and yet they're
+                                some of my favorites. Like Sgt. Pepper's, they try something really cool and new (The
+                                Medley) and top it all off with a big finale (although admittedly A Day in the Life is
+                                better than The End.)</p>
+                            <p> And, man, they do not miss once on this album. It goes something like this: all-timer
+                                Lennon song; all-timer Harrison song (all-timer Song, period); all-timer Granny
+                                Mccartney song; all-timer normal Mccartney song; the only good Ringo song, which is not
+                                only good but Fantastic; [redacted]; all-timer Harrison song again; all-timer Lennon
+                                song again; and then Paul McCartney's absolute masterpiece, an innovation in tracks
+                                blending together, a pretty much unmatched achievement in album layout before or since.
+                                Look me in the eyes and tell me Abbey Road doesn't deserve the hype.</p>
+                            <p> Oh, and I do not care for I Want You (She's So Heavy). It insists upon itself.</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    You're asking me: will my love grow?<br>
+                                    I don't know<br>
+                                    I don't know<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Something, Octopus's Garden, She Came In Through The Bathroom Window</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/mmt.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Magical Mystery Tour</p>
+                        <p class="artistInfo">The Beatles</p>
+                        <p class="yearInfo">1967</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/2BtE7qm1qzM80p9vLSiXkj?si=730b316ce26d4e4e
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Magical_Mystery_Tour</p>
+                        <div class="reviewInfo">
+                            <p>"Magical Mystery Tour is only good because half of it is singles!" So what? "Magical Mystery Tour is a glorified greatest hits album!" So what? "Magical Mystery Tour was phoned in and made as an afterthought!" So what?</p>
+                            <p>In the infintely expansive Beatles-verse of lore and meta-Beatles-verse of fan discourse, it becomes pretty much impossible to speak in generalizations, because every stance that could possibly be taken on anything has not only been stated already, but has an active contingent of believers and disbelievers ready to toss you in a woodchipper for your opinion. This album, of all of them, best encapsulates this dilemma. Depending on who you ask, this is the best Beatles Album, the worst Beatles album, the most underrated, the most overrated, perfectly rated, bad, good, so bad it's good, genius, moronic, twee, pretentious or emptyheaded.</p>
+                            <p>And I'll tell you right now, folks, I'm 10,000% on the side of the Genius faction. Have you heard this album? No, like really?</p>
+                            <p>Even if you don't think the singles section should count (which is completely ludicrous, by the way,) I Am the Walrus is easily one of the most iconic Beatles tracks out there, in all its proto-Smells Like Teen Spirit glory, and the title track and Your Mother Should Know would both be standouts on the White Album! If you think the singles should count (which they obviously should and do,) then, I mean, we may be looking at the single densest concentration of Beatles talent in one place - ever. Guys, this album has Strawberry Fields Forever AND Penny Lane AND All You Need Is Love!</p>
+                            <p>If Abbey Road is their best and most complete album, then this is certainly their most jam-packed. The absolute best of the Beatles can be found in these (only!) 11 songs. My god. Magical indeed.</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>How does it feel to be one of the beautiful people?<br>
+                                    Tuned to a natural E<br>
+                                    Happy to be that way<br>
+                                    Now that you've found another key<br>
+                                    What are you going to play?<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Your Mother Should Know, I Am The Walrus, Strawberry Fields Forever</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/bachelor.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Bachelor No. 2</p>
+                        <p class="subtitleInfo">or, the Last Remains of the Dodo</p>
+                        <p class="artistInfo">Aimee Mann</p>
+                        <p class="yearInfo">2000</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/41Qh3WL5sMD76RZKWWGWQw?si=5ba2cbc997194ff8
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">
+                            https://en.wikipedia.org/wiki/Bachelor_No._2_or,_the_Last_Remains_of_the_Dodo</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    Now he's numbering himself among the masterminds<br>
+                                    'Cause he's hit upon the leverage of valentines<br>
+                                    Lifting dialogue from Judy Garland story lines<br>
+                                    Where get-tough girls turn into gold mines<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: How Am I Different?, Red Vines, Ghost World</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/newabnormal.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">The New Abnormal</p>
+                        <p class="artistInfo">The Strokes</p>
+                        <p class="yearInfo">2020</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/2xkZV2Hl1Omi8rk2D7t5lN?si=84a9f003ec8649a5
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/The_New_Abnormal</p>
+                        <div class="reviewInfo">
+                            <p>It all started with Angles.</p>
+                            <p>In my opinion (and don't crucify me; they're in my top, like, 3 favorite bands,) the Strokes, at the beginning of their career, struggled to find a niche they were truly great in. That first album careens between "American Arctic Monkeys" and "Worse White Stripes," with the occasional Soma sprinkled in, and their next two efforts were pale imitations of <i>that.</i> But once the 2010s rolled around, they started throwing some fun synths into the mix, started getting more experimental, started branching out. And the New Abnormal is that approach, taken to its logical extreme.</p>
+                            <p>What makes the Strokes so great, I feel, and what has cemented them as one of the greatest bands of all time (certainly in their genre,) is that they've never stopped evolving. Since First Impressions of Earth, every album they've put out has been better than the last. So many bands from that era have either disappeared entirely or fallen into the trap of writing the same stuff over and over, but the Strokes - it's like they spun their wheels for a few years, then decided "never again."</p>
+                            <p>The New Abnormal is nothing short of a triumph, and I mean that not just in the metaphorical sense but also in the ancient Roman sense. This is a parade, a victory lap. These men have been to war and back and now find themselves at the head of 10,000 soldiers tossing gold coins to a jubilant audience. But it's never overly indulgent - There are only nine songs on this album, and each one has been honed down to its absolute essentials.</p>
+                            <p>We kick things off with The Adults are Talking, maybe the catchiest and most re-listenable song of the decade. Like watching an artisan watchmaker at work, every piece is in its right place, and Julian Casablancas is practically bragging that he can still write top-tier pop hits 20-some years on. And it's 5 minutes long! I bet you didn't even notice.</p>
+                            <p>While Selfless looks like a b-side off of Comedown Machine if you squint, and Bad Decisions wouldn't be out of place alongside, say, New York City Cops, these are still quintessentially New Abnormal songs; there's something about the tinge of melancholy all these songs share, the slight distance we feel from the singer. Brooklyn Bridge to Chorus, as a great example, is one of very few pop bangers on this album, and the chorus still laments <i>I want new friends/but they don't want me.</i></p>
+                            <p>Then, on track 5, New Abnormal does what Comedown only ever hinted at, and takes a hard left turn to measured, introspective setpieces, really leaning into that aformentioned melancholy. And, normally, this is where the back half would be slow and plodding and completely lose me - but this is maybe the better of the two!</p>
+                            <p>The New Abnormal, if it does end up being the Strokes' final album, is the perfect encapsulation of everything that made them great. It's the golden capstone atop the Great Pyramid. And when you get to the end of Ode to the Mets - holy god, what an amazing song, by the way - and Julian Casablancas is basically screaming, and the guitar becomes more of a string section, and the walls come crashing down around you, you really, truly feel like the last survivor of a shipwreck, having just borne witness to something biblically epic.</p>
+                            <p>Because you have.</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Gone now are the old times,<br>
+                                    forgotten, time to hold on the railing<br>
+                                    The Rubik's Cube isn't solving for us<br><br>
+                                    Old friends, long forgotten<br>
+                                    The old ways at the bottom of<br>
+                                    the ocean now has swallowed<br>
+                                    the only thing that's left<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: The Adults are Talking, At the Door, Ode to the Mets</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/viva.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Viva La Vida</p>
+                        <p class="subtitleInfo">or Death and All His Friends</p>
+                        <p class="artistInfo">Coldplay</p>
+                        <p class="yearInfo">2008</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/4XTT0NcNHyvl6h9JX2AfEi?si=718b72b4c09b472e
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Viva_la_Vida_or_Death_and_All_His_Friends
+                        </p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Then there was rain:<br>
+                                    The sky wore a veil of gold and green<br>
+                                    Night was the bride of a lonely day<br>
+                                    And time just floated<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Yes, Violet Hill, Death and All His Friends</b><br>
+                            <b>PROSPEKT'S MARCH BONUS: Glass of Water</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/wim.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Welcome Interstate Managers</p>
+                        <p class="artistInfo">Fountains of Wayne</p>
+                        <p class="yearInfo">2003</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/6TZp52tXShLQbq8yNMxqNT?si=5f2b25959b4c4253
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Welcome_Interstate_Managers</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>From the C train to the shiny tower<br>
+                                    Kicked around till happy hour found you<br>
+                                    Where you can drink that smirk right off your face<br><br>
+                                    And now you're leaving New York<br>
+                                    For no better place<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Mexican Wine, Little Red Light, Hung Up On You</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/suburbs.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">The Suburbs</p>
+                        <p class="artistInfo">Arcade Fire</p>
+                        <p class="yearInfo">2010</p>
+                        <p class="spotifyInfo">https://open.spotify.com/track/2UWdUez9MB9yzL7Y81Mcip?si=0c54f7d2a2e84f8b
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/The_Suburbs</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>So can you understand<br>
+                                    That I want a daughter while I'm still young?<br>
+                                    I want to hold her hand<br>
+                                    And show her some beauty before this damage is done<br>
+                                    But if it's too much to ask, if it's too much to ask<br>
+                                    Then send me a son<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: The Suburbs/Ready to Start, Deep Blue, Sprawl II (Mountains Beyond
+                                Mountains)</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/atb.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Always the Bridesmaid</p>
+                        <p class="artistInfo">The Decemberists</p>
+                        <p class="yearInfo">2008</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/playlist/6CZ4LnB0Cyleg4vBvthEga?si=dab1faeb5f734281</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">
+                            https://en.wikipedia.org/wiki/The_Decemberists#2008:_Always_the_Bridesmaid</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Going off half-cocked, not shot full of arrows from the cherubim<br>
+                                    Oh the nerve of them<br>
+                                    To not draw their bow<br>
+                                    And the raincoat that you wore when it rained today,<br>
+                                    And the raincoat that you wore when it rained today<br>
+                                    I think it only made it rain more<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: O New England, A Record Year for Rainfall, Valerie Plame</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/fleetfoxes.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Fleet Foxes</p>
+                        <p class="artistInfo">Fleet Foxes</p>
+                        <p class="yearInfo">2008</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/1rfgmU0AYNwWfS88pCOlX7?si=6ef-IkVnROKFjwQm0D7eCQ</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Fleet_Foxes_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    In the gentle light as the morning nears<br>
+                                    You don't say a single word<br>
+                                    of the last two years<br>
+                                    Where you were or when you reached the frontier<br>
+                                    I didn't understand<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: White Winter Hymnal, He Doesn't Know Why, Blue Ridge Mountains</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/newmoon.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">The Twilight Saga: New Moon</p>
+                        <p class="subtitleInfo">(Original Motion Picture Soundtrack)</p>
+                        <p class="artistInfo">Various Artists</p>
+                        <p class="yearInfo">2009</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/2PDlvc7K51qC4Bkali3q0R?si=QZRHEjeBQPSoGt7EOwLOaQ</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/The_Twilight_Saga:_New_Moon_(soundtrack)
+                        </p>
+                        <div class="reviewInfo">
+                            <p>The Twilight Saga: New Moon (Original Motion Picture Soundtrack) surely seems like the
+                                outlier on this list, right? Thing is, this album does something very well that many
+                                other albums fail to do at all. Buoyed by its impressive array of late-2000s indie
+                                talent, this album <i>cultivates a vibe.</i></p>
+                            <p>It's impossible to put on this soundtrack and not feel like you're there, taken back to
+                                high school in the closing years of the first decade; you're Edward, trying to fit in,
+                                different somehow from your classmates, object of attention against your wishes; you're
+                                Bella, just as isolated, never fully settled down in this new place; at once at odds
+                                with your surrounding and knowing exactly how each tired day is going to play out, like
+                                you've been alive for a hundred years. </p>
+                            <p>These songs are yearning; in their most upbeat moments its feels like a rare
+                                breakthrough, a reminder to keep going. It's often slow, but always thoughtful. It feels
+                                like you've just burned a best-of CD and taken it on the bus. </p>
+                            <p>And I don't even like the Twilight movies that much!</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    What can he tell 'em now? <br>
+                                    "Sorry I let you down,<br>
+                                    Sorry it wasn't quite true"<br>
+                                    But don't get hung up on it, just soldier on with it<br>
+                                    And good luck with shooting the moon<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Shooting The Moon, Satellite Heart, Meet Me on the Equinox</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/afut.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Ants From Up There</p>
+                        <p class="artistInfo">Black Country, New Road</p>
+                        <p class="yearInfo">2022</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/21xp7NdU1ajmO1CX0w2Egd?si=e78d482a2af647e3
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Ants_from_Up_There</p>
+                        <div class="reviewInfo">
+                            <p>This album does have its issues. Haldern is a lesser son of greater sires, and if you do
+                                something more interesting with Mark's Theme and fix that godawful drumming on Snow
+                                Globes - the refrain is so good but the dissonance takes me out every time! - you have
+                                an airtight, perfect album on your hands.</p>
+                            <p>Now, that's not what we've got. But what we do have more than makes up for it; you could
+                                put Snow Globes on the tracklist another five times and it would still be a Ten. I
+                                stumbled across this album online, and all I had to listen to was that Intro to be
+                                completely, irrevocably sold on the project.</p>
+                            <p>And it just gets better from there. Chaos Space Marine can just as easily be the opener
+                                to a goofy faux-victorian student musical, but the driving rhythm and our first - of
+                                many - taste of Isaac Wood's delicious, rich vocals keep you entirely immersed. If Intro
+                                gets you sold on the promise, this song gets you hooked on the vibe, the story, the
+                                tone. There's teases of the intensity (those drums!), the humor ("So long, chumps"), and
+                                even the story (references to Good Will Hunting's iconic Billie Eillish refrain and the
+                                ever-present Concorde) that await you.</p>
+                            <p>Concorde, speaking of, is deceptively laid-back but has that signature bombastic buildup
+                                and ending that makes it all worth it. Bread Song is heartbreaking until it becomes
+                                heartbreaking <i>and</i> raucous. I sing Good Will Hunting to myself pretty much
+                                constantly; this is easily the catchiest song on an album that doesn't go for catchiness
+                                but has it in unbelievable abundance anyways. Actually, I take it back, The Place Where
+                                He Inserted the Blade is the catchiest, a laurel it need not rest on, since it's also
+                                perhaps the greatest song ever written. And Basketball Shoes is so ambitious, so BIG,
+                                that just thinking about it gives me chills and actually listening to it sends me into a
+                                near-catatonic state, like a musical cinder block heaved full-force at my sternum.</p>
+                            <p>With its amount of depth, clever instrumentation, huge moments, diversity of pace but
+                                consistency of tone, and just stellar lyrics, this could easily be a Typhoon album (and
+                                that's high praise) - no wonder I love it so much.</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    All I've been forms the drone, we sing the rest<br>
+                                    Oh, your generous loan to me<br>
+                                    your crippling interest<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Good Will Hunting, The Place Where He Inserted the Blade, Basketball
+                                Shoes</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/helpless.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Helplessness Blues</p>
+                        <p class="artistInfo">Fleet Foxes</p>
+                        <p class="yearInfo">2011</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/7D0rCfJjFj9x0bdgRKtvzb?si=4olsouUPSZ-1NipwnN7Jtw</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Helplessness_Blues</p>
+                        <div class="reviewInfo">
+                            <p>I honestly thought there was no way Fleet Foxes could improve upon the perfection that is their debut.
+                                I was wrong.</p>
+                            <p>Every facet of this one has been ratched up a notch. Where Self-Titled had White Winter Hymnal to show off 
+                                their harmonies, He Doesn't Know Why to show off their lyrics, and Ragged Wood to show of their instrumentals, 
+                                Lorelai not only has all three but <i>improves upon</i> all three. And the whole album is like this! </p>
+                             <p>Now, there are shortfalls. Bedouin Dress is so promising, but inexplicably contains this grating, slightly off-key,  
+                                Android-ringtone-eqsue fiddle riff that, unfortunately, becomes a repeating motif in the song; the end of An Argument 
+                                elicits an instant, panicked skip, giving me war flashbacks to Ants From Up There's similarly dissonant and overwrought
+                                Snow Globes.</p>
+                               <p> Those complaints are pretty irrelevant, however, when you consider that these are the guys who, on the same album, give us 
+                                the slinky, intense, intriguing Sim Sala Bim; the haunting, impassioned confessional Montezuma; the driving, wistful Grown Ocean; and, 
+                                most impressively, the monumental achievment that is the title track: a two-parter which perfectly strikes that impossible balance between
+                                inspiring and gutting, that builds you up right until you think you get the gist, then pulls the floor out from under you, spinning and tumbling in slow motion,
+                                life flashing before your eyes.</p>
+                                <p>So the riddle, then, is this: if Fleet Foxes was a ten and Helplessness Blues is even better, what on earth do I rate it?</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    And I still see you when I try to sleep<br>
+                                    I see the garden, the tower, the street<br>
+                                    Call out to nobody, call out to me<br>
+                                    Chip on the shoulder, the diamond, the teeth<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Battery Kinzie, Helplessness Blues, Lorelai</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--████████╗██╗███████╗██████╗     ███╗   ██╗ ██╗ ███╗   ██╗ ███████╗
+            ╚══██╔══╝██║██╔════╝██╔══██╗    ████╗  ██║ ██║ ████╗  ██║ ██╔════╝
+                ██║   ██║█████╗  ██████╔╝    ██╔██╗ ██║ ██║ ██╔██╗ ██║ █████╗  
+                ██║   ██║██╔══╝  ██╔══██╗    ██║╚██╗██║ ██║ ██║╚██╗██║ ██╔══╝  
+                ██║   ██║███████╗██║  ██║    ██║ ╚████║ ██║ ██║ ╚████║ ███████╗
+                ╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═══╝ ╚═╝ ╚═╝  ╚═══╝ ╚══════╝ -->
+
+        <div id="tier9" class="tier">
+            <div id="tierLabel9" style="background-color: green;" class="tierLabel">
+                <div class="tierNumber">9</div>
+                <div class="tierDescription">Incredible album, but with
+                    something holding it back from
+                    true perfection. Maybe a few
+                    skips, maybe the vibe. 10s and 9s
+                    can be pretty interchangeable
+                    from person to person. <b>Still a must-listen.</b></div>
+                <div class="sortButtonHolder">
+                    <button class="alphabeticalSortButton" onclick="sortTierAlphabetically($(this))">
+                        <span>Sort<br></span>
+                        <span data-alttext="A->Z"><span>Alphabetically</span></span>
+                        <span class="arrowIndicator">&#8645;</span>
+                    </button>
+                    <button class="yearSortButton" onclick="sortTierYearwise($(this))">Sort by Year &#8645;</button>
+                    <button class="artistSortButton" onclick="sortTierArtistwise($(this))">Sort by Artist
+                        &#8645;</button>
+                </div>
+            </div>
+            <div class="albumHolder">
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/dream.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">The Dream</p>
+                        <p class="artistInfo">Alt-J</p>
+                        <p class="yearInfo">2022</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/5ogYKSRRlVAgMzv09HFeIn?si=-D8NV6U1QcmZlyb7dxNlFQ</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/The_Dream_(alt-J_album)</p>
+                        <div class="reviewInfo">
+                            <p>What can I say? Alt-J are allergic to making a perfect album. They're always so close,
+                                too.</p>
+                            <p>This one is noticeably chiller than the other three. Besides the obligatory
+                                slow-build-up-and-massive-climax tracks (which, as usual, are incredible,) even the
+                                catchy upbeat songs are very laid-back, smooth, slick, flowy. If you close your
+                                eyes you can picture Joe Newman singing most of these on a pool float somewhere. This
+                                can be very good and even fascinatingly implemented on tracks like Bane, U&ME, and the
+                                Actor; on the other hand, you have songs like Hard Drive Gold, which unfortunately
+                                Sucks. And of course, as usual, they've added some pretty forgettable tracks in the
+                                second half there, which, when combined with the overall lethargic feel of the album,
+                                make for some real snoozers.</p>
+                            <p>THAT BEING SAID: Chicago and Philadelphia are classic Alt-J grandiose-bangers. Bane is
+                                slippery and intriguing throughout, while being the closest this album gets to a proper
+                                Rock song. Get Better would be trite if made by anyone else but instead it's an
+                                all-timer Sad Boy Hours staple. Powders makes me feel emotions, man. And Happier When
+                                You're Gone is, against all odds, probably in my top three Alt-J songs of all time. I
+                                gave this a 9 for a reason.</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    It's not easy, it's not easy<br>
+                                    Hopelessness on the range<br>
+                                    Yeah, you're breathing hard in the pastures<br>
+                                    If not the lock then what has to change?<br>
+                                    Persecution is your favourite word<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Happier When You're Gone, Philadelphia, Powders</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/aaw.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">An Awesome Wave</p>
+                        <p class="artistInfo">Alt-J</p>
+                        <p class="yearInfo">2012</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/6k3vC8nep1BfqAIJ81L6OL?si=3d6aca5c21034d75
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/An_Awesome_Wave</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock" style="text-align: left;">
+                                <i>
+                                    <pre>
+Never leave it too late, always enjoy the taste
+Of the great
+          great
+          great 
+          grey world of hearts
+
+As all dogs everywhere bark
+                                     bark
+                                     bark
+                                     bark
+It's worth knowing
+Like all good fruit, the balance of life
+Is in the ripe and ruin
+                                    </pre>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Breezeblocks, Dissolve Me, Taro</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/tiay.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">This Is All Yours</p>
+                        <p class="artistInfo">Alt-J</p>
+                        <p class="yearInfo">2014</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/4oktVvRuO1In9B7Hz0xm0a?si=b0312314770948fc
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/This_Is_All_Yours</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Une immense espérance a traversé la terre<br>
+                                    Une immense espérance a traversé ma peur<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Every Other Freckle, The Gospel of John Hurt, Bloodflood Pt. II </b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/thebeatles.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">The Beatles</p>
+                        <p class="subtitleInfo">"The White Album"</p>
+                        <p class="artistInfo">The Beatles</p>
+                        <p class="yearInfo">1968</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/1klALx0u4AavZNEvC4LrTL?si=ztljmTnQQ--yaLFcZQJQvg</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/The_Beatles_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>I told you about the walrus and me, man<br>
+                                    You know that we're as close as can be, man<br>
+                                    Well, here's another clue for you all<br>
+                                    The walrus was Paul<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS:</b>
+                            <b>FIRST HALF: Dear Prudence, Happiness Is a Warm Gun, Martha My Dear</b>
+                            <b>SECOND HALF: Mother Nature's Son, Sexy Sadie, Cry Baby Cry</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/sgtpeppers.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Sgt. Pepper's Lonely Hearts Club Band</p>
+                        <p class="artistInfo">The Beatles</p>
+                        <p class="yearInfo">1967</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/6QaVfG1pHYl1z15ZxkvVDW?si=jIhvqxRQRneQyNogjXR-gg</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Sgt._Pepper%27s_Lonely_Hearts_Club_Band
+                        </p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    Send me a postcard, drop me a line<br>
+                                    Stating point of view<br>
+                                    Indicate precisely what you mean to say<br>
+                                    Yours sincerely, wasting away<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Lovely Rita, Sgt. Pepper's Lonely Hearts Club Band (Reprise), A Day in
+                                the Life</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/comedown.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Comedown Machine</p>
+                        <p class="artistInfo">The Strokes</p>
+                        <p class="yearInfo">2013</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/4WnkQO4xD9ljQooB3VIxCV?si=1b072b23dbd3455e
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Comedown_Machine</p>
+                        <div class="reviewInfo">
+                            <p>Look, Tap Out is a good song. So is the All the Time - but after that, you really think
+                                you've heard enough of this album. "I get the gist," you know? THEN that little synth
+                                riff at the beginning of One Way Trigger kicks in and you're back up again. That song
+                                makes you pick your ass up and Dance, but in a kinda melancholy way, kind of a Charlie
+                                Brown type dance. Like you're dancing and Remembering. <i>You asked me to stay...</i>
+                            </p>
+                            <p>Then, bang, we're pulled out of that moment, like snapping out of a daydream, straight
+                                into the passenger seat of a convertible doing a $dollar down the Pacific Coast Highway.
+                                Goddamn right it's Welcome to Japan. This song is refined slick oily Cool, and it makes
+                                you feel cool. Hell, it <i>makes</i> you cool all on its own. And when you hit that
+                                ending, it's like crashing out after a really good run, like sprinting and tripping on a
+                                rock. And that brief, glorious moment where you were on top of the world is over. And
+                                then - </p>
+                            <p>You open your eyes.</p>
+                            <p>Here it is, masked behind this arpeggio somewhere between a violin and a synth, this
+                                heart-monitor rhythm that makes you feel like the song is scanning you somehow: the
+                                Comedown Machine. You can practically se the title card appearing before your eyes.
+                                After such a bombastic beginning to the album, we've finally reached our limit and
+                                crumbled under the pressure - but that was just the prologue. We've reached the true
+                                heart of the story. In the life of a rockstar, we've just jumped the shark. We're
+                                crashing out. We're down.</p>
+                            <p>But we don't stay there for long.</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    You're not just a friend; you're me born again<br>
+                                    We'll be in this race until the very end<br>
+                                    He lives on the phone<br>
+                                    He cheats on his clone<br>
+                                    You'll never believe me 'til you're on your own<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Welcome to Japan, Partners in Crime, Happy Ending</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/offerings.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Offerings</p>
+                        <p class="artistInfo">Typhoon</p>
+                        <p class="yearInfo">2018</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/2keHjWDRlQYnrTkm7ShyUc?si=fa5e1c1aa32a4a68
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Offerings_(Typhoon_album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    And the moment stretches on<br>
+                                    Like the colonnade at the Parthenon<br>
+                                    It's an unmarked grave<br>
+                                    but somebody's laid<br>
+                                    some flowers for Algernon<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Rorschach, Empiricist, Remember</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/xy.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">X&Y</p>
+                        <p class="artistInfo">Coldplay</p>
+                        <p class="yearInfo">2005</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/4E7bV0pzG0LciBSWTszra6?si=8b386bde79a748c6
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/X%26Y</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Oh, what good is it to live with nothing left to give?<br>
+                                    Forget, but not forgive, not loving all you see<br>
+                                    All the streets you're walking on, a thousand houses long<br>
+                                    Well, that's where I belong, and you belong with me<br>
+                                    Not swallowed in the sea<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Talk, The Hardest Part, Twisted Logic</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/arobtth.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">A Rush of Blood to the Head</p>
+                        <p class="artistInfo">Coldplay</p>
+                        <p class="yearInfo">2002</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/0RHX9XECH8IVI3LNgWDpmQ?si=14a3f1b0916b4f0f
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/A_Rush_of_Blood_to_the_Head</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Come out of things unsaid<br>
+                                    Shoot an apple off my head, and a<br>
+                                    trouble that can't be named<br>
+                                    A tiger's waiting to be tamed<br>
+                                    singing:<br>
+                                    "You are,<br>
+                                    You are"<br><br></i>
+                            </div>
+                            <b>FAVORITE SONGS: God Put a Smile upon Your Face, Warning Sign, A Rush of Blood to the
+                                Head</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/cowboy.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Be the Cowboy</p>
+                        <p class="artistInfo">Mitski</p>
+                        <p class="yearInfo">2018</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/42cH7mrkfljkqkxA2Ip9Xq?si=46a95dc4da9847ca
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Be_the_Cowboy</p>
+                        <div class="reviewInfo">
+                            <p>Mitski has a tendency to write the best two minutes of music you've ever heard, and
+                                instead of adding some slop to make it a nice radio-friendly 3.5 minutes like most
+                                artists would, she leaves it as-is and goes and writes <i>another</i>. What we're left
+                                with is a collection of diverse, immensely catchy,
+                                sometimes-light-sometimes-heavy-but-always-short-and-sweet, good-ass songs. Be The Cowboy is unpredictable but always satisfying, like a prix fixe  menu at a Michelin star restaurant. Sit back and let the professionals cook for you tonight.</p>
+                            <p>These songs are firmly in the Mitski Tradition of, say, Francis Forever, with melancholy
+                                but realistic lyrics (I often think about <i>Cause nobody butters me up like you/and
+                                    nobody fucks me like/me</i>) and an often-slow start that builds to an absolute
+                                Ripper of a climax. The secret sauce on this album, though, is the prevalence of an
+                                upbeat tempo, not just within each track but <i>between</i> them, whisking us past each
+                                song like a whirlwind or an out-of-control carousel, enticing us,
+                                grabbing our attention, then, "Nope, time to go."</p>
+                            <p>You can put it on shuffle, you can listen straight through - you'll be just as utterly transfixed either way.</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    It's just that I fell in love with a war<br>
+                                    And nobody told me it ended<br>
+                                    And it left a pearl in my head<br>
+                                    And I roll it around every night<br>
+                                    just to watch it glow<br>
+                                    Every night, baby, that's where I go<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Why Didn't You Stop Me?, Lonesome Love, Me And My Husband</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/carpenter.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">The Carpenter</p>
+                        <p class="artistInfo">The Avett Brothers</p>
+                        <p class="yearInfo">2012</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/4RclFqtNPoThUz7327xFbD?si=b2bb6667c8184982
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/The_Carpenter_(album)</p>
+                        <div class="reviewInfo">
+                            <p> We're definitely at the point in the list where albums stop really working as an
+                                in-order curated experience (which goes to show just how rare that feat is) and where
+                                they more function as a collection of songs. And in doing the latter, The Carpenter gets
+                                top marks.</p>
+                            <p> The <i>reason</i> it doesnt work as a straight listen-through is because Winter in my
+                                Heart takes the wind right out of your sails after the stellar Once and Future Carpenter
+                                and the delightfully yoinky-spronky Live and Die. If I have one gripe with this album,
+                                it is that.</p>
+                            <p> But then we're back to the bangers. If for I and Love and You the Avett Brothers were at
+                                their most folsksy and contemplative, then here it's like they sat down and
+                                decided to only write slappers this time. Pretty Girl from Michigan is an absolute
+                                all-timer, and I Never Knew You does the impossible and manages to follow it up.
+                                February Seven is one of those classic Avett Brothers songs that is defintely a mote
+                                slower and so full of sentiment to teeter on the brink of saccharine, but these guys
+                                know that; what is this, amateur hour?; and it ends up being yet another banger. Add it
+                                to the list.</p>
+                            <p> Through my Prayers is a bit of a skip.</p>
+                            <p> Now, don't take the opening paragraph as me saying this album doesnt work as an album
+                                overall. It very much does. The connective tissue between all of these songs is this
+                                bouncy feeling, an upbeatness of a kind unique from their earlier work. There's more
+                                horns, more staccato, more roundness and fullness. It's to the point where you can sort
+                                of pick these songs out of a crowd and say "yeah, this one's from the Carpenter." Case
+                                in point, the dual waltzes of Down with the Shine and A Father's First Spring, both of
+                                which are just great.</p>
+                            <p> Then it's time for Geraldine and Paul Newman vs the Demons, both of which are - say it
+                                with me now - all-time bangers, and not even just by Avett standards. The latter in
+                                particular sounds like they decided to write a Decemberists song and just knocked it out
+                                of the park, and the former is a staple on all my playlists. How is such a good song
+                                packed into a minute thirty-seven?</p>
+                            <p> Then Life, which is, mercifully, actually fantastic and not another Through My Prayers,
+                                to close it out. And immediately after, The Once and Future Carpenter, then Live and
+                                Die, then Winter in my Heart...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>My life is but a coin pulled from an empty pocket<br>
+                                    Dropped into a slot with dreams of sevens close behind<br>
+                                    Hope and fear go with it<br>
+                                    And the moon and the sun go spinning<br>
+                                    Like the numbers and the fruit before our eyes<br><br>
+                                    Sometimes I hit<br>
+                                    Sometimes it robs me blind<br>
+                                    Sometimes I hit<br>
+                                    Sometimes it robs me blind<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: The Once and Future Carpenter, Pretty Girl from Michigan, Geraldine</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/ialay.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">I and Love and You</p>
+                        <p class="artistInfo">The Avett Brothers</p>
+                        <p class="yearInfo">2009</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/2PPFtYUnnqMYflIEn3b7ON?si=fFo26lJTTiuvLxofIkqj5g</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/I_and_Love_and_You</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>There was a dream<br>
+                                    and one day I could see it<br>
+                                    Like a bird in a cage, I broke in and demanded that somebody free it<br>
+                                    And there was a kid<br>
+                                    with a head full of doubt<br>
+                                    So I'll scream 'til I die or the last of those bad thoughts are finally out<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Laundry Room, Slight Figure of Speech, It Goes On and On</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/candl.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Carrie & Lowell</p>
+                        <p class="artistInfo">Sufjan Stevens</p>
+                        <p class="yearInfo">2015</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/64xtjfsPHNHch0CZ7fPTjS?si=wq2gd6RoSOS54P0tvcwQ1g</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Carrie_%26_Lowell</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>I forgive you, mother, I can hear you<br>
+                                    And I long to be near you<br>
+                                    But every road leads to an end<br>
+                                    Yes, every road leads to an end<br>
+                                    Your apparition passes through me in the willows<br>
+                                    Five red hens -<br>
+                                    you'll never see us again<br>
+                                    You'll never see us again<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Should Have Known Better, Fourth of July, The Only Thing</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/itaots.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">In the Aeroplane over the Sea</p>
+                        <p class="artistInfo">Neutral Milk Hotel</p>
+                        <p class="yearInfo">1998</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/0vVekV45lOaVKs6RZQQNob?si=44e93cc2c12441ba
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/In_the_Aeroplane_Over_the_Sea</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>What a beautiful dream<br>
+                                    That could flash on the screen<br>
+                                    In a blink of an eye and be gone from me<br>
+                                    Soft and sweet<br>
+                                    Let me hold it close and keep it here<br>
+                                    with me<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: King of Carrot Flowers Pt. 1, Holland 1945, Ghost</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/illinois.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Illinois</p>
+                        <p class="artistInfo">Sufjan Stevens</p>
+                        <p class="yearInfo">2005</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/1pOl0KEC1iQnA6F0XxV4To?si=4f2f27e6b5434b0a
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Illinois_(Sufjan_Stevens_album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Oh, great intentions<br>
+                                    Covenant with the imitation<br>
+                                    Have you no conscience?<br>
+                                    I think about it now<br><br>
+                                    Oh, God of Progress,<br>
+                                    have you degraded or forgot us?<br>
+                                    Where have your laws gone?<br>
+                                    I think about it now<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Come On! Feel the Illinoise!, Casimir Pulaski Day, The Man of Metropolis Steals Our Hearts</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/xo.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">XO</p>
+                        <p class="artistInfo">Elliott Smith</p>
+                        <p class="yearInfo">1998</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/1zOxlHQGGV6EH7n4OIFTyh?si=wu27p25mQFaIjwBIb4pb3w</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/XO_(Elliott_Smith_album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>I saw you at the perfect place<br>
+                                    It's going to happen soon,<br>
+                                    but not today<br>
+                                    So go to sleep, make the change<br>
+                                    I'll meet you here tomorrow<br>
+                                    Independence Day<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Sweet Adeline, Waltz #2 (XO), Independence Day</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--████████╗██╗███████╗██████╗     ███████╗ ██╗  ██████╗  ██╗  ██╗ ████████╗
+            ╚══██╔══╝██║██╔════╝██╔══██╗    ██╔════╝ ██║ ██╔════╝  ██║  ██║ ╚══██╔══╝
+                ██║   ██║█████╗  ██████╔╝    █████╗   ██║ ██║  ███╗ ███████║    ██║   
+                ██║   ██║██╔══╝  ██╔══██╗    ██╔══╝   ██║ ██║   ██║ ██╔══██║    ██║   
+                ██║   ██║███████╗██║  ██║    ███████╗ ██║ ╚██████╔╝ ██║  ██║    ██║   
+                ╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝    ╚══════╝ ╚═╝  ╚═════╝  ╚═╝  ╚═╝    ╚═╝ -->
+        <div id="tier8" class="tier">
+            <div id="tierLabel8" style="background-color: greenyellow;" class="tierLabel">
+                <div class="tierNumber">8</div>
+                <div class="tierDescription">This is a very good album.
+                    <b>Must-listen</b> if you like the genre or band already, otherwise still quite good.
+                </div>
+                <div class="sortButtonHolder">
+                    <button class="alphabeticalSortButton" onclick="sortTierAlphabetically($(this))">
+                        <span>Sort<br></span>
+                        <span data-alttext="A->Z"><span>Alphabetically</span></span>
+                        <span class="arrowIndicator">&#8645;</span>
+                    </button>
+                    <button class="yearSortButton" onclick="sortTierYearwise($(this))">Sort by Year &#8645;</button>
+                    <button class="artistSortButton" onclick="sortTierArtistwise($(this))">Sort by Artist
+                        &#8645;</button>
+                </div>
+            </div>
+            <div class="albumHolder">
+
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/theglow2.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">The Glow pt. 2</p>
+                        <p class="artistInfo">The Microphones</p>
+                        <p class="yearInfo">2001</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/6QYoRO2sXThCORAifrP4Bl?si=26e927c610eb43d4
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/The_Glow_Pt._2</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>But there's no hope for me<br>
+                                    I've been set free<br>
+                                    There's no breeze, there's no ship on my sea<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: The Moon, My Roots Are Strong And Deep, I Felt Your Shape</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/letitbe.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Let It Be</p>
+                        <p class="artistInfo">The Beatles</p>
+                        <p class="yearInfo">1970</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/0jTGHV5xqHPvEcwL8f6YU5?si=N0FLAiy8Rl-X_4ioSrcFHg</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Let_It_Be_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Two of us sending postcards, writing letters<br>
+                                    on my wall<br>
+                                    You and me burning matches, lifting latches<br>
+                                    on our way back home<br>
+                                    We're on our way home<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Two of Us, I Me Mine, Get Back</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/isthisit.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Is This It</p>
+                        <p class="artistInfo">The Strokes</p>
+                        <p class="yearInfo">2001</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/2k8KgmDp9oHrmu0MIj4XDE?si=hn5JuBD0RXeI4xbTbe1opQ</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Is_This_It</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>And now my fears, they come to me in threes<br>
+                                    So I, sometimes,<br>
+                                    say, "Fate, my friend, you say the strangest things<br>
+                                    I find<br>
+                                    sometimes"<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Soma, Hard to Explain, When It Started</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/angles.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Angles</p>
+                        <p class="artistInfo">The Strokes</p>
+                        <p class="yearInfo">2011</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/6Jx4cGhWHewTcfKDJKguBQ?si=DsoxiGghSwCmSph9c2JXlg</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Angles_(The_Strokes_album)</p>
+                        <div class="reviewInfo">
+                            <p>The beginning of Macchu Pichu is sounds like going through one of those Mario pipes into
+                                Strokesland, and boy is it a welcome sight. This is the song that got me into the
+                                Strokes, full stop, and everyone who listens to it has the same reaction.</p>
+                            <p>Not all of the album is this good. You're So Right is forgettable, and Metabolism sounds
+                                kinda the same but with a knockoff Muse sound (the band does grandiose much better on
+                                other occasions); these opinions seem to be reflected by the community at large, given
+                                their lackluster Spotify play count. I have no need to listen to Call Me Back ever
+                                again. For the most part, though, the tracks found here are quite good, listenable and
+                                relistenable, even though they might entirely escape your notice on the first
+                                listen-through.</p>
+                            <p>This isn't the type of album with a consistent feel or story or anything, it's more like
+                                a Toys'R'Us of catchy alt rock. So, points deducted, I suppose, but it's hard to be mad
+                                or disappointed in this album for longer than a couple seconds. Cause before you know
+                                it, Gratisfaction is playing, and everything is forgiven.</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    He is coming from a part of hell<br>
+                                    Where lightning blue eyes don't go down well<br>
+                                    He can tell that we're oblivious<br>
+                                    It's addiction of routine as well<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Macchu Pichu, Under Cover of Darkness, Gratisfaction</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/symmag.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Sympathetic Magic</p>
+                        <p class="artistInfo">Typhoon</p>
+                        <p class="yearInfo">2021</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/7CVV2JOhid8GxxM52SS5Md?si=puX4NP7iSv2KLJL4qUBCaA</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Sympathetic_Magic_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>And the drinks grew low and your eyes grew dim<br>
+                                    Like a curtain was pulled so no light gets in<br>
+                                    You said, "I'm fine alone, but it's good to see you, man,<br>
+                                    I feel cut off from all I have been<br>
+                                    But am I the stump or am I the limb?"<br>
+                                    I was eyeing the door and you noticed it<br><br>
+
+                                    I said, "I have to be running"<br>
+                                    Late for dinner or something<br><br>
+
+                                    And you thanked me for coming<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Empire Builder, We're In It, Evil Vibes</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/ghoststories.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Ghost Stories</p>
+                        <p class="artistInfo">Coldplay</p>
+                        <p class="yearInfo">2014</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/2G4AUqfwxcV1UdQjm2ouYr?si=f3749182c7cb4c21
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Ghost_Stories_(Coldplay_album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Millions of miles from home<br>
+                                    In the swirling swimming on<br>
+                                    When I'm rolling with the thunder<br>
+                                    But bleed from thorns<br>
+                                    Leave a light, a light on<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: True Love, Midnight, All Your Friends</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/paramore.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Paramore</p>
+                        <p class="artistInfo">Paramore</p>
+                        <p class="yearInfo">2013</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/4sgYpkIASM1jVlNC8Wp9oF?si=ooq5IM8MS_-bRAMP1dRFjQ</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Paramore_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    What do you actually expect<br>
+                                    a broken mirror to reflect?<br>
+                                    You know anklebiters<br>
+                                    Gave you a false perception<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Now, Still Into You, (One of Those) Crazy Girls</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/ironsea.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Under the Iron Sea</p>
+                        <p class="artistInfo">Keane</p>
+                        <p class="yearInfo">2006</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/02Ird1pnGUdA6ruy87cxVa?si=7430af50f301436b
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Under_the_Iron_Sea</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Say<br>
+                                    a word or two to brighten<br>
+                                    my day<br>
+                                    Do you think that you could see a way<br>
+                                    to lay yourself down<br>
+                                    and make it so? But you don't want to know<br>
+                                    You take much more<br>
+                                    than I'd ever ask for<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Atlantic, Put It Behind You, The Frog Prince</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/yourstokeep.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Yours To Keep</p>
+                        <p class="artistInfo">Albert Hammond, Jr.</p>
+                        <p class="yearInfo">2006</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/1pJT6SArgRf1aQ5DCTxl7g?si=UPIPXOI2QhOyQ4KG6V8pVA</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Yours_to_Keep_(Albert_Hammond_Jr._album)
+                        </p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    Picked up your smoke,<br>
+                                    then you drag a little<br>
+                                    I wanna choke,<br>
+                                    so you won't belittle<br>
+                                    Everyone knows<br>
+                                    that you'll do it over and over and over and over again<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: In Transit, Scared, Holiday</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/stickseason.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Stick Season</p>
+                        <p class="artistInfo">Noah Kahan</p>
+                        <p class="yearInfo">2022</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/50ZenUP4O2Q5eCy2NRNvuz?si=bONBn5UxRvW8Xgrtr4vjRw</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Stick_Season_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    It's been a long year<br>
+                                    and all of our book's pages dog-eared<br>
+                                    We'll write out the ends on our palms, dear,<br>
+                                    then forget to read<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: All My Love, New Perspective, Homesick</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/fotb.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Father of the Bride</p>
+                        <p class="artistInfo">Vampire Weekend</p>
+                        <p class="yearInfo">2019</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/1A3nVEWRJ8yvlPzawHI1pQ?si=7157e663ccd54d2b
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Father_of_the_Bride_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    Baby, I know death probably hasn't happened yet<br>
+                                    'cause I don't remember living life before this<br>
+                                    And darling, our disease is the same one as the trees<br>
+                                    unaware that they've been living in a forest<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Bambina, Unbearably White, Flower Moon</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/songsaboutjane.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Songs About Jane</p>
+                        <p class="artistInfo">Maroon 5</p>
+                        <p class="yearInfo">2002</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/1Rv9WRKyYhFaGbuYDaQunN?si=fc02a671a943403f
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Songs_About_Jane</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>And mama, I've been crying<br>
+                                    'Cause things ain't how they used to be<br>
+                                    She said, "The battle's almost won<br>
+                                    And we're only several miles from the Sun"<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: This Love, She Will Be Loved, Sunday Morning</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/cranewife.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">The Crane Wife</p>
+                        <p class="artistInfo">The Decemberists</p>
+                        <p class="yearInfo">2006</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/4qvFBtRrwbSgoH3nyVlTCp?si=ef08246fe9974120
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/The_Crane_Wife</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>We made our oath to Vavilov:<br>
+                                    we'd not betray the solanum,<br>
+                                    the acres of asteraceae,<br>
+                                    to our own pangs of starvation<br>
+                                    When the war came<br>
+                                    When the war came<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: O Valencia!, Summersong, The Crane Wife 1 & 2</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/kingisdead.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">The King Is Dead</p>
+                        <p class="artistInfo">The Decemberists</p>
+                        <p class="yearInfo">2011</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/3hd8GiXOy4KUTxVDVUDT5F?si=84556535f9d04a50
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/The_King_Is_Dead_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>A barony of ivy in the trees<br>
+                                    expanding out its empire by degrees<br>
+                                    And all the branches burst to bloom<br>
+                                    in the boom<br>
+                                    Heaven sent this cardinal, maroon,<br>
+                                    to decorate our living room<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Calamity Song, Rox in the Box, All Arise!</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/emotionalism.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Emotionalism</p>
+                        <p class="artistInfo">The Avett Brothers</p>
+                        <p class="yearInfo">2007</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/4pb5b6XKuzzh5CqPFOzptQ?si=wrSronIbSCWkly1SWlL4uA</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Emotionalism_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    Well my '63 Ford is a bull,<br>
+                                    she's four thousand pounds at least<br>
+                                    But metal surrenders<br>
+                                    when oak trees meet fenders<br>
+                                    and engines go through the front seat<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Paranoia in B Flat Major, Will You Return?, The Ballad of Love and Hate</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/matd.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Magpie and the Dandelion</p>
+                        <p class="artistInfo">The Avett Brothers</p>
+                        <p class="yearInfo">2013</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/35s4PRYklJmst9IiTuCK0S?si=9OdSqnhpQYWmu0O0gnBr8g</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Magpie_and_the_Dandelion</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Her name became<br>
+                                    the flame unto the fire<br>
+                                    A magpie on the wire warned of those<br>
+                                    Dead until the high;<br>
+                                    shamelessly alive until the low<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Open Ended Life, Another Is Waiting, Bring Your Love To Me</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/am.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">AM</p>
+                        <p class="artistInfo">Arctic Monkeys</p>
+                        <p class="yearInfo">2013</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/78bpIziExqiI9qztvNFlQu?si=0353883c7bdb4fe9
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/AM_(Arctic_Monkeys_album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>You and me could have been a team<br>
+                                    Each had a half of a king and queen seat<br>
+                                    Like the beginning of Mean Streets<br>
+                                    You could be my baby<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: R U Mine?, Arabella, Snap Out Of It</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/trench.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Trench</p>
+                        <p class="artistInfo">twenty one pilots</p>
+                        <p class="yearInfo">2018</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/621cXqrTSSJi1WqDMSLmbL?si=a8eda823bc114dd9
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Trench_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Hide you in my coat pocket<br>
+                                    where I kept my rebel red<br>
+                                    I felt I was invincible, you wrapped around my head<br>
+                                    Now different lives I lead,<br>
+                                    my body lives on lead<br>
+                                    The last two lines may read incorrect until said<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Chlorine, The Hype, Cut My Lip</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/mvotc.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Modern Vampires of the City</p>
+                        <p class="artistInfo">Vampire Weekend</p>
+                        <p class="yearInfo">2013</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/1GXMNFfoHF4sN7lG8gZq1j?si=28996132d88842fb
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Modern_Vampires_of_the_City</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>We worshipped you,<br> 
+                                    your red right hand<br>
+                                    Won't we see you once again?<br>
+                                    In foreign soil, in foreign land<br>
+                                    who will guide us through the end?<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Step, Diane Young, Finger Back</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/mbdtf.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">My Beautiful Dark Twisted Fantasy</p>
+                        <p class="artistInfo">Kanye West</p>
+                        <p class="yearInfo">2010</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/20r762YmB5HeofjMCiPMLv?si=8849903d5dee4913
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/My_Beautiful_Dark_Twisted_Fantasy</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>I-I-I-I did it, alright, alright, I admit it<br>
+                                    Now pick your next move, you could leave or live with it<br>
+                                    Ichabod Crane with that motherfuckin' top off<br>
+                                    Split and go where? Back to wearing knockoffs?<br>
+                                    Ha ha, knock it off, Neimans, shop it off<br>
+                                    Let's talk over mai tais, waitress, top it off<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Dark Fantasy, All Of The Lights, Runaway</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/10000gecs.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">10,000 Gecs</p>
+                        <p class="artistInfo">100 Gecs</p>
+                        <p class="yearInfo">2023</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/2XS5McKf3zdJWpcZ4OkZPZ?si=iUQxPtylSV2B7o_yNiBNgQ</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/10,000_gecs</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>I smell the trees when I'm in Colorado<br>
+                                    Interior gas station McDonald's<br>
+                                    I left my cell phone dead at the house<br>
+                                    I see the stars when the sun goes down<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: 757, Hollywood Baby, Frog on the Floor</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/reflektor.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Reflektor</p>
+                        <p class="artistInfo">Arcade Fire</p>
+                        <p class="yearInfo">2013</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/2brwuyGZ2lLqWnBX6U4MQT?si=pfbGsTRjRTCLmeAo25xb9A</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Reflektor</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Entre la nuit, la nuit et l'aurore<br>
+                                    Entre le royaume des vivants et des morts<br>
+                                    If this is heaven, I need something more<br>
+                                    Just a place to be alone<br>
+                                    'Cause you're my home<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: You Already Know, Joan of Arc, Afterlife</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/gonenow.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Gone Now</p>
+                        <p class="artistInfo">Bleachers</p>
+                        <p class="yearInfo">2017</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/10HKbC9lKDHGQvndGck6XJ?si=a18eb02a9c9947c1
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Gone_Now</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Rolling thunder had cursed my bedroom<br>
+                                    Heard from your mother, she don't recognize you<br>
+                                    Now Mickey Mantle left on a Sunday<br>
+                                    And all of the neighborhood<br>
+                                    rushes home to pray<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Dream of Mickey Mantle, Goodmorning, Goodbye</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/midwestprincess.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">The Rise and Fall of a Midwest Princess</p>
+                        <p class="artistInfo">Chappell Roan</p>
+                        <p class="yearInfo">2023</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/0EiI8ylL0FmWWpgHVTsZjZ?si=rPFybARcSEyKrjKEEFfzkA</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/The_Rise_and_Fall_of_a_Midwest_Princess
+                        </p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>I thank my wicked dreams, a year from Tennessee<br>
+                                    Oh, Santa Monica, you've been too good to me<br>
+                                    Won't make my mama proud, it's gonna cause a scene<br>
+                                    She sees her baby girl, I know she's gonna scream<br><br>
+                                    God, what have you done?<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Femininomenon, Red Wine Supernova, HOT TO GO!</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/wtt.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Watch the Throne</p>
+                        <p class="artistInfo">Jay-Z & Kanye West</p>
+                        <p class="yearInfo">2011</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/2if1gb3t6IkhiKzrtS9Glc?si=jen7mqfLTc2WG04SSlXJSg</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Watch_the_Throne</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Sophisticated ignorance,<br>
+                                    write my curses in cursive<br>
+                                    I get it custom, you a customer<br>
+                                    You ain't accustomed to going through customs, you ain't been nowhere, huh?<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Ni**as in Paris, Gotta Have It, Why I Love You</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--████████╗██╗███████╗██████╗     ███████╗ ███████╗██╗   ██╗ ███████╗ ███╗   ██╗
+            ╚══██╔══╝██║██╔════╝██╔══██╗    ██╔════╝ ██╔════╝██║   ██║ ██╔════╝ ████╗  ██║
+                ██║   ██║█████╗  ██████╔╝    ███████╗ █████╗  ██║   ██║ █████╗   ██╔██╗ ██║
+                ██║   ██║██╔══╝  ██╔══██╗    ╚════██║ ██╔══╝  ╚██╗ ██╔╝ ██╔══╝   ██║╚██╗██║
+                ██║   ██║███████╗██║  ██║    ███████║ ███████╗ ╚████╔╝  ███████╗ ██║ ╚████║
+                ╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝    ╚══════╝ ╚══════╝  ╚═══╝   ╚══════╝ ╚═╝  ╚═══╝ -->
+        <div id="tier7" class="tier">
+            <div id="tierLabel7" style="background-color: yellow;" class="tierLabel">
+                <div class="tierNumber">7</div>
+                <div class="tierDescription">A few real standouts, solidly
+                    listenable throughout;
+                    definitely a <b>GOOD</b> album.</div>
+                <div class="sortButtonHolder">
+                    <button class="alphabeticalSortButton" onclick="sortTierAlphabetically($(this))">
+                        <span>Sort<br></span>
+                        <span data-alttext="A->Z"><span>Alphabetically</span></span>
+                        <span class="arrowIndicator">&#8645;</span>
+                    </button>
+                    <button class="yearSortButton" onclick="sortTierYearwise($(this))">Sort by Year &#8645;</button>
+                    <button class="artistSortButton" onclick="sortTierArtistwise($(this))">Sort by Artist
+                        &#8645;</button>
+                </div>
+            </div>
+            <div class="albumHolder">
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/relaxer.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Relaxer</p>
+                        <p class="artistInfo">Alt-J</p>
+                        <p class="yearInfo">2017</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/3uHMSQ1cC1fFAi4WMnelQP?si=acpU5_BeQOmhUb6xu7tQzw</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Relaxer_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>How green, how green was my valley?<br>
+                                    Oh, your deeps and your shades<br>
+                                    where the wild roses pray<br>
+                                    Such heat from pride<br>
+                                    Glorious, the voice of man!<br>
+                                    Like the nightingales, we sing:<br>
+                                    How green, how green was my valley?<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: 3WW, In Cold Blood, Pleader</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/cleopatra.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Cleopatra</p>
+                        <p class="artistInfo">The Lumineers</p>
+                        <p class="yearInfo">2016</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/26HAAGfOhnc0CqqcHoaQGD?si=WjhnoRoJRYenJOQZFhPjoA</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Cleopatra_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Were you safe and warm in your coat of arms<br>
+                                    with your fingers in a fist<br>
+                                    Did you hear the notes, all those static codes<br>
+                                    in the radio abyss?<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Sleep on the Floor, Cleopatra, Gun Song</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/rubbersoul.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Rubber Soul</p>
+                        <p class="artistInfo">The Beatles</p>
+                        <p class="yearInfo">1965</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/50o7kf2wLwVmOTVYJOTplm?si=2f4bb3f642424916
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Rubber_Soul</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>I told that girl I could start right away<br>
+                                    when she said, "Listen, babe, I got something to say<br>
+                                    I got no car and it's breaking my heart - <br>
+                                    but I found a driver and that's a start"<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Norwegian Wood (This Bird Has Flown), Michelle, I'm Looking Through You</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/roomonfire.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Room on Fire</p>
+                        <p class="artistInfo">The Strokes</p>
+                        <p class="yearInfo">2003</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/3HFbH1loOUbqCyPsLuHLLh?si=d71f86e8443c45d5
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Room_on_Fire</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>He wants it easy, he want it relaxed<br>
+                                    Said, "I can do a lot of things, but I can't do that"<br>
+                                    Two steps forward then three steps back, alright<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Reptilia, Automatic Stop, 12:51</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/thisiswhy.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">This Is Why</p>
+                        <p class="artistInfo">Paramore</p>
+                        <p class="yearInfo">2023</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/6tG8sCK4htJOLjlWwb7gZB?si=5ff36b06bc754951
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/This_Is_Why</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Turns out I'm livin' in a horror film<br>
+                                    Where I'm both the killer and the final girl<br>
+                                    So who, who are you?<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Running Out Of Time, You First, Thick Skull</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/afterlaughter.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">After Laughter</p>
+                        <p class="artistInfo">Paramore</p>
+                        <p class="yearInfo">2017</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/1c9Sx7XdXuMptGyfCB6hHs?si=x20n-v6IR4i0oBs6kXHqDg</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/After_Laughter</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Be sure<br>
+                                    to put your faith in something more<br>
+                                    I'm just a girl and you're<br>
+                                    not as alone as you feel<br>
+                                    We all got problems, don't we?<br>
+                                    We all need heroes, don't we?<br>
+                                    But rest assured there's not a single person here who's worthy<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Hard Times, Rose-Colored Boy, Grudges</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/lumineers.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">The Lumineers</p>
+                        <p class="artistInfo">The Lumineers</p>
+                        <p class="yearInfo">2012</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/2MTEiVNgRgIvVIrJAqHNBu?si=IBBloaFBSLmMr-uiiGk-KQ</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/The_Lumineers_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>No, classy girls don't kiss in bars<br>
+                                    Boys will break their backs and hearts<br>
+                                    But it's alright, the hardest part is through<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Stubborn Love, Big Parade, Flapper Girl</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/iii.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">III</p>
+                        <p class="artistInfo">The Lumineers</p>
+                        <p class="yearInfo">2019</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/0cGGGHvqwMD2J7bNz8TG3s?si=Og4M-siYTxKdPusUnUgUgg</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/III_(The_Lumineers_album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>'Cause all of this, it don't come free<br>
+                                    And don't become a casualty<br>
+                                    And live beneath<br>
+                                    what you were meant to be<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Life in the City, Gloria, Leader Of The Landslide</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/mignonette.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Mignonette</p>
+                        <p class="artistInfo">The Avett Brothers</p>
+                        <p class="yearInfo">2004</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/3Qre72w4Yc9Ib2UeCgTaOK?si=5cff7c8587874a0c
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Mignonette_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    And I love you but I can't remember why<br>
+                                    and I'd love to find a reason to deny<br>
+                                    I was a one-hit wonder in my own hometown<br><br>
+                                    And I guess I might have made a few mistakes<br>
+                                    but maybe that's exactly what it takes<br>
+                                    to get a little happy in this big, sad world<br><br></i>
+                            </div>
+                            <b>FAVORITE SONGS: Nothing Short of Thankful, Letter to a Pretty Girl, Pretty Girl at the Airport</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/punisher.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Punisher</p>
+                        <p class="artistInfo">Phoebe Bridgers</p>
+                        <p class="yearInfo">2020</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/6Pp6qGEywDdofgFC1oFbSH?si=5bd3253328d04bd6
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Punisher_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Baby, you're a vampire<br>
+                                    You want blood and I promised<br>
+                                    I'm a bad liar<br>
+                                    With a savior complex<br>
+                                    All the skeletons you hide<br>
+                                    Show me yours and I'll show you mine<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Kyoto, ICU, I Know The End</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/vampireweekend.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Vampire Weekend</p>
+                        <p class="artistInfo">Vampire Weekend</p>
+                        <p class="yearInfo">2008</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/7n8NJkGKAl2np1bXiRn0CY?si=lzmLWMlfT-SPnsWR1Ribpw</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Vampire_Weekend_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>The Argentines collapse in defeat<br>
+                                    The admiralty surveys the remnants of the fleet<br>
+                                    The ground beneath their feet<br>
+                                    is a nautically mapped sheet<br>
+                                    As thin as paper while it slips away from view<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Oxford Comma, Campus, Walcott</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/1000gecs.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">1000 gecs</p>
+                        <p class="artistInfo">100 gecs</p>
+                        <p class="yearInfo">2019</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/2uhB1KivbFnlkARpbd0Cvu?si=53294b9605ea4c3a
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/1000_gecs</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Your arms look so fucking cute, they look like lil' cigarettes<br>
+                                    I bet I could smoke you, I could roast you<br>
+                                    And then you'd love it and you'd text me "I love you"<br>
+                                    And then I'd fucking ghost you<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: 745 sticky, stupid horse, hand crushed by a mallet</b>
+                            <b>HONORABLE MENTION: ringtone (Remix) [feat. Charli XCX, Rico Nasty, Kero Kero Bonito]</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/stoneroses.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">The Stone Roses</p>
+                        <p class="artistInfo">The Stone Roses</p>
+                        <p class="yearInfo">1989</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/0um9FI6BLBldL5POP4D4Cw?si=AbvfIYrBQAyP8KCwWHPEWw</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/The_Stone_Roses_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>When the streets are cold and lonely<br>
+                                    And the cars, they burn below me<br>
+                                    Are you all alone,<br>
+                                    is anybody home?<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: She Bangs the Drums, Waterfall, Bye Bye Bad Man</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/vessel.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Vessel</p>
+                        <p class="artistInfo">twenty one pilots</p>
+                        <p class="yearInfo">2013</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/2r2r78NE05YjyHyVbVgqFn?si=85e1f812e5924d92
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Vessel_(Twenty_One_Pilots_album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Fight it,<br>
+                                    take the pain, ignite it<br>
+                                    Tie a noose around your mind, loose enough to breathe fine, and tie it<br>
+                                    to a tree, tell it, "You belong to me<br>
+                                    this ain't a noose, this is a leash,<br>
+                                    and I have news for you, you must obey Me"<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Ode to Sleep, Migraine, Guns for Hands</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/fwn.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Favourite Worst Nightmare</p>
+                        <p class="artistInfo">Arctic Monkeys</p>
+                        <p class="yearInfo">2007</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/6rsQnwaoJHxXJRCDBPkBRw?si=tus33fQfSz2g33hjsIBfJQ</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Favourite_Worst_Nightmare</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Everything's in order in a black hole<br>
+                                    Nothing seems as pretty as the past though<br>
+                                    That Bloody Mary's lacking in Tabasco<br>
+                                    Remember when you used to be a rascal?<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Teddy Picker, Fluorescent Adolescent, 505</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/parachutes.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Parachutes</p>
+                        <p class="artistInfo">Coldplay</p>
+                        <p class="yearInfo">2000</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/6ZG5lRT77aJ3btmArcykra?si=N_JpRj6fQCCU0hudtisU4g</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Parachutes_(Coldplay_album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Bones, sinking like stones<br>
+                                    All that we fought for<br>
+                                    Homes, places we've grown<br>
+                                    All of us are done for<br>
+                                    And we live in a beautiful world<br>
+                                    Yeah, we do, yeah, we do<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Don't Panic, Shiver, Everything's Not Lost</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/tlop.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">The Life of Pablo</p>
+                        <p class="artistInfo">Kanye West</p>
+                        <p class="yearInfo">2016</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/7gsWAHLeT0w7es6FofOXk1?si=93MMqn2dRJa3F4-usBzZ8A</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/The_Life_of_Pablo</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>The sun is in my eyes<br>
+                                    Woke up and felt the vibe<br>
+                                    No matter how hard they try,<br>
+                                    we never gonna die<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Father Stretch My Hands Pt. 1, Famous, Wolves</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/eitheror.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Either/Or</p>
+                        <p class="artistInfo">Elliott Smith</p>
+                        <p class="yearInfo">1997</p>
+                        <p class="spotifyInfo">
+                            https://open.spotify.com/album/5bmpvyP7UGqB4VuXmrJUMy?si=aUjiz_aRQZKTyfhg4h243g</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Either/Or_(album)</p>
+                        <div class="reviewInfo">
+                            <p>It's just not as vibrant, energetic, or catchy as XO. "Between the Bars" is no "Waltz 2."
+                                There's some slappers in here for sure, but honestly the more laid-back tone doesn't do
+                                it for me; combine that with fewer catchy melodies and a less polished sound and you
+                                have a nice, solid, very ElliottSmithy Elliott Smith album. Maybe just listen to the
+                                greatest hits and leave it at that.</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>
+                                    I'm not surprised at all, and really, why should I be?<br>
+                                    See nothing wrong<br>
+                                    See nothing wrong<br>
+                                    So sick and tired of all these pictures of me<br>
+                                    Oh, everybody's dying just to get the disease<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Between the Bars, Pictures of Me, Rose Parade</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--████████╗██╗███████╗██████╗     ███████╗ ██╗ ██╗  ██╗
+            ╚══██╔══╝██║██╔════╝██╔══██╗    ██╔════╝ ██║ ╚██╗██╔╝
+                ██║   ██║█████╗  ██████╔╝    ███████╗ ██║  ╚███╔╝ 
+                ██║   ██║██╔══╝  ██╔══██╗    ╚════██║ ██║  ██╔██╗ 
+                ██║   ██║███████╗██║  ██║    ███████║ ██║ ██╔╝ ██╗
+                ╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝    ╚══════╝ ╚═╝ ╚═╝  ╚═╝ -->
+        <div id="tier6" class="tier">
+            <div id="tierLabel6" style="background-color: orange;" class="tierLabel">
+                <div class="tierNumber">6</div>
+                <div class="tierDescription">Couple of good songs, rest is
+                    anywhere from forgettable
+                    to bad. This tier can be very
+                    variable - Still on the good
+                    side of ok.</div>
+                <div class="sortButtonHolder">
+                    <button class="alphabeticalSortButton" onclick="sortTierAlphabetically($(this))">
+                        <span>Sort<br></span>
+                        <span data-alttext="A->Z"><span>Alphabetically</span></span>
+                        <span class="arrowIndicator">&#8645;</span>
+                    </button>
+                    <button class="yearSortButton" onclick="sortTierYearwise($(this))">Sort by Year &#8645;</button>
+                    <button class="artistSortButton" onclick="sortTierArtistwise($(this))">Sort by Artist
+                        &#8645;</button>
+                </div>
+            </div>
+            <div class="albumHolder">
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/blurryface.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Blurryface</p>
+                        <p class="artistInfo">twenty one pilots</p>
+                        <p class="yearInfo">2015</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/3cQO7jp5S9qLBoIVtbkSM1?si=a4b6d2b8caee45ea
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Blurryface</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Death inspires me like a dog inspires a rabbit<br><br></i>
+                            </div>
+                            <b>FAVORITE SONGS: Ride, Tear In My Heart, The Judge</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/revolver.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Revolver</p>
+                        <p class="artistInfo">The Beatles</p>
+                        <p class="yearInfo">1966</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/3PRoXYsngSwjEQWR5PsHWR?si=0d79dae000324be2
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Revolver_(Beatles_album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Turn off your mind, relax and float downstream<br>
+                                    It is not dying, it is not dying<br>
+                                    Lay down all thoughts, surrender to the void<br>
+                                    It is shining, it is shining<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Eleanor Rigby, Yellow Submarine, For No One</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/contra.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Contra</p>
+                        <p class="artistInfo">Vampire Weekend</p>
+                        <p class="yearInfo">2010</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/0H8cHlbp6eieUUOLmv4FzJ?si=33068e22b33a47a8
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Contra_(album)</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Years go by and hearts start to harden<br>
+                                    Those palms and firs that grew in your garden<br>
+                                    are falling down and nearing the rosebeds,<br>
+                                    the roots are shooting up through the tool shed<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: White Sky, Holiday, Cousins</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/rab.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Regional at Best</p>
+                        <p class="artistInfo">twenty one pilots</p>
+                        <p class="yearInfo">2011</p>
+                        <p class="spotifyInfo">Placeholder</p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Regional_at_Best</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>We all are stranger creatures than when we all started out as kids<br>
+                                    Culture forbids<br>
+                                    We have romantic fantasies about what dying truly is<br>
+                                    Fall off the grid<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Guns for Hands, Ode to Sleep, Ruby</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/sita.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">Stranger In The Alps</p>
+                        <p class="artistInfo">Phoebe Bridgers</p>
+                        <p class="yearInfo">2017</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/0qWcLfCZ8wtcoOdX14oGNI?si=646603d955974b90
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/Stranger_in_the_Alps</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>You said when you met me, you<br>
+                                    were bored<br>
+                                    And you,<br>
+                                    you were in a band<br>
+                                    when I was born<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: Motion Sickness, Scott Street</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ████████╗██╗███████╗██████╗     ███████╗ ██╗ ██╗   ██╗ ███████╗
+            ╚══██╔══╝██║██╔════╝██╔══██╗     ██╔════╝ ██║ ██║   ██║ ██╔════╝
+                ██║   ██║█████╗  ██████╔╝     █████╗   ██║ ██║   ██║ █████╗  
+                ██║   ██║██╔══╝  ██╔══██╗     ██╔══╝   ██║ ╚██╗ ██╔╝ ██╔══╝  
+                ██║   ██║███████╗██║  ██║     ██║      ██║  ╚████╔╝  ███████╗
+                ╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝     ╚═╝      ╚═╝   ╚═══╝   ╚══════╝ -->
+        <div id="tier5" class="tier">
+            <div id="tierLabel5" style="background-color: orangered;" class="tierLabel">
+                <div class="tierNumber">5</div>
+                <div class="tierDescription">Meh. Very average. Albums with
+                    one banger and the rest
+                    are bad also go here.
+                    Just good enough to not be bad.</div>
+                <div class="sortButtonHolder">
+                    <button class="alphabeticalSortButton" onclick="sortTierAlphabetically($(this))">
+                        <span>Sort<br></span>
+                        <span data-alttext="A->Z"><span>Alphabetically</span></span>
+                        <span class="arrowIndicator">&#8645;</span>
+                    </button>
+                    <button class="yearSortButton" onclick="sortTierYearwise($(this))">Sort by Year &#8645;</button>
+                    <button class="artistSortButton" onclick="sortTierArtistwise($(this))">Sort by Artist
+                        &#8645;</button>
+                </div>
+            </div>
+            <div class="albumHolder">
+                <div class="album" onClick="seeMoreAlbum(this)">
+                    <img src="../img/albums/300/fioe.jpg">
+                    <div class="hiddenInfo">
+                        <p class="albumInfo">First Impressions of Earth</p>
+                        <p class="artistInfo">The Strokes</p>
+                        <p class="yearInfo">2006</p>
+                        <p class="spotifyInfo">https://open.spotify.com/album/1HQ61my1h3VWp2EBWKlp0n?si=1abfdb4e3042429a
+                        </p>
+                        <p class="appleMusicInfo">Placeholder</p>
+                        <p class="wikipediaInfo">https://en.wikipedia.org/wiki/First_Impressions_of_Earth</p>
+                        <div class="reviewInfo">
+                            <p>Full review forthcoming...</p>
+                            <hr>
+                            <div class="lyricsBlock">
+                                <i>Twenty-nine different attributes<br>
+                                    Only seven that you like<br>
+                                    Twenty ways to see the world<br>
+                                    And twenty ways to start a fight<br><br>
+                                </i>
+                            </div>
+                            <b>FAVORITE SONGS: You Only Live Once</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="blurOverlay"></div>
+    <div id="moreInfo">
+        <div id="dummyTopSection" class="topSection">
+            <div class="heading">Name of Album</div>
+            <div class="subheading">Subtitle</div>
+            <div class="artistyear">Artist | Year</div>
+        </div>
+
+        <div id="realTopSection" class="topSection">
+            <div class="heading crt-text">Name of Album</div>
+            <div class="subheading crt-text">Subtitle</div>
+            <div class="artistyear">Artist | Year</div>
+        </div>
+
+        <div id="icon-row">
+            <div id="links-row">
+                <a target="_blank" id="wikipedia-link" href="http://en.wikipedia.org">
+                    <img src="../img/wiki-icon.png">
+                </a>
+                <a target="_blank" id="spotify-link" href="http://en.wikipedia.org">
+                    <img target="_blank" src="../img/spotify-icon.png">
+                </a>
+                <a target="_blank" id="apple-music-link" href="http://en.wikipedia.org">
+                    <img src="../img/apple-music-icon.png">
+                </a>
+            </div>
+            <img id="starsimg" src="../img/stars/5.png">
+        </div>
+        <div id="reviewblock"></div>
+    </div>
+</body>
+
+</html>

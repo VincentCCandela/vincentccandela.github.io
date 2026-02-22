@@ -1,0 +1,205 @@
+@keyframes marker-bounce {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-1vh);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+html{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+body{
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-pixelated;
+    image-rendering: pixelated;
+    /* background-color: #2348c9; */
+    background-color: black;
+}
+
+#marker-mtl{
+    top: 29%;
+    left: 48%;
+}
+
+#marker-phl{
+    top: 56%;
+    left: 48%;
+}
+
+.map-marker{
+    position: absolute;
+    width: 7vw;
+    height: auto;
+    animation: marker-bounce 2s ease-in-out 0s infinite;
+    z-index: 2;
+}
+
+.fullscreen-menu-bar{
+    background-color: dodgerblue;
+}
+
+
+@media (max-aspect-ratio: 0.8/1){
+    .fullscreen-menu-bar{
+        display: none;
+    }
+  }
+
+/* Portrait mode */
+@media (max-aspect-ratio: 1.25/1){
+
+
+    #map-div{
+        height: 100vh;
+        left: -10vw;
+        position: fixed;
+        overflow: hidden;
+        border: 1 px solid red;
+    }
+
+    #map-img{
+        height: 100%;
+    }
+  
+
+    #map-logo{
+        position: fixed;
+        bottom: 1vh;
+        left: 1vw;
+        width: 25vw;
+        z-index: 2;
+    }
+
+    #water-div{
+        position: fixed;
+        top: 0px;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: url("../img/waves.gif");
+        background-size: auto 12%;
+        z-index: 0;
+    }
+
+    .text-box{
+        position: fixed;
+        font-size: 0.8rem;
+        width: 30vw;
+        height: auto;
+        background-color: #cfd4e8;
+        border-right: 0.2vw solid #565861;
+        border-bottom: 0.2vw solid #565861;
+        border-left: 0.2vw solid #f5f7ff;
+        border-top: 0.2vw solid #f5f7ff;
+        z-index: 2;
+        display: none;
+        text-align: center;
+        padding: 2vw;
+    }
+
+    #phl-text-box{
+        bottom:10vh;
+        right: 5vw;
+    }
+    
+    #mtl-text-box{
+        top:5vh;
+        left: 5vw;
+    }
+
+    .map-marker{
+        width: 4rem;
+    }
+
+}
+
+
+/* Landscape mode */
+@media (min-aspect-ratio: 1.25/1) or (aspect-ratio: 1.25/1){
+
+    #map-div{
+        position: fixed;
+        top: 0;
+        left:0;
+        width: 100vw;
+        overflow: hidden;
+        z-index: 1;
+        border: 1 px solid red;
+    }
+
+    #map-img{
+        width: 100%;
+    }
+
+
+    #water-div{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: url("../img/waves.gif");
+        background-size: auto 12%;
+        z-index: 0;
+    }
+
+
+    #map-logo{
+        position: fixed;
+        bottom: 1vh;
+        right: 1vw;
+        width: 10vw;
+        z-index: 2;
+    }
+
+
+
+    #phl-text-box{
+        bottom:15vh;
+        right: 10vw;
+    }
+    
+    #mtl-text-box{
+        top:15vh;
+        left: 10vw;
+    }
+
+    
+    .text-box{
+        position: fixed;
+        width: 25vw;
+        height: auto;
+        background-color: #cfd4e8;
+        border-right: 0.2vw solid #565861;
+        border-bottom: 0.2vw solid #565861;
+        border-left: 0.2vw solid #f5f7ff;
+        border-top: 0.2vw solid #f5f7ff;
+        z-index: 2;
+        display: none;
+        text-align: center;
+        padding: 2vw;
+    }
+    
+    .text-box-title{
+
+        font-size: clamp(1rem, 1.8vmax, 3rem);
+    }
+    
+    .text-box-body{
+        font-size: clamp(0.7rem, 1.2vmax, 2rem);
+    } 
+}
+

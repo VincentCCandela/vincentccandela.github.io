@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link type="text/css" rel="stylesheet" href="../style.css">
+    <link type="text/css" rel="stylesheet" href="../crt.css">
+    <link type="text/css" rel="stylesheet" href="./about.css">
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="../crt.js"></script>
+    <title>About - Kiran McCulloch</title>
+</head>
+
+<script>
+    $(document).ready(
+        
+        function () {
+            $('img').attr('draggable', false);
+            if (inIframe()) {
+                $("#crt-overlay, .fullscreen-menu-bar, .home-button").hide()
+            }
+            $(".linklist a").attr("target", "_blank");
+        }
+    );
+</script>
+
+<body class="crt-text">
+    <div class="crt-overlay" id="crt-overlay"></div>
+    <div class="fullscreen-menu-bar">
+        <p class="popup-title">About</p>
+        <div class="popup-spacer"></div>
+        <a class="popup-small-button" href="../index.html" id="aboutFullMin">&#95;</a>
+        <a class="popup-small-button" id="aboutFullMax"><b>&#9634;</b></a>
+        <a class="popup-small-button" href="../index.html" id="aboutFullClose">x</a>
+    </div>
+    <div class="fullscreen-menu-bar" id="fullscreen-menu-bar-spacer">
+        <p class="popup-title">About</p>
+    </div>
+    <div class="home-button" onclick='window.location.href = "../index.html"'>
+        <img src="../img/home.png" alt="a pixellated icon of a home">
+    </div>
+
+    <div id="wrapper" class="clearfix">
+        <div class="sidebar">
+            <div class="logo">
+                <img src='../img/wiki-logo.png' alt="logo">
+            </div>
+            <div class="navigation">
+                <ul>
+                    <li><a  href="#">Main page</a></li>
+                    <li><a  href="#">Contents</a></li>
+                    <li><a  href="#">Featured content</a></li>
+                </ul>
+                <h3>Interaction</h3>
+                <ul>
+                    <li><a  href="#">Help</a></li>
+                    <li><a  href="#">About</a></li>
+                    <li><a  href="#">Portal</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mainsection">
+            <div class="headerLinks">
+                <img id="mobileLogo" src='../img/wiki-logo-mobile.png' alt="logo">
+                <span class="user">Not logged in</span> <a  href="#">Talk</a> <a  href="#">Contributions</a> <a
+                    href="#">Create account</a> <a  href="#">Log in</a>
+            </div>
+            <div class="tabs clearfix">
+
+                <div class="tabsLeft">
+                    <ul>
+                        <li><a  href="#" class="active">Article</a></li>
+                        <li><a  href="#">Talk</a></li>
+                    </ul>
+                </div>
+                <div class="tabsRight">
+                    <ul>
+                        <li><a  href="#" class="active">Read</a></li>
+                        <li><a  href="#">View source</a></li>
+                        <li><a  href="#">View history</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="article">
+                <h1>Kiran McCulloch</h1>
+                <div class="siteSub">
+                    <p id="subName">From McIpedia, the Encyclopedia</p>
+                    <img src="../img/stars/single.png">
+                    <img src="../img/lock.png">
+                </div>
+                <p class="roleNote">This article is about the programmer. For other uses, see <a target="_blank" href="https://en.wikipedia.org/wiki/McCulloch_(disambiguation)">McCulloch (disambiguation)</a>.</p>
+                <div class="articleRight">
+                    <div class="articleRightInner">
+                        <img src="../img/grad_vid.gif" alt="image of Kiran McCulloch" style="width: auto;" />
+                    </div>
+                    Kiran McCulloch graduating from <br><a target="_blank" href="https://en.wikipedia.org/wiki/McGill_University">McGill University</a>, June 2023
+                </div>
+                <p style="line-height: 2em;"><br>Kiran McCulloch is an American programmer and designer from <a target="_blank" href="https://en.wikipedia.org/wiki/Philadelphia">Philadelphia</a>. He is known for his expertise in design and coding alike, as well as his uncanny ability to pick up new skills. He currently resides in <a target="_blank" href="https://en.wikipedia.org/wiki/Montreal">Montreal</a>, <a target="_blank" href="https://en.wikipedia.org/wiki/Quebec">Quebec</a>, where he has been living since 2018.</p>
+
+                <div class="contentsPanel">
+                    <div class="contentsHeader">Contents</div>
+                    <ul>
+                        <li>
+                            <span>1</span><a href="#about-header">About</a>
+                        </li>
+                        <li>
+                            <span>2</span><a href="#skills-header">Skills</a>
+                            <ul>
+                                <li><span>2.1</span><a href="#coding-header">Coding</a></li>
+                                <li><span>2.2</span><a href="#geography-header">Geography</a></li>
+                                <li><span>2.3</span><a href="#design-header">Design</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span>3</span><a href="#history-header">History</a>
+                            <ul>
+                                <li><span>3.1</span><a href="#early-life-header">Early Life</a> </li>
+                                <li><span>3.2</span><a href="#schooling-header">Schooling</a> </li>
+                                <li><span>3.3</span><a href="#work-experience-header">Work Experience</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <span id="body-text">
+                    <h2 id="about-header">About</h2>
+                    <p>Kiran McCulloch is, in brief, a man of elegant solutions. From the moment an idea pops into his head, his enthusiasm for the task at hand becomes unmatchable. He is governed by a desire to create. Similarly, his fervor for learning often leaves him with several Wikipedia tabs open or hours spent doing online trivia. McCulloch alone is a force to be reckoned with, but given the right tools and let into a room with similarly driven individuals, infinity's the limit.</p>
+                    <h2 id="skills-header">Skills</h2>
+                    <h3 id="coding-header">Coding</h3>
+                    <p>Having grown up as a self-described "<a target="_blank" href="https://en.wikipedia.org/wiki/Lego">Lego</a> kid,"<sup>[1]</sup> McCulloch's fascination with coding
+                        as a building-block-like tool has been noted from a very young age. Regarding programming as
+                        the ultimate creative outlet, McCulloch is proficient in several programming languages such as
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a>, 
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Java_(programming_language)">Java</a>, 
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/JavaScript">Javascript</a>, 
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/C_(programming_language)">C</a>, 
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/C%2B%2B">C++</a>, and 
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/PHP">PHP</a>, having worked with them extensively throughout high
+                        school and university alike, both in class and on personal time. University courses have
+                        provided similar ventures into 
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/SQL">SQL</a>, 
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)">Bash</a>, 
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/OCaml">OCaml</a>, and several others. In addition, he remains very
+                        familiar with 
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/HTML">HTML</a> and 
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/CSS">CSS</a>, as well as the suite of popular web development frameworks like
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/JQuery">JQuery</a>, 
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/React_(JavaScript_library)">React.js</a> and 
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Node.js">Node.js</a>. He is currently learning 
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Swift_(programming_language)">Swift</a>, being that it is used to create some
+                        of the most powerful mobile applications available when wielded with enough expertise.</p>
+                    <h3 id="geography-header">Geography</h3>
+                    <p>McCulloch's pet passion has always been geography, from a very basic level, such as memorizing
+                        all the world capitals and flags, to a very advanced one, like creating his own <a target="_blank" href="https://en.wikipedia.org/wiki/Lidar">LIDAR</a>-based
+                        watershed delineation algorithm. Having further expanded his knowledge with a broad range of studies in
+                        the subject at university, he continues to try find a way back to use it in any possible project.
+                    </p>
+                    <h3 id="design-header">Design</h3>
+                    <p>Creativity is at the heart of everything McCulloch does. His earliest several jobs were all
+                        editing-focused, and since then he has ventured into web design, photography, vector graphics,
+                        animation, film, photobashing, printing, and more.<sup>[2]</sup> Possessing a significant amount
+                        of work experience, McCulloch is well-known as a designer in his social circles, often acting as a go-to
+                        source for social media posts and advertisements but also picking up more consistent
+                        extracurricular work at times. <a target="_blank" href="https://en.wikipedia.org/wiki/Adobe_Photoshop">Photoshop</a> and <a target="_blank" href="https://en.wikipedia.org/wiki/Adobe_Premiere_Pro">Premiere</a> are the most used tools to this end, but <a target="_blank" href="https://en.wikipedia.org/wiki/Adobe_AfterEffects">After Effects</a>,
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Adobe_Illustrator">Illustrator</a>, and <a target="_blank" href="https://en.wikipedia.org/wiki/Final_Cut_Pro">Final Cut</a> often make appearances.</p>
+                    <h2 id="history-header">History</h2>
+                    <h3 id="early-life-header">Early Life</h3>
+                    <p>Kiran McCulloch was born in Philadelphia, <a target="_blank" href="https://en.wikipedia.org/wiki/Pennsylvania">Pennsylvania</a> at the turn of the millennium. Several
+                        years later, McCulloch, along with his parents and sisters, would move to a nearby suburb, where he
+                        would reside for more than a decade before his eventual move to <a target="_blank" href="https://en.wikipedia.org/wiki/Canada">Canada</a>. McCulloch has, somewhat
+                        hyperbolically, described Philadelphia as "the greatest city on the planet"<sup>[3]</sup> and
+                        remains fiercely proud of his city to this day.</p>
+                    <h3 id="schooling-header">Schooling</h3>
+                    <p>After attending a small private school in the suburbs for almost eight years, McCulloch made the
+                        move in 2012 to <a target="_blank" href="https://en.wikipedia.org/wiki/Germantown_Friends_School">Germantown Friends School</a> in Philadelphia's <a target="_blank" href="https://en.wikipedia.org/wiki/Germantown,_Philadelphia">Germantown</a> neighborhood. It was here that
+                        he took his first coding classes and competed in his first hackathon, later citing these
+                        experiences as heavy inspiration for his future work.<sup>[4]</sup></p>
+                    <p>
+                        The looming end of high school presented a difficult decision as to where to attend university;
+                        with multiple offers of equal academic caliber on the table, the choice would come down to personal
+                        preference.<sup>[5]</sup> In the spring of 2018, McCulloch visited Montreal for the first time
+                        in his life, and, seeing its quality, made the decision to attend <a target="_blank" href="https://en.wikipedia.org/wiki/McGill_University">McGill University</a> that fall.</p>
+                    <p>
+                        Over the next four years, McCulloch built valuable skills and greatly expanded upon his
+                        knowledge base, taking courses in Algorithm Design, Web Development, Robotics, and Artificial
+                        Intelligence, among many others. McCulloch also pursued his passion for geography,
+                        taking courses in such topics as hydrology, climatology, human geography, and meteorology.
+                        Despite the <a target="_blank" href="https://en.wikipedia.org/wiki/COVID-19_pandemic">breakout of a worldwide pandemic</a> in his second year, McCulloch completed his studies in
+                        2022, graduating with a bachelor's degree in computer science and a minor in geography.
+                    </p>
+                    <h3 id="work-experience-header">Work Experience</h3>
+                    <p>The precise start date of McCulloch's career remains a hotly debated topic among
+                        historians,<sup>[6]</sup> but most sources place it in 2013, when, while at sleepaway camp, the
+                        head of the Video Department trusted McCulloch, a child, with the keys to the computer room, citing
+                        his work ethic and technological zeal, but more likely than not also taking advantage of the
+                        free labor. Since then, McCulloch has always been comfortable working in a collaborative environment,
+                        and teamwork remains a staple of his projects.</p>
+                    <p>
+                        The proper start came in 2017 when a month-long internship at a film studio provided McCulloch
+                        with his first foray into a professional environment. Despite returning to school shortly after, he
+                        gained valuable experience working in a fast-paced environment. In 2019, After his first year at
+                        university, McCulloch found a job at the <a target="_blank" href="https://en.wikipedia.org/wiki/Academy_of_Natural_Sciences_of_Drexel_University">Academy of Natural Sciences</a> in downtown Philadelphia,
+                        working as an environmental researcher, combining his passions of coding and geography into one.
+                        Here, he was truly a young professional, developing a codebase on the then-unused <a target="_blank" href="https://en.wikipedia.org/wiki/Google_Earth#Google_Earth_Engine">Google Earth Engine</a>. 
+                        In 2020, immediately after the pandemic hit, McCulloch worked for a while as IT support
+                        for <a target="_blank" href="https://en.wikipedia.org/wiki/Verizon_Communications">Verizon</a>, spending the summer dealing with hardware problems as opposed to the software
+                        he was more used to.</p>
+                    <p>
+                        Despite being busy with classes, McCulloch also found time to take on scores of freelance design
+                        projects for friends, family, and paying clients alike. It was here that he began to combine his
+                        talents once more, and found a taste for Web Development, being a combination of design and
+                        coding, much like his job at the Academy years prior had been a fusion of coding and geography.
+                        Naturally, then, his work in these years tended towards the arts, working remotely for a design firm in
+                        Boston and then heading the Graphics Division in a student-led project at McGill.
+                    </p>
+                </span>
+
+                <div class="lavenderBox">
+                    <div class="header">See Also</div>
+                    <div class="subtitle linklist"><a
+                            href="https://en.wikipedia.org/wiki/List_of_programmers">Programmers </a> <a
+                            href="https://en.wikipedia.org/wiki/List_of_geographers">Geographers </a> <a
+                            href="https://en.wikipedia.org/wiki/List_of_Jeopardy!_contestants">Trivia Experts </a></div>
+                    <div class="linklist">
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Lorem_ipsum">Lorem Ipsum </a>
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Filler_text">Filler text</a>
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program">Hello World </a>
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Typography">Typography </a>
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Pangram">Pangram </a>
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Hamburgevons">Hamburgevons </a>
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Just_another_Perl_hacker">JAPH </a>
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Harvard_sentences">Harvard sentences </a>
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Utah_teapot">Utah teapot </a>
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Quine_(computing)">Quine </a>
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/Etaoin_shrdlu">Etaoin shrdlu </a>
+                        <a target="_blank" href="https://en.wikipedia.org/wiki/The_quick_brown_fox_jumps_over_the_lazy_dog">The quick
+                            brown fox jumps over the lazy dog </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

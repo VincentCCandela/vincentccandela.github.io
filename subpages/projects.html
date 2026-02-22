@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<style>
+    #background {
+        width: 100vw;
+        height: 100vh;
+        background: url("../img/github-blur.png");
+        background-size: cover;
+        background-position: center;
+    }
+
+    #dialog-window {
+        text-align: center;
+        padding: 10px;
+        background-color: #cfd4e8;
+        width: clamp(300px, 50vw, 1000px);
+        font-size: clamp(1rem, 2vmax, 2rem);
+        border-right: 0.3vmax solid #565861;
+        border-bottom: 0.3vmax solid #565861;
+        border-left: 0.3vmax solid #f5f7ff;
+        border-top: 0.3vmax solid #f5f7ff;
+    }
+
+    #flex-container {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .fullscreen-menu-bar{
+        background-color: royalblue;
+    }
+</style>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link type="text/css" rel="stylesheet" href="../style.css">
+    <link type="text/css" rel="stylesheet" href="../crt.css">
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="../crt.js"></script>
+    <title>Projects - Vincent Candela</title>
+</head>
+<script>
+    $(document).ready(
+        function () {
+            $('img').attr('draggable', false);
+            if (inIframe()) {
+                $("#crt-overlay, .fullscreen-menu-bar, .home-button").hide()
+            }
+        }
+    )
+</script>
+
+<body class="crt-text">
+    <div class="crt-overlay" id="crt-overlay"></div>
+    <div class="fullscreen-menu-bar">
+        <p class="popup-title">Projects</p>
+        <div class="popup-spacer"></div>
+        <a class="popup-small-button" href="../index.html" id="aboutFullMin">&#95;</a>
+        <a class="popup-small-button" id="aboutFullMax"><b>&#9634;</b></a>
+        <a class="popup-small-button" href="../index.html" id="aboutFullClose">x</a>
+    </div>
+    <div class="fullscreen-menu-bar" id="fullscreen-menu-bar-spacer">
+        <p class="popup-title">Projects</p>
+    </div>
+    <div id="background"></div>
+    <div id="flex-container">
+        <div id="dialog-window">
+            <span style="color: #d93609;">COMING SOON</span><br><br>
+            In the meantime, <a href="https://github.com/VincentCCandela" target="_blank">check out my GitHub.</a>
+            <!-- <p>email: <a href="mailto:..." target="_blank">vincent.candela14@gmail.com</a></p>
+            <span>LinkedIn: <a href="https://www.linkedin.com/in/vincent-c-candela/" target="_blank">Vincent Candela</a></span> -->
+        </div>
+    </div>
+</body>
+
+</html>

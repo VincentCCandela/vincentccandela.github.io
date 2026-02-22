@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link type="text/css" rel="stylesheet" href="../style.css">
+    <link type="text/css" rel="stylesheet" href="../crt.css">
+    <link type="text/css" rel="stylesheet" href="./contact.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="../crt.js"></script>
+    <title>Linktree - Vincent Candela</title>
+</head>
+
+<script>
+    $(document).ready(function () {
+        $('img').attr('draggable', false);
+        if (inIframe()) {
+            $("#crt-overlay, .fullscreen-menu-bar, .home-button").hide();
+        }
+    });
+</script>
+
+<body class="crt-text">
+    <div class="crt-overlay" id="crt-overlay"></div>
+    <div id="ps-overlays">
+        <div class="fullscreen-menu-bar" style="background-color: lightskyblue;">
+            <p class="popup-title">Linktree</p>
+        </div>
+    </div>
+
+    <div id="content">
+        <div id="contact-main-section">
+            <div class="contact-links">
+                <p>email: <a href="mailto:vincent.candela14@gmail.com" target="_blank">vincent.candela14@gmail.com</a></p>
+                <p>LinkedIn: <a href="https://www.linkedin.com/in/vincent-c-candela/" target="_blank">Vincent C Candela</a></p>
+                <p>github: <a href="https://github.com/VincentCCandela" target="_blank">VincentCCandela</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

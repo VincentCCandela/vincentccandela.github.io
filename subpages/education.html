@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link type="text/css" rel="stylesheet" href="../style.css">
+    <link type="text/css" rel="stylesheet" href="../crt.css">
+    <link type="text/css" rel="stylesheet" href="./education.css">
+    <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="../crt.js"></script>
+    <title>Education - Vincent Candela</title>
+</head>
+
+<script>
+    function isTouchDevice() {
+        return (('ontouchstart' in window) ||
+            (navigator.maxTouchPoints > 0) ||
+            (navigator.msMaxTouchPoints > 0));
+    }
+
+    function stopSpinning(){
+        $("#marker-mtl").attr("src", "../img/mcgill-pixel.png");
+        $("#marker-phl").attr("src", "../img/gfs-pixel.png");
+        $("#mtl-text-box").hide(200);
+        $("#phl-text-box").hide(200);
+    }
+
+    const base_aspect_ratio = 1.25;
+    var move_by_x, move_by_y = 0;
+
+    function resizeMap(){
+        var aspect_ratio = ($(window).width() / $(window).height());
+        if (aspect_ratio >= base_aspect_ratio) {
+            //move by is a range (0,1)
+            move_by_y = ((1 - (base_aspect_ratio / aspect_ratio)) / 2);
+            $("#map-div").css('transform', "translateY(" + (move_by_y * -100) + "%)");
+        } else {
+            //move by is a range (0,1)
+            move_by_x = (1 - (aspect_ratio / base_aspect_ratio)) / 2;
+            $("#map-div").css('transform', "translateX(" + (move_by_x * -100) + "%)");
+        }
+    }
+
+    $(window).on('resize',resizeMap);
+
+    $(document).ready(
+        function () {
+            $('img').attr('draggable', false);
+            if (inIframe()) {
+                $("#crt-overlay, .fullscreen-menu-bar, .home-button").hide()
+            }
+            
+            resizeMap();
+
+            // $(".map-text-box").hide();
+
+            if (isTouchDevice()) {
+                $("#marker-mtl").click(
+                    function () {
+                        $(this).attr("src", "../img/mcgill-spin.gif");
+                        $("#mtl-text-box").show(200);
+                        $("#phl-text-box").hide(200);
+                    }
+                );
+                $("#marker-phl").click(
+                    function () {
+                        $(this).attr("src", "../img/gfs-spin.gif");
+                        $("#mtl-text-box").hide(200);
+                        $("#phl-text-box").show(200);
+                    }
+                );
+            } else {
+                $("#marker-mtl").hover(
+                    function () {
+                        $("#mtl-text-box").toggle(200);
+                    }
+                );
+                $("#marker-phl").hover(
+                    function () {
+                        $("#phl-text-box").toggle(200);
+                    }
+                );
+                $("#marker-mtl").hover(
+                    function () {
+                        $(this).attr("src", "../img/mcgill-spin.gif");
+                    },
+                    function () {
+                        $(this).attr("src", "../img/mcgill-pixel.png");
+                    }
+                );
+                $("#marker-phl").hover(
+                    function () {
+                        $(this).attr("src", "../img/gfs-spin.gif");
+                    },
+                    function () {
+                        $(this).attr("src", "../img/gfs-pixel.png");
+                    }
+                );
+            }
+
+            //shows text boxes on hover
+
+        });
+
+</script>
+
+<body>
+
+    <div class="crt-overlay" id="crt-overlay"></div>
+    <div class="fullscreen-menu-bar">
+        <p class="popup-title">Education</p>
+        <div class="popup-spacer"></div>
+        <a class="popup-small-button" href="../index.html" id="aboutFullMin">&#95;</a>
+        <a class="popup-small-button" id="aboutFullMax"><b>&#9634;</b></a>
+        <a class="popup-small-button" href="../index.html" id="aboutFullClose">x</a>
+    </div>
+    <div class="fullscreen-menu-bar" id="fullscreen-menu-bar-spacer">
+        <p class="popup-title">Education</p>
+    </div>
+    <div class="home-button" onclick='window.location.href = "../index.html"'>
+        <img src="../img/home.png" alt="a pixellated icon of a home">
+    </div>
+
+
+    <div id="water-div"></div>
+
+    <div id="map-div" ontouchend="stopSpinning()">
+        <img id="map-img" src="../img/map.png">
+        <img id="marker-phl" class="map-marker" src="../img/TODOgfs-pixel.png">
+        <img id="marker-mtl" class="map-marker" src="../img/mcgill-pixel.png">
+    </div>
+
+
+
+    <div id="phl-text-box" class="text-box">
+        <p class="text-box-title">St. John's Prep</p>
+        <p class="text-box-body">Danvers, Massachusetts</p>
+        <p class="text-box-body">High School</p>
+    </div>
+    <div id="mtl-text-box" class="text-box">
+        <p class="text-box-title">McGill University</p>
+        <p class="text-box-body">Montreal, Quebec</p>
+        <p class="text-box-body">B.Sc. Quantitative Biology, Minor Mathematics</p>
+    </div>
+    <img id="map-logo" src="../img/maps-logo.png">
+</body>
+
+</html>

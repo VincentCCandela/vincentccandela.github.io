@@ -1,0 +1,28 @@
+  .crt-overlay {
+    content: " ";
+    display: block;
+
+    background: linear-gradient(rgba(0, 0, 0, 0.01) 50%, rgba(16, 16, 16, 0.08) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.1), rgba(0, 255, 0, 0.05), rgba(0, 0, 255, 0.1));
+    /*background: linear-gradient(90deg, rgba(255, 0, 0, 0.12), rgba(0, 255, 0, 0.06), rgba(0, 0, 255, 0.12)); */
+    z-index: 1000;
+    background-size: 100% 0.25vmax, 0.25vmax 100%;
+    pointer-events: none;
+
+    position: fixed;
+    width: 300vw;
+    height: 300vh;
+    left: -150vw;
+    top: -150vh;
+  }
+
+  .crt-text {
+    text-shadow: 0.1vmax 0 0.1vmax rgba(0, 30, 255, 0.3), -0.25vmax 0 0.1vmax rgba(255, 0, 80, 0.1), 0 0 0.3vmax #555555;
+  }
+
+  @media screen and (min-width: 1600px) {
+    .crt-overlay {
+      background-size: 100% 0.18vmax, 0.18vmax 100%;
+    }
+
+  }
+

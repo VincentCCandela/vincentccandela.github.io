@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        body{
+            background-color: palevioletred;
+            text-align: center;
+        }
+        
+    </style>
+    <script>
+        var min_time = 0;
+        var max_time = 0;
+        $(document).ready(function(){
+            const submit = document.querySelector("#submit");
+            submit.addEventListener("click", async (event) => {
+                event.preventDefault();
+                const userInfo = document.querySelector("#theform");
+                const formData = new FormData(userInfo);
+                var min_time = formData.get("mintime");
+                var max_time = formData.get("maxtime");
+                shrimp_alert();
+            });
+
+        });
+
+        function shrimp_alert(){
+            randint = Math.getRandomInt(min_time, max_time);
+            alert("waiting "+randint.toString()+" milliseconds");
+            setTimeout(shrimp_alert,randint*1000);
+        }
+    </script>
+</head>
+<body>
+    <h1>SHRIMP CHECK</h1>
+    <form id="theform" style="width:20vw; margin:auto">
+        <label for="username">Minimum Time (Seconds):</label>
+        <input type="number" name="mintime" required><br>
+        <label for="username">Maximum Time (Seconds):</label>
+        <input type="number" name="maxtime" required><br>
+        <input type="submit" id="submit" value="ACTIVATE SHRIMP MODE">
+    </form>
+</body>
+</html>
