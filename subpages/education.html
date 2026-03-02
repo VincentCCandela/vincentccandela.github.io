@@ -1,3 +1,4 @@
+<!-- TODO: make the sjp and bu icons rotate -->
 <!DOCTYPE html>
 <html>
 
@@ -22,9 +23,11 @@
 
     function stopSpinning(){
         $("#marker-mtl").attr("src", "../img/mcgill-pixel.png");
-        $("#marker-phl").attr("src", "../img/gfs-pixel.png");
+        $("#marker-dan").attr("src", "../img/sjp-logo.png");
+        $("#marker-bos").attr("src", "../img/bu-logo.png");
         $("#mtl-text-box").hide(200);
-        $("#phl-text-box").hide(200);
+        $("#dan-text-box").hide(200);
+        $("#bos-text-box").hide(200);
     }
 
     const base_aspect_ratio = 1.25;
@@ -61,14 +64,24 @@
                     function () {
                         $(this).attr("src", "../img/mcgill-spin.gif");
                         $("#mtl-text-box").show(200);
-                        $("#phl-text-box").hide(200);
+                        $("#dan-text-box").hide(200);
+                        $("#bos-text-box").hide(200);
                     }
                 );
-                $("#marker-phl").click(
+                $("#marker-dan").click(
                     function () {
-                        $(this).attr("src", "../img/gfs-spin.gif");
+                        $(this).attr("src", "../img/sjp-logo.png");
                         $("#mtl-text-box").hide(200);
-                        $("#phl-text-box").show(200);
+                        $("#bos-text-box").hide(200);
+                        $("#dan-text-box").show(200);
+                    }
+                );
+                $("#marker-bos").click(
+                    function () {
+                        $(this).attr("src", "../img/bos-logo.png");
+                        $("#mtl-text-box").hide(200);
+                        $("#dan-text-box").hide(200);
+                        $("#bos-text-box").show(200);
                     }
                 );
             } else {
@@ -77,9 +90,14 @@
                         $("#mtl-text-box").toggle(200);
                     }
                 );
-                $("#marker-phl").hover(
+                $("#marker-dan").hover(
                     function () {
-                        $("#phl-text-box").toggle(200);
+                        $("#dan-text-box").toggle(200);
+                    }
+                );
+                $("#marker-bos").hover(
+                    function () {
+                        $("#bos-text-box").toggle(200);
                     }
                 );
                 $("#marker-mtl").hover(
@@ -90,12 +108,20 @@
                         $(this).attr("src", "../img/mcgill-pixel.png");
                     }
                 );
-                $("#marker-phl").hover(
+                $("#marker-dan").hover(
                     function () {
-                        $(this).attr("src", "../img/gfs-spin.gif");
+                        $(this).attr("src", "../img/sjp-logo.png");
                     },
                     function () {
-                        $(this).attr("src", "../img/gfs-pixel.png");
+                        $(this).attr("src", "../img/sjp-logo.png");
+                    }
+                );
+                $("#marker-bos").hover(
+                    function () {
+                        $(this).attr("src", "../img/bu-logo.png");
+                    },
+                    function () {
+                        $(this).attr("src", "../img/bu-logo.png");
                     }
                 );
             }
@@ -128,13 +154,14 @@
 
     <div id="map-div" ontouchend="stopSpinning()">
         <img id="map-img" src="../img/map.png">
-        <img id="marker-phl" class="map-marker" src="../img/TODOgfs-pixel.png">
+        <img id="marker-dan" class="map-marker" src="../img/sjp-logo.png">
         <img id="marker-mtl" class="map-marker" src="../img/mcgill-pixel.png">
+        <img id="marker-bos" class="map-marker" src="../img/bu-logo.png">
     </div>
 
 
 
-    <div id="phl-text-box" class="text-box">
+    <div id="dan-text-box" class="text-box">
         <p class="text-box-title">St. John's Prep</p>
         <p class="text-box-body">Danvers, Massachusetts</p>
         <p class="text-box-body">High School</p>
@@ -142,9 +169,14 @@
     <div id="mtl-text-box" class="text-box">
         <p class="text-box-title">McGill University</p>
         <p class="text-box-body">Montreal, Quebec</p>
-        <p class="text-box-body">B.Sc. Quantitative Biology, Minor Mathematics</p>
+        <p class="text-box-body">BSc. Quantitative Biology, Minor Mathematics</p>
     </div>
-    <img id="map-logo" src="../img/maps-logo.png">
+    <div id="bos-text-box" class="text-box">
+        <p class="text-box-title">Boston University</p>
+        <p class="text-box-body">Boston, Massachusetts</p>
+        <p class="text-box-body">MSc. Electrical and Computer Engineering</p>
+    </div>
+    <!-- <img id="map-logo" src="../img/maps-logo.png"> -->
 </body>
 
 </html>

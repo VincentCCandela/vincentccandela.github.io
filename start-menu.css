@@ -25,6 +25,7 @@
 #top-left-logo {
     height: 4vh;
     image-rendering: pixelated;
+    /* display: none; */
 }
 
 /* ── Start Menu Panel ─────────────────────────────────────── */

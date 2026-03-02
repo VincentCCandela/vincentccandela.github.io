@@ -34,9 +34,14 @@ body{
     left: 48%;
 }
 
-#marker-phl{
-    top: 56%;
-    left: 48%;
+#marker-dan{
+    top: 40%;
+    left: 58%;
+}
+
+#marker-bos{
+    top: 45%;
+    left: 54%;
 }
 
 .map-marker{
@@ -110,14 +115,19 @@ body{
         padding: 2vw;
     }
 
-    #phl-text-box{
-        bottom:10vh;
+    #dan-text-box{
+        top:10vh;
         right: 5vw;
     }
     
     #mtl-text-box{
         top:5vh;
         left: 5vw;
+    }
+
+    #bos-text-box{
+        bottom:10vh;
+        right: 10vw;
     }
 
     .map-marker{
@@ -167,8 +177,8 @@ body{
 
 
 
-    #phl-text-box{
-        bottom:15vh;
+    #dan-text-box{
+        top:15vh;
         right: 10vw;
     }
     
@@ -176,6 +186,12 @@ body{
         top:15vh;
         left: 10vw;
     }
+
+    #bos-text-box{
+        bottom:15vh;
+        right: 10vw;
+    }
+
 
     
     .text-box{

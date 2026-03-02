@@ -176,13 +176,6 @@ position: fixed !important
         justify-content: space-between;
         align-items: center;
     }
-
-    #top-left-logo {
-        height: 5vh;
-        padding: 0.5vh;
-        padding-left: 1.5vw;
-        padding-right: 1.5vw;
-    }
     
     .clock {
         font-size: 3vw;
@@ -311,6 +304,13 @@ position: fixed !important
         left: 10vw;
         top: 5vh;
     }
+
+    /* #linux-popup {
+        left: 5vw;
+        top: 5vh;
+        width: 90vw;
+        height: 500px;
+    } */
 
     .popup-window-wrapper {
         display: flex;
@@ -545,12 +545,6 @@ position: fixed !important
         flex-direction: row;
         align-items: center;
     }
-
-    #top-left-logo {
-        height: 4vh;
-        width: auto;
-        padding: 0;
-    }
     
     .popup-window {
         position: fixed;
@@ -707,25 +701,39 @@ position: fixed !important
     .list-row:hover>p.hidden-skills {
         opacity: 100;
     }
+
+    /* #linux-popup {
+        width: 75vw;
+        height: 500px;
+        left: 12vw;
+        top: 8vh;
+    } */
 }
 
 
 @media (min-aspect-ratio: 3/2) {
-    #kiran-photo {
+    /* #kiran-photo {
         position: fixed;
         bottom: 10%;
         left: 1vw;
         height: 90vh;
-    }
+    } */
 }
 
 @media (min-aspect-ratio: 1/1) and  (max-aspect-ratio: 3/2) {
-    #kiran-photo {
+    /* #kiran-photo {
         position: fixed;
         bottom: 10%;
         left: 1vw;
         width: 40vw;
-    }
+    } */
+
+    /* #linux-popup {
+        width: 75vw;
+        height: 500px;
+        left: 12vw;
+        top: 8vh;
+    } */
 }
 
 #splash-text {

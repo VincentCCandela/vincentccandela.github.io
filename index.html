@@ -23,7 +23,7 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="./clock.js"></script>
     <title>Vincent Candela</title>
-    <link rel="icon" href="./img/favicon.ico">
+    <link rel="icon" href="./img/icon-scaled-main.ico">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPRQKNS8ZF"></script>
@@ -113,13 +113,20 @@
             distance: 0,
             containment: 'window',
             scroll: false,
-            iframeFix: true
+            // iframeFix: true
+            start: function() {
+                $('iframe').not('#linux-popup iframe').css('pointer-events', 'none');
+            },
+            stop: function() {
+                $('iframe').css('pointer-events', 'auto');
+            }
         });
 
         $(".resizable").resizable({
             handles: "all",
             start: function (event, ui) {
-                $('iframe').css('pointer-events', 'none');
+                // $('iframe').css('pointer-events', 'none');
+                $('iframe').not('#linux-popup iframe').css('pointer-events', 'none');
             },
             stop: function (event, ui) {
                 $('iframe').css('pointer-events', 'auto');
@@ -202,13 +209,13 @@
             initMatrix();
 
             if (isTouchScreen){
-                $('#about-icon').find("img").attr("src", "./img/about-icon.gif");
+                // $('#about-icon').find("img").attr("src", "./img/about-icon.gif");
                 $('#education-icon').find("img").attr("src", "./img/education-icon.gif");
-                $('#experience-icon').find("img").attr("src", "./img/experience-icon.gif");
+                // $('#experience-icon').find("img").attr("src", "./img/experience-icon.gif");
                 $('#projects-icon').find("img").attr("src", "./img/projects-icon.gif");
-                $('#music-icon').find("img").attr("src", "./img/music-icon.gif");
+                /*$('#music-icon').find("img").attr("src", "./img/music-icon.gif");*/
                 /* TODO: add a gif for contacts/linktree */
-                $('#music-icon').find("img").attr("src", "./img/contact-icon-17.gif");
+                /*$('#music-icon').find("img").attr("src", "./img/contact-icon-17.gif");*/
             }
 
             $('img').attr('draggable', false);
@@ -228,20 +235,20 @@
                 $(".list-row").dequeue();
             });
 
-            $("#aboutMenu, #aboutMin").click(function () { minimizeWindow("about"); });
-            $("#aboutClose").click(function () { closeWindow("about"); });
+            // $("#aboutMenu, #aboutMin").click(function () { minimizeWindow("about"); });
+            // $("#aboutClose").click(function () { closeWindow("about"); });
 
             $("#educationMenu, #educationMin").click(function () { minimizeWindow("education"); });
             $("#educationClose").click(function () { closeWindow("education"); });
 
-            $("#experienceMenu, #experienceMin").click(function () { minimizeWindow("experience"); });
-            $("#experienceClose").click(function () { closeWindow("experience"); });
+            // $("#experienceMenu, #experienceMin").click(function () { minimizeWindow("experience"); });
+            // $("#experienceClose").click(function () { closeWindow("experience"); });
 
             $("#projectsMenu, #projectsMin").click(function () { minimizeWindow("projects"); });
             $("#projectsClose").click(function () { closeWindow("projects"); });
 
-            $("#musicMenu, #musicMin").click(function () { minimizeWindow("music"); });
-            $("#musicClose").click(function () { closeWindow("music"); });
+            // $("#musicMenu, #musicMin").click(function () { minimizeWindow("music"); });
+            // $("#musicClose").click(function () { closeWindow("music"); });
 
             $("#creditsMin").click(function () { minimizeWindow("credits"); });
             $("#creditsClose").click(function () { closeWindow("credits"); });
@@ -249,11 +256,11 @@
             $("#contactMenu, #contactMin").click(function () { minimizeWindow("contact"); });
             $("#contactClose").click(function () { closeWindow("contact"); });
 
-            $("#aboutMax").click(function () { toggleMaximize("about-popup"); });
+            // $("#aboutMax").click(function () { toggleMaximize("about-popup"); });
             $("#educationMax").click(function () { toggleMaximize("education-popup"); });
-            $("#experienceMax").click(function () { toggleMaximize("experience-popup"); });
+            // $("#experienceMax").click(function () { toggleMaximize("experience-popup"); });
             $("#projectsMax").click(function () { toggleMaximize("projects-popup"); });
-            $("#musicMax").click(function () { toggleMaximize("music-popup"); });
+            // $("#musicMax").click(function () { toggleMaximize("music-popup"); });
             $("#contactMax").click(function () { toggleMaximize("contact-popup"); });
 
             function toggleMaximize(popupId) {
@@ -266,12 +273,59 @@
                 }
             }
 
-            $('#about-icon').click(function () { openWindow("about"); });
+            // $('#about-icon').click(function () { openWindow("about"); });
             $('#education-icon').click(function () { openWindow("education"); });
-            $('#experience-icon').click(function () { openWindow("experience"); });
+            // $('#experience-icon').click(function () { openWindow("experience"); });
             $('#projects-icon').click(function () { openWindow("projects"); });
-            $('#music-icon').click(function () { openWindow("music"); });
+            // $('#music-icon').click(function () { openWindow("music"); });
             $('#contact-icon').click(function () { openWindow("contact"); });
+
+            $('#linux-icon').click(function () { openWindow("linux"); });
+            $("#linuxMenu, #linuxMin").click(function () { minimizeWindow("linux"); });
+            $("#linuxClose").click(function () { closeWindow("linux"); });
+            $("#linuxMax").click(function () { toggleMaximize("linux-popup"); });
+
+            document.addEventListener('keydown', function(e) {
+                if (!$('#linux-popup').is(':visible')) return;
+                document.querySelector('#linux-popup iframe').contentWindow.postMessage({
+                    type: 'keyevent', eventType: 'keydown',
+                    key: e.key, code: e.code, keyCode: e.keyCode, which: e.which,
+                    shiftKey: e.shiftKey, ctrlKey: e.ctrlKey, altKey: e.altKey, metaKey: e.metaKey
+                }, '*');
+                e.preventDefault();
+            }, true);
+
+            document.addEventListener('keyup', function(e) {
+                if (!$('#linux-popup').is(':visible')) return;
+                document.querySelector('#linux-popup iframe').contentWindow.postMessage({
+                    type: 'keyevent', eventType: 'keyup',
+                    key: e.key, code: e.code, keyCode: e.keyCode, which: e.which,
+                    shiftKey: e.shiftKey, ctrlKey: e.ctrlKey, altKey: e.altKey, metaKey: e.metaKey
+                }, '*');
+                e.preventDefault();
+            }, true);
+
+            window.addEventListener('message', function(e) {
+                if (e.data.type === 'linux-resize') {
+                    const menuBarHeight = $('#linux-popup .popup-menu-bar').outerHeight();
+                    const padding = 10;
+                    $('#linux-popup').css({
+                        width: e.data.width + padding,
+                        height: e.data.height + menuBarHeight + padding
+                    });
+                }
+            });
+
+
+
+            $("#linux-icon").hover(
+                // function () { $(this).find("img").attr("src", "./img/linux-icon.gif"); },
+                function () { $(this).find("img").attr("src", "./img/linux-icon.png"); }
+            );
+
+            // $('#linux-icon').find("img").attr("src", "./img/linux-icon.gif");
+            $('#linux-icon').find("img").attr("src", "./img/linux-icon.png");
+
 
             function openStartMenu() {
                 $('#start-menu').addClass('open');
@@ -320,14 +374,14 @@
                     $('.icon-wrapper').removeClass('icon-border');
                 });
 
-                $("#about-icon").hover(
-                    function () {
-                        $(this).find("img").attr("src", "./img/about-icon.gif");
-                    },
-                    function () {
-                        $(this).find("img").attr("src", "./img/about-icon.png");
-                    }
-                );
+                // $("#about-icon").hover(
+                //     function () {
+                //         $(this).find("img").attr("src", "./img/about-icon.gif");
+                //     },
+                //     function () {
+                //         $(this).find("img").attr("src", "./img/about-icon.png");
+                //     }
+                // );
                 $("#education-icon").hover(
                     function () {
                         $(this).find("img").attr("src", "./img/education-icon.gif");
@@ -336,14 +390,14 @@
                         $(this).find("img").attr("src", "./img/education-icon.png");
                     }
                 );
-                $("#experience-icon").hover(
-                    function () {
-                        $(this).find("img").attr("src", "./img/experience-icon.gif");
-                    },
-                    function () {
-                        $(this).find("img").attr("src", "./img/experience-icon.png");
-                    }
-                );
+                // $("#experience-icon").hover(
+                //     function () {
+                //         $(this).find("img").attr("src", "./img/experience-icon.gif");
+                //     },
+                //     function () {
+                //         $(this).find("img").attr("src", "./img/experience-icon.png");
+                //     }
+                // );
                 $("#projects-icon").hover(
                     function () {
                         $(this).find("img").attr("src", "./img/projects-icon.gif");
@@ -352,14 +406,14 @@
                         $(this).find("img").attr("src", "./img/projects-icon.png");
                     }
                 );
-                $("#music-icon").hover(
-                    function () {
-                        $(this).find("img").attr("src", "./img/music-icon.gif");
-                    },
-                    function () {
-                        $(this).find("img").attr("src", "./img/music-icon.png");
-                    }
-                );
+                // $("#music-icon").hover(
+                //     function () {
+                //         $(this).find("img").attr("src", "./img/music-icon.gif");
+                //     },
+                //     function () {
+                //         $(this).find("img").attr("src", "./img/music-icon.png");
+                //     }
+                // );
                 $("#contact-icon").hover(
                     function () {
                         $(this).find("img").attr("src", "./img/contact-icon-17.png"); /* TODO: change to gif */
@@ -424,23 +478,26 @@
                 <span id="start-menu-name">Vincent Candela</span>
             </div>
             <div id="start-menu-items">
-                <div class="start-menu-item" data-window="about">
+                <!-- <div class="start-menu-item" data-window="about">
                     <img src="./img/about-icon.png" class="start-menu-icon"> About
-                </div>
+                </div> -->
                 <div class="start-menu-item" data-window="education">
                     <img src="./img/education-icon.png" class="start-menu-icon"> Education
                 </div>
-                <div class="start-menu-item" data-window="experience">
+                <!-- <div class="start-menu-item" data-window="experience">
                     <img src="./img/experience-icon.png" class="start-menu-icon"> Experience
-                </div>
+                </div> -->
                 <div class="start-menu-item" data-window="projects">
                     <img src="./img/projects-icon.png" class="start-menu-icon"> Projects
                 </div>
-                <div class="start-menu-item" data-window="music">
+                <!-- <div class="start-menu-item" data-window="music">
                     <img src="./img/music-icon.png" class="start-menu-icon"> Music Tierlist
-                </div>
+                </div> -->
                 <div class="start-menu-item" data-window="contact">
                     <img src="./img/contact-icon-17.png" class="start-menu-icon"> Linktree
+                </div>
+                <div class="start-menu-item" data-window="linux">
+                    <img src="./img/linux-icon.png" class="start-menu-icon"> Alpine Linux
                 </div>
                 <div class="start-menu-divider"></div>
                 <div class="start-menu-item" id="start-credits-btn">
@@ -457,22 +514,23 @@
                 <img id="top-left-logo" src="./img/logo.png" alt="">
                 <span id="start-btn-label">Start</span>
             </div>
-            <p id="aboutMenu">About</p>
+            <!-- <p id="aboutMenu">About</p> -->
             <p id="educationMenu">Education</p>
-            <p id="experienceMenu">Experience</p>
+            <!-- <p id="experienceMenu">Experience</p> -->
             <p id="projectsMenu">Projects</p>
-            <p id="musicMenu">Music Tierlist</p>
+            <!-- <p id="musicMenu">Music Tierlist</p> -->
             <p id="contactMenu">Linktree</p>
+            <p id="linuxMenu" style="display: none;">Alpine Linux</p>
             <div class="clock">00:00:00</div>
         </div>
     
         <div class="shortcut-icons-wrapper">
             <div class="dummy-icon-wrapper"></div>
     
-            <div class="icon-wrapper" id="about-icon">
+            <!-- <div class="icon-wrapper" id="about-icon">
                 <img class="shortcut-icon" id="about-icon-img" src="./img/about-icon.png">
                 <p style="margin-top: 0;">About</p>
-            </div>
+            </div> -->
     
             <div class="icon-wrapper" id="education-icon">
                 <img class="shortcut-icon" id="education-icon-img" src="./img/education-icon.png">
@@ -486,19 +544,23 @@
                 <p style="margin-top: 0;">Linktree</p>
             </div>
     
-            <div class="icon-wrapper" id="experience-icon">
+            <!-- <div class="icon-wrapper" id="experience-icon">
                 <img class="shortcut-icon" id="experience-icon-img" src="./img/experience-icon.png">
                 <p style="margin-top: 0;">Experience</p>
-            </div>
+            </div> -->
     
             <div class="icon-wrapper" id="projects-icon">
                 <img class="shortcut-icon" id="projects-icon-img" src="./img/projects-icon.png">
                 <p style="margin-top: 0;">Projects</p>
             </div>
     
-            <div class="icon-wrapper" id="music-icon">
+            <!-- <div class="icon-wrapper" id="music-icon">
                 <img class="shortcut-icon" id="music-icon-img" src="./img/music-icon.png">
                 <p style="margin-top: 0;">Music Tierlist</p>
+            </div> -->
+            <div class="icon-wrapper" id="linux-icon">
+                <img class="shortcut-icon" id="linux-icon-img" src="./img/linux-icon.png">
+                <p style="margin-top: 0;">Alpine Linux</p>
             </div>
         </div>    
     
@@ -517,7 +579,7 @@
     
                 <div class="list-row">
                     <p class="center-list-item" id="list-item-2">Computer Engineering</p>
-                    <p class="hidden-skills">CPU Architecture, Memory Hierarchy,<br> Operating Systems, Digital VLSI</p>
+                    <p class="hidden-skills">CPU Architecture,<br> Operating Systems, Digital VLSI</p>
                 </div>
                 <div class="flex-break"></div>
     
@@ -533,11 +595,11 @@
                 </div>
                 <div class="flex-break"></div>
     
-                <div class="list-row">
+                <!-- <div class="list-row">
                     <p class="center-list-item" id="list-item-5"> Recreational Sports </p>
                     <p class="hidden-skills"> Downhill Skiing, MountainBiking,<br> Cross-Country Skiing, Surfing</p>
                 </div>
-                <div class="flex-break"></div>
+                <div class="flex-break"></div> -->
     
                 <div class="list-row">
                     <p class="center-list-item" id="list-item-6"> Coursework</p>
@@ -548,7 +610,7 @@
             </div>
         </div>
     
-        <div id="about-popup" class="popup-window draggable resizable row-container">
+        <!-- <div id="about-popup" class="popup-window draggable resizable row-container">
             <div class="popup-window-wrapper">
                 <div class="popup-menu-bar" style="background-color: rgb(60, 102, 73)">
                     <p class="popup-title">About</p>
@@ -559,7 +621,7 @@
                 </div>
                 <iframe src="./subpages/about.html"></iframe>
             </div>
-        </div>
+        </div> -->
     
         <div id="education-popup" class="popup-window draggable resizable">
             <div class="popup-window-wrapper">
@@ -574,7 +636,7 @@
             </div>
         </div>
     
-        <div id="experience-popup" class="popup-window draggable resizable">
+        <!-- <div id="experience-popup" class="popup-window draggable resizable">
             <div class="popup-window-wrapper">
                 <div class="popup-menu-bar" style="background-color: rgb(60, 102, 73)">
                     <p class="popup-title">Experience</p>
@@ -585,7 +647,7 @@
                 </div>
                 <iframe src="./subpages/experience.html"></iframe>
             </div>
-        </div>
+        </div> -->
     
         <div id="projects-popup" class="popup-window draggable resizable">
             <div class="popup-window-wrapper">
@@ -600,7 +662,7 @@
             </div>
         </div>
     
-        <div id="music-popup" class="popup-window draggable resizable">
+        <!-- <div id="music-popup" class="popup-window draggable resizable">
             <div class="popup-window-wrapper">
                 <div class="popup-menu-bar" style="background-color: rgb(60, 102, 73)">
                     <p class="popup-title">Music Tierlist</p>
@@ -611,7 +673,7 @@
                 </div>
                 <iframe src="./subpages/albums.html"></iframe>
             </div>
-        </div>
+        </div> -->
     
         <div id="credits-popup" class="popup-window draggable resizable">
             <div class="popup-window-wrapper">
@@ -638,6 +700,19 @@
                 </div>
                 <iframe src="./subpages/contact.html"></iframe>
             </div>
+        </div>
+    </div>
+
+    <div id="linux-popup" class="popup-window draggable resizable">
+        <div class="popup-window-wrapper">
+            <div class="popup-menu-bar" style="background-color: rgb(60, 102, 73)">
+                <p class="popup-title">Alpine Linux</p>
+                <div class="popup-spacer"></div>
+                <p class="popup-small-button" id="linuxMin">&#95;</p>
+                <p class="popup-small-button" id="linuxMax"><b>&#9634;</b></p>
+                <p class="popup-small-button" id="linuxClose">x</p>
+            </div>
+            <iframe src="./subpages/linux.html"></iframe>
         </div>
     </div>
 

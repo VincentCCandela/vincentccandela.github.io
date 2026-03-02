@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>v86 Embed</title>
+    <style>
+        #screen_container {
+            display: inline-block;
+            line-height: 0;
+        }
+        #screen_container > canvas { display: block; }
+        #screen_container > div { 
+            white-space: pre;
+            font: 14px monospace;
+            line-height: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div id="screen_container">
+        <div style="white-space: pre; font: 14px monospace;"></div>
+        <canvas style="display: none;"></canvas>
+    </div>
+
+    <script src="libv86.js"></script>
+    <script>
+        var emulator = new V86({
+            wasm_path: "v86.wasm",          // if using WASM build
+            memory_size: 256 * 1024 * 1024, // 128MB RAM
+            vga_memory_size: 8 * 1024 * 1024,
+            screen_container: document.getElementById("screen_container"),
+            bios: { url: "seabios.bin" },
+            vga_bios: { url: "vgabios.bin" },
+            cdrom: { url: "alpine-virt-3.23.3-x86.iso", async: true }, // your ISO
+            autostart: true,
+        });
+    </script>
+</body>
+</html>

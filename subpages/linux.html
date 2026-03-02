@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: auto;
+        }
+        #screen_container {
+            display: inline-block;
+            line-height: 0;
+        }
+        #screen_container > canvas { display: block; }
+        #screen_container > div {
+            white-space: pre;
+            font: 14px monospace;
+            line-height: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div id="screen_container">
+        <div style="white-space: pre; font: 14px monospace;"></div>
+        <canvas style="display: none;"></canvas>
+    </div>
+    <script src="../v86/build/libv86.js"></script>
+    <script>
+        var emulator = new V86({
+            wasm_path: "../v86/build/v86.wasm",
+            memory_size: 256 * 1024 * 1024,
+            vga_memory_size: 8 * 1024 * 1024,
+            screen_container: document.getElementById("screen_container"),
+            bios: { url: "../v86/bios/seabios.bin" },
+            vga_bios: { url: "../v86/bios/vgabios.bin" },
+            cdrom: { url: "../images/alpine-virt-3.23.3-x86.iso", async: true },
+            autostart: true,
+        });
+
+        window.addEventListener('message', function(e) {
+            if (!e.data || e.data.type !== 'keyevent') return;
+            const event = new KeyboardEvent(e.data.eventType, {
+                key: e.data.key, code: e.data.code,
+                keyCode: e.data.keyCode, which: e.data.which,
+                shiftKey: e.data.shiftKey, ctrlKey: e.data.ctrlKey,
+                altKey: e.data.altKey, metaKey: e.data.metaKey,
+                bubbles: true
+            });
+            document.body.dispatchEvent(event);  // body has classList, window/document do not
+        });
+
+        const observer = new ResizeObserver(() => {
+            const canvas = document.querySelector('#screen_container canvas');
+            if (canvas && canvas.offsetWidth > 0) {
+                window.parent.postMessage({
+                    type: 'linux-resize',
+                    width: canvas.offsetWidth,
+                    // height: canvas.offsetHeight
+                    height: window.innerHeight * 0.75
+                }, '*');
+            }
+        });
+        observer.observe(document.querySelector('#screen_container'));
+    </script>
+</body>
+</html>
