@@ -150,7 +150,10 @@ position: fixed !important
     }
     
     .icon-wrapper p {
-        font-size: 1.5vw;
+        /* font-size: 1.5vw; */
+        font-size: clamp(0.5rem, 2.5vw, 0.9rem);
+        color: #00ff41;
+        text-shadow: 0 0 6px #00ff41;
     }
 
     .bottomnav {
@@ -215,7 +218,8 @@ position: fixed !important
 
     #main-title {
         /* font-size: 10vw; */
-        font-size: clamp(4vw, 6vw, 8vw);
+        /* font-size: clamp(3vw, 5vw, 6vw); */
+        font-size: 4vw;
         font-family: 'BP Squares';
         color: #d93609;
         flex-shrink: 0;

@@ -103,6 +103,7 @@
         fxEnabled = true;
         $('#matrix-canvas').css('display', 'block');
         $('#splash-text').css('visibility', 'visible');
+        $('#splash-text').text(chooseRandomSplashText());
         if (!matrixInitialized) { initMatrix(); matrixInitialized = true; }
         $('#fx-label').text('Disable FX');
         $('#fx-icon').text('🌧️');
