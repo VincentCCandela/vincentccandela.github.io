@@ -777,12 +777,23 @@ position: fixed !important
     }
 }
 
+@keyframes mc-splash-pulse-mobile {
+    from { transform: scale(0.88); }
+    to   { transform: scale(1.05); }
+}
+
 @media (max-aspect-ratio: 1/1) {
     #splash-text {
         font-size: clamp(0.35rem, 1.8vw, 0.75rem) !important;
-        left: 70vw;
-        top: 6vh;
+        /* left: 70vw; */
+        /* top: 6vh; */
+        align-self: left;
+        left: auto;
+        top: auto;
+        position: relative !important;
+        animation: mc-splash-pulse-mobile 0.6s ease-in-out infinite alternate;
     }
+    
 }
 
 :root {

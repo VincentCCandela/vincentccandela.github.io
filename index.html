@@ -262,8 +262,8 @@
             // $("#musicMenu, #musicMin").click(function () { minimizeWindow("music"); });
             // $("#musicClose").click(function () { closeWindow("music"); });
 
-            $("#creditsMenu, #creditsMin").click(function () { minimizeWindow("credits"); });
-            $("#creditsClose").click(function () { closeWindow("credits"); });
+            // $("#creditsMenu, #creditsMin").click(function () { minimizeWindow("credits"); });
+            // $("#creditsClose").click(function () { closeWindow("credits"); });
 
             $("#contactMenu, #contactMin").click(function () { minimizeWindow("contact"); });
             $("#contactClose").click(function () { closeWindow("contact"); });
@@ -361,10 +361,10 @@
                 closeStartMenu();
                 openWindow($(this).data('window'));
             });
-            $(document).on('click', '#start-credits-btn', function() {
-                closeStartMenu();
-                openWindow('credits');
-            });
+            // $(document).on('click', '#start-credits-btn', function() {
+            //     closeStartMenu();
+            //     openWindow('credits');
+            // });
             $(document).on('click', '#start-fx-btn', function() {
                 closeStartMenu();
                 toggleFX();
@@ -519,9 +519,9 @@
                 <div class="start-menu-item" id="start-fx-btn">         <!-- ADD -->
                     <span class="start-menu-icon-text" id="fx-icon">📺</span> <span id="fx-label">Enable FX</span>
                 </div>                                                   <!-- ADD -->
-                <div class="start-menu-item" id="start-credits-btn">
+                <!-- <div class="start-menu-item" id="start-credits-btn">
                     <span class="start-menu-icon-text">⭐</span> Credits
-                </div>
+                </div> -->
                 <div class="start-menu-item" id="start-shutdown-btn">
                     <span class="start-menu-icon-text">⏻</span> Shut Down...
                 </div>
@@ -540,7 +540,7 @@
             <!-- <p id="musicMenu">Music Tierlist</p> -->
             <p id="contactMenu">Linktree</p>
             <p id="linuxMenu" style="display: none;">Alpine Linux</p>
-            <p id="creditsMenu">Credits</p>
+            <!-- <p id="creditsMenu">Credits</p> -->
             <div class="clock">00:00:00</div>
         </div>
     
@@ -695,7 +695,7 @@
             </div>
         </div> -->
     
-        <div id="credits-popup" class="popup-window draggable resizable">
+        <!-- <div id="credits-popup" class="popup-window draggable resizable">
             <div class="popup-window-wrapper">
                 <div class="popup-menu-bar" style="background-color: rgb(60, 102, 73)">
                     <p class="popup-title">Credits</p>
@@ -707,7 +707,7 @@
                     <p> <a href="https://github.com/copy/v86" target="_blank"> v86</a> was used for the Alpine Linux virtual machine. </p>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div id="contact-popup" class="popup-window draggable resizable">
             <div class="popup-window-wrapper">
