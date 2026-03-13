@@ -153,14 +153,6 @@ position: fixed !important
         font-size: 1.5vw;
     }
 
-    #kiran-photo {
-        position: fixed;
-        bottom: 26vh;
-        left: 0vw;
-        height: 55vh;
-        
-    }
-
     .bottomnav {
         overflow: hidden;
         background-color: #001a0a;
@@ -205,13 +197,13 @@ position: fixed !important
         display: flex;
         flex-wrap: nowrap;
         flex-direction: column;
-        justify-content: center;
+        /* justify-content: center; */
         align-items: center;
         position: fixed !important;
-        top: 0;
+        top: 12vh;
         left: 0;
         width: 100vw;
-        height: calc(100dvh - var(--nav-height) - 10vh);
+        /* height: calc(100dvh - var(--nav-height) - 10vh); */
         gap: 1vh;
     }
     
@@ -221,7 +213,8 @@ position: fixed !important
     }
 
     #main-title {
-        font-size: 10vw;
+        /* font-size: 10vw; */
+        font-size: clamp(4vw, 6vw, 8vw);
         font-family: 'BP Squares';
         color: #d93609;
         flex-shrink: 0;
@@ -742,22 +735,9 @@ position: fixed !important
 
 
 @media (min-aspect-ratio: 3/2) {
-    /* #kiran-photo {
-        position: fixed;
-        bottom: 10%;
-        left: 1vw;
-        height: 90vh;
-    } */
 }
 
 @media (min-aspect-ratio: 1/1) and  (max-aspect-ratio: 3/2) {
-    /* #kiran-photo {
-        position: fixed;
-        bottom: 10%;
-        left: 1vw;
-        width: 40vw;
-    } */
-
     /* #linux-popup {
         width: 75vw;
         height: 500px;
