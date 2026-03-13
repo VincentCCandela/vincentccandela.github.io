@@ -197,8 +197,9 @@ position: fixed !important
         display: flex;
         flex-wrap: nowrap;
         flex-direction: column;
-        /* justify-content: center; */
-        align-items: center;
+        /* align-items: center; */
+        align-items: flex-start;
+        padding-left: 5vw;
         position: fixed !important;
         top: 12vh;
         left: 0;
@@ -284,7 +285,7 @@ position: fixed !important
         opacity: 0;
         z-index: 1;
         padding: 0 2vh;
-        text-align: right;
+        text-align: left;
         /* color: white; */
         color: #00ff41;
         text-shadow: 0 0 2px #00ff41;
