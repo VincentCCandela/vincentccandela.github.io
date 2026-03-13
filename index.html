@@ -106,6 +106,28 @@
 
     let browsertype=navigator.userAgent;
 
+    var fxEnabled = false;
+    var matrixInitialized = false;
+
+    function enableFX() {
+        fxEnabled = true;
+        $('#matrix-canvas').css('display', 'block');
+        $('#splash-text').css('visibility', 'visible');
+        if (!matrixInitialized) { initMatrix(); matrixInitialized = true; }
+        $('#fx-label').text('Disable FX');
+        $('#fx-icon').text('🌧️');
+    }
+    function disableFX() {
+        fxEnabled = false;
+        $('#matrix-canvas').css('display', 'none');
+        $('#splash-text').css('visibility', 'hidden');
+        $('#fx-label').text('Enable FX');
+        $('#fx-icon').text('📺');
+    }
+    function toggleFX() {
+        if (fxEnabled) disableFX(); else enableFX();
+    }
+
     $(function () {
         $(".draggable").draggable({
             handle: ".popup-menu-bar",
@@ -206,7 +228,7 @@
 
     $(document).ready(
         function () {
-            initMatrix();
+            // initMatrix(); // we want to start it by user request, not by default because it is a little too distracting
 
             if (isTouchScreen){
                 // $('#about-icon').find("img").attr("src", "./img/about-icon.gif");
@@ -250,7 +272,7 @@
             // $("#musicMenu, #musicMin").click(function () { minimizeWindow("music"); });
             // $("#musicClose").click(function () { closeWindow("music"); });
 
-            $("#creditsMin").click(function () { minimizeWindow("credits"); });
+            $("#creditsMenu, #creditsMin").click(function () { minimizeWindow("credits"); });
             $("#creditsClose").click(function () { closeWindow("credits"); });
 
             $("#contactMenu, #contactMin").click(function () { minimizeWindow("contact"); });
@@ -351,7 +373,11 @@
             });
             $(document).on('click', '#start-credits-btn', function() {
                 closeStartMenu();
-                minimizeWindow('credits');
+                openWindow('credits');
+            });
+            $(document).on('click', '#start-fx-btn', function() {
+                closeStartMenu();
+                toggleFX();
             });
             $(document).on('click', '#start-shutdown-btn', function() {
                 closeStartMenu();
@@ -500,6 +526,9 @@
                     <img src="./img/linux-icon.png" class="start-menu-icon"> Alpine Linux
                 </div>
                 <div class="start-menu-divider"></div>
+                <div class="start-menu-item" id="start-fx-btn">         <!-- ADD -->
+                    <span class="start-menu-icon-text" id="fx-icon">📺</span> <span id="fx-label">Enable FX</span>
+                </div>                                                   <!-- ADD -->
                 <div class="start-menu-item" id="start-credits-btn">
                     <span class="start-menu-icon-text">⭐</span> Credits
                 </div>
@@ -521,6 +550,7 @@
             <!-- <p id="musicMenu">Music Tierlist</p> -->
             <p id="contactMenu">Linktree</p>
             <p id="linuxMenu" style="display: none;">Alpine Linux</p>
+            <p id="creditsMenu">Credits</p>
             <div class="clock">00:00:00</div>
         </div>
     
@@ -590,8 +620,8 @@
                 <div class="flex-break"></div>
     
                 <div class="list-row">
-                    <p class="center-list-item" id="list-item-4">Front-End Development</p>
-                    <p class="hidden-skills">This Website</p>
+                    <p class="center-list-item" id="list-item-4">Front-End and High-Level Development</p>
+                    <p class="hidden-skills">This Website,<br> Minecraft Auto-Trade Utility Mod,<br>Various Baritone Utility Mod Bug Fixes</p>
                 </div>
                 <div class="flex-break"></div>
     
@@ -683,8 +713,8 @@
                     <p class="popup-small-button" id="creditsMin">&#95;</p>
                     <p class="popup-small-button" id="creditsClose">x</p>
                 </div>
-                <div style="overflow-y: auto; padding-left: 5%; padding-right: 3%;">
-                    <p> ... </p>
+                <div style="overflow-y: auto; padding-left: 5%; padding-right: 3%; color: #00ff41; text-shadow: 0 0 2px #00ff41; font-size: 0.8vw; line-height: 1.8;">
+                    <p> <a href="https://github.com/copy/v86" target="_blank"> v86</a> was used for the Alpine Linux virtual machine. </p>
                 </div>
             </div>
         </div>

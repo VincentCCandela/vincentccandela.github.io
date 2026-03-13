@@ -754,6 +754,7 @@ position: fixed !important
     height: auto;
     margin: 0;
     padding: 0;
+    visibility: hidden;
 }
 
 @keyframes mc-splash-pulse {
@@ -787,6 +788,7 @@ position: fixed !important
     width: 100%; height: 100%;
     z-index: 0;
     pointer-events: none;
+    display: none;
 }
 
 .popup-window.maximized {
@@ -798,7 +800,7 @@ position: fixed !important
 }
 
 #aboutMenu, #educationMenu, #experienceMenu,
-#projectsMenu, #musicMenu, #contactMenu {
+#projectsMenu, #musicMenu, #contactMenu, #creditsMenu {
     display: none;
 }
 
