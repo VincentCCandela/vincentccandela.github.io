@@ -40,7 +40,8 @@
             cdrom: { url: "../images/alpine-virt-3.23.3-x86.iso", async: true },
             autostart: true,
             net_device: {
-                relay_url: "wss://relay.widgetry.org/"
+                relay_url: "wss://relay.widgetry.org/",
+                type: "virtio"
             }
         });
 
