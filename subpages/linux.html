@@ -72,10 +72,19 @@
     </script>
 
     <script>
-        setInterval(function() {
-            window.scrollTo(0, document.body.scrollHeight);
-        }, 100);
-    </script>
+    const termDiv = document.querySelector('#screen_container > div');
+    let lastLineCount = 0;
 
+    const scrollObserver = new MutationObserver(() => {
+        const text = termDiv.innerText || termDiv.textContent || '';
+        const lineCount = text.split('\n').length;
+        if (lineCount > lastLineCount) {
+            lastLineCount = lineCount;
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    });
+
+    scrollObserver.observe(termDiv, { childList: true, subtree: true, characterData: true });
+    </script>
 </body>
 </html>
