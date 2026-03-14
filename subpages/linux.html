@@ -28,15 +28,15 @@
         <div style="white-space: pre; font: 14px monospace;"></div>
         <canvas style="display: none;"></canvas>
     </div>
-    <script src="../v86/build/libv86.js"></script>
+    <script src="../v86_src/libv86.js"></script>
     <script>
         var emulator = new V86({
-            wasm_path: "../v86/build/v86.wasm",
+            wasm_path: "../v86_src/v86.wasm",
             memory_size: 256 * 1024 * 1024,
             vga_memory_size: 8 * 1024 * 1024,
             screen_container: document.getElementById("screen_container"),
-            bios: { url: "../v86/bios/seabios.bin" },
-            vga_bios: { url: "../v86/bios/vgabios.bin" },
+            bios: { url: "../v86_src/seabios.bin" },
+            vga_bios: { url: "../v86_src/vgabios.bin" },
             cdrom: { url: "../images/alpine-virt-3.23.3-x86.iso", async: true },
             autostart: true,
             net_device: {
