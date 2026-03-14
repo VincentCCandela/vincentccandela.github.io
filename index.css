@@ -219,7 +219,7 @@ position: fixed !important
     #main-title {
         /* font-size: 10vw; */
         /* font-size: clamp(3vw, 5vw, 6vw); */
-        font-size: 4vw;
+        font-size: 3vw;
         font-family: 'BP Squares';
         color: #d93609;
         flex-shrink: 0;
