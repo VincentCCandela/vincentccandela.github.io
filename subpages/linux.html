@@ -39,9 +39,9 @@
             vga_bios: { url: "../v86/bios/vgabios.bin" },
             cdrom: { url: "../images/alpine-virt-3.23.3-x86.iso", async: true },
             autostart: true,
-            net_device: {
-                relay_url: "wss://relay.widgetry.org/"
-            }
+            // net_device: {
+            //     relay_url: "wss://relay.widgetry.org/"
+            // }
         });
 
         window.addEventListener('message', function(e) {
