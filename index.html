@@ -298,8 +298,31 @@
             $("#linuxClose").click(function () { closeWindow("linux"); });
             $("#linuxMax").click(function () { toggleMaximize("linux-popup"); });
 
+            // document.addEventListener('keydown', function(e) {
+            //     if (!$('#linux-popup').is(':visible')) return;
+            //     document.querySelector('#linux-popup iframe').contentWindow.postMessage({
+            //         type: 'keyevent', eventType: 'keydown',
+            //         key: e.key, code: e.code, keyCode: e.keyCode, which: e.which,
+            //         shiftKey: e.shiftKey, ctrlKey: e.ctrlKey, altKey: e.altKey, metaKey: e.metaKey
+            //     }, '*');
+            //     e.preventDefault();
+            // }, true);
+
             document.addEventListener('keydown', function(e) {
                 if (!$('#linux-popup').is(':visible')) return;
+
+                // Ctrl+Shift+P — read clipboard in parent, send text to iframe
+                if (e.ctrlKey && e.shiftKey && e.key === 'P') {
+                    e.preventDefault();
+                    navigator.clipboard.readText().then(function(text) {
+                        document.querySelector('#linux-popup iframe').contentWindow.postMessage(
+                            { type: 'paste', text: text }, '*'
+                        );
+                    });
+                    return;
+                }
+
+                // forward everything else normally
                 document.querySelector('#linux-popup iframe').contentWindow.postMessage({
                     type: 'keyevent', eventType: 'keydown',
                     key: e.key, code: e.code, keyCode: e.keyCode, which: e.which,

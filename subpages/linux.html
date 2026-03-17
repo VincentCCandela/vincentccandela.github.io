@@ -66,8 +66,16 @@
             // });
 
             window.addEventListener('message', function(e) {
-                if (!e.data || e.data.type !== 'keyevent') return;
-                const event = new KeyboardEvent(e.data.eventType, {
+                if (!e.data) return;
+
+                // Handle paste from parent
+                if (e.data.type === 'paste') {
+                    emulator.keyboard_send_text(e.data.text);
+                    return;
+                }
+
+                if (e.data.type !== 'keyevent') return;
+                const event = new KeyboardEvent(e.data.eventType, {            
                     key: e.data.key, code: e.data.code,
                     keyCode: e.data.keyCode, which: e.data.which,
                     shiftKey: e.data.shiftKey, ctrlKey: e.data.ctrlKey,
@@ -89,6 +97,30 @@
                 }
             });
             observer.observe(document.querySelector('#screen_container'));
+
+
+            // Ctrl+Shift+C — Copy (Guest → Host)
+            emulator.add_listener("clipboard-get", function (text) {
+                navigator.clipboard.writeText(text).catch(function () {
+                    const ta = document.createElement("textarea");
+                    ta.value = text;
+                    ta.style.position = "fixed";
+                    ta.style.opacity = "0";
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(ta);
+                });
+            });
+
+        document.addEventListener("keydown", function (e) {
+            if (e.ctrlKey && e.shiftKey && e.key === "C") {
+                e.preventDefault();
+                emulator.keyboard_send_scancodes([0x1d, 0x2a, 0x2e, 0xae, 0xaa, 0x9d]);
+            }
+        });
+
+            
         })();
     </script>
 
