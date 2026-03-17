@@ -308,21 +308,38 @@
             //     e.preventDefault();
             // }, true);
 
+            // document.addEventListener('keydown', function(e) {
+            //     if (!$('#linux-popup').is(':visible')) return;
+
+            //     // Ctrl+Shift+P — read clipboard in parent, send text to iframe
+            //     if (e.ctrlKey && e.shiftKey && e.key === 'V') {
+            //         e.preventDefault();
+            //         navigator.clipboard.readText().then(function(text) {
+            //             document.querySelector('#linux-popup iframe').contentWindow.postMessage(
+            //                 { type: 'paste', text: text }, '*'
+            //             );
+            //         });
+            //         return;
+            //     }
+
+            //     // forward everything else normally
+            //     document.querySelector('#linux-popup iframe').contentWindow.postMessage({
+            //         type: 'keyevent', eventType: 'keydown',
+            //         key: e.key, code: e.code, keyCode: e.keyCode, which: e.which,
+            //         shiftKey: e.shiftKey, ctrlKey: e.ctrlKey, altKey: e.altKey, metaKey: e.metaKey
+            //     }, '*');
+            //     e.preventDefault();
+            // }, true);
+
             document.addEventListener('keydown', function(e) {
                 if (!$('#linux-popup').is(':visible')) return;
 
-                // Ctrl+Shift+P — read clipboard in parent, send text to iframe
-                if (e.ctrlKey && e.shiftKey && e.key === 'V') {
+                // Skip Ctrl+V — handled by paste event above
+                if (e.ctrlKey && e.key === 'v') {
                     e.preventDefault();
-                    navigator.clipboard.readText().then(function(text) {
-                        document.querySelector('#linux-popup iframe').contentWindow.postMessage(
-                            { type: 'paste', text: text }, '*'
-                        );
-                    });
                     return;
                 }
 
-                // forward everything else normally
                 document.querySelector('#linux-popup iframe').contentWindow.postMessage({
                     type: 'keyevent', eventType: 'keydown',
                     key: e.key, code: e.code, keyCode: e.keyCode, which: e.which,
@@ -340,6 +357,25 @@
                 }, '*');
                 e.preventDefault();
             }, true);
+
+            document.addEventListener('paste', function(e) {
+                if (!$('#linux-popup').is(':visible')) return;
+                e.preventDefault();
+                const text = e.clipboardData.getData('text');
+                document.querySelector('#linux-popup iframe').contentWindow.postMessage(
+                    { type: 'paste', text: text }, '*'
+                );
+            });
+
+            // document.addEventListener('keyup', function(e) {
+            //     if (!$('#linux-popup').is(':visible')) return;
+            //     document.querySelector('#linux-popup iframe').contentWindow.postMessage({
+            //         type: 'keyevent', eventType: 'keyup',
+            //         key: e.key, code: e.code, keyCode: e.keyCode, which: e.which,
+            //         shiftKey: e.shiftKey, ctrlKey: e.ctrlKey, altKey: e.altKey, metaKey: e.metaKey
+            //     }, '*');
+            //     e.preventDefault();
+            // }, true);
 
             window.addEventListener('message', function(e) {
                 if (e.data.type === 'linux-resize') {
@@ -515,7 +551,7 @@
     <div id="theTrickSafariDiv">
         <div id="start-menu">
             <div id="start-menu-sidebar">
-                <span id="start-menu-name">Vincent Candela v0.0.5</span>
+                <span id="start-menu-name">Vincent Candela v0.0.6</span>
             </div>
             <div id="start-menu-items">
                 <!-- <div class="start-menu-item" data-window="about">
