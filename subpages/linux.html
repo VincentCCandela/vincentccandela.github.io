@@ -114,7 +114,7 @@
             });
 
         document.addEventListener("keydown", function (e) {
-            if (e.ctrlKey && e.shiftKey && e.key === "C") {
+            if (e.ctrlKey && e.shiftKey && e.key === "Y") {
                 e.preventDefault();
                 emulator.keyboard_send_scancodes([0x1d, 0x2a, 0x2e, 0xae, 0xaa, 0x9d]);
             }
