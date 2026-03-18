@@ -219,6 +219,22 @@
 
     $(document).ready(
         function () {
+            const pasteTarget = document.createElement('div');
+            pasteTarget.contentEditable = 'true';
+            pasteTarget.style.cssText = 'position:fixed;opacity:0;pointer-events:none;top:0;left:0;width:1px;height:1px;overflow:hidden;';
+            document.body.appendChild(pasteTarget);
+
+            pasteTarget.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const text = e.clipboardData.getData('text');
+                if (text) {
+                    document.querySelector('#linux-popup iframe').contentWindow.postMessage(
+                        { type: 'paste', text: text }, '*'
+                    );
+                }
+                pasteTarget.blur();
+            });
+
             // initMatrix(); // we want to start it by user request, not by default because it is a little too distracting
 
             if (isTouchScreen){
@@ -334,8 +350,8 @@
             document.addEventListener('keydown', function(e) {
                 if (!$('#linux-popup').is(':visible')) return;
 
-                if (e.ctrlKey && e.key === 'v') {
-                    // e.preventDefault();
+                if (e.ctrlKey && (e.key === 'v' || e.key === 'V')) {
+                    pasteTarget.focus();
                     return;
                 }
 
@@ -356,15 +372,6 @@
                 }, '*');
                 e.preventDefault();
             }, true);
-
-            document.addEventListener('paste', function(e) {
-                if (!$('#linux-popup').is(':visible')) return;
-                e.preventDefault();
-                const text = e.clipboardData.getData('text');
-                document.querySelector('#linux-popup iframe').contentWindow.postMessage(
-                    { type: 'paste', text: text }, '*'
-                );
-            });
 
             // document.addEventListener('keyup', function(e) {
             //     if (!$('#linux-popup').is(':visible')) return;
@@ -550,7 +557,7 @@
     <div id="theTrickSafariDiv">
         <div id="start-menu">
             <div id="start-menu-sidebar">
-                <span id="start-menu-name">Vincent Candela v0.0.8</span>
+                <span id="start-menu-name">Vincent Candela v0.0.9</span>
             </div>
             <div id="start-menu-items">
                 <!-- <div class="start-menu-item" data-window="about">
