@@ -134,6 +134,9 @@ position: fixed !important
         text-align: center;
         border: 0.2vmax solid transparent;
         width: clamp(20px,20vw,100px);
+        position: static !important;
+        left: auto !important;
+        top: auto !important;
     }
 
     .icon-wrapper img {
